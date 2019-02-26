@@ -20,8 +20,7 @@ class RSAKeyParser {
       return _parsePublic(_pkcs8PublicSequence(_parseSequence(rows)));
     }
 
-    // NOTE: Should we throw an exception?
-    return null;
+    throw UnsupportedError('PEMKey($key) is unsupported');
   }
 
   pointycastle.RSAPrivateKey parsePrivate(String key) {
@@ -36,8 +35,7 @@ class RSAKeyParser {
       return _parsePrivate(_pkcs8PrivateSequence(_parseSequence(rows)));
     }
 
-    // NOTE: Should we throw an exception?
-    return null;
+    throw UnsupportedError('PEMKey($key) is unsupported');
   }
 
   pointycastle.RSAPublicKey _parsePublic(ASN1Sequence sequence) {
