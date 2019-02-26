@@ -1,102 +1,137 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
-/// Represents integers obtained while creating a Public/Private key pair.
-class RSAPrivateKey {
-  /// First prime number.
-  final BigInt p;
+import 'package:asn1lib/asn1lib.dart';
+import "package:pointycastle/pointycastle.dart";
 
-  /// Second prime number.
-  final BigInt q;
+/// RSA PEM parser.
+class RSAKeyParser {
+  /// Parses the PEM key no matter it is public or private, it will figure it out.
+  RSAPublicKey parsePublic(String key) {
+    List<String> rows = key.split('\n'); // LF-only, this could be a problem
+    String header = rows.first;
 
-  /// Modulus for public and private keys. Satisfies `n=p*q`.
-  final BigInt n;
+    if (header == '-----BEGIN RSA PUBLIC KEY-----') {
+      return _parsePublic(_parseSequence(rows));
+    }
 
-  /// Public key exponent. Satisfies `d*e=1 mod phi(n)`.
-  final BigInt e;
+    if (header == '-----BEGIN PUBLIC KEY-----') {
+      return _parsePublic(_pkcs8PublicSequence(_parseSequence(rows)));
+    }
 
-  /// Private key exponent. Satisfies `d*e=1 mod phi(n)`.
-  final BigInt d;
-
-  /// Different form of [p]. Satisfies `dmp1=d mod (p-1)`.
-  final BigInt dmp1;
-
-  /// Different form of [p]. Satisfies `dmq1=d mod (q-1)`.
-  final BigInt dmq1;
-
-  /// A coefficient which satisfies `coeff=q^-1 mod p`.
-  final BigInt coeff;
-
-  /// The number of bits used for the modulus. Usually 1024, 2048 or 4096 bits.
-  int get bitLength => n.bitLength;
-
-  RSAPrivateKey(
-      this.n, this.e, this.d, this.p, this.q, this.dmp1, this.dmq1, this.coeff);
-}
-
-/// Provides a [encrypt] method for encrypting messages with a [RSAPrivateKey].
-abstract class RSAAlgorithm {
-  /// Performs the encryption of [bytes] with the private [key].
-  /// Others who have access to the public key will be able to decrypt this
-  /// the result.
-  ///
-  /// The [intendedLength] argument specifies the number of bytes in which the
-  /// result should be encoded. Zero bytes will be used for padding.
-  static List<int> encrypt(
-      RSAPrivateKey key, List<int> bytes, int intendedLength) {
-    var message = bytes2BigInt(bytes);
-    var encryptedMessage = _encryptInteger(key, message);
-    return integer2Bytes(encryptedMessage, intendedLength);
+    // NOTE: Should we throw an exception?
+    return null;
   }
 
-  static BigInt _encryptInteger(RSAPrivateKey key, BigInt x) {
-    // The following is equivalent to `_modPow(x, key.d, key.n) but is much
-    // more efficient. It exploits the fact that we have dmp1/dmq1.
-    var xp = _modPow(x % key.p, key.dmp1, key.p);
-    var xq = _modPow(x % key.q, key.dmq1, key.q);
-    while (xp < xq) {
-      xp += key.p;
+  RSAPrivateKey parsePrivate(String key) {
+    List<String> rows = key.split('\n'); // LF-only, this could be a problem
+    String header = rows.first;
+
+    if (header == '-----BEGIN RSA PRIVATE KEY-----') {
+      return _parsePrivate(_parseSequence(rows));
     }
-    return ((((xp - xq) * key.coeff) % key.p) * key.q) + xq;
+
+    if (header == '-----BEGIN PRIVATE KEY-----') {
+      return _parsePrivate(_pkcs8PrivateSequence(_parseSequence(rows)));
+    }
+
+    // NOTE: Should we throw an exception?
+    return null;
   }
 
-  // TODO(kevmoo): see if this can be done more efficiently with BigInt
-  static BigInt _modPow(BigInt b, BigInt e, BigInt m) {
-    if (e < BigInt.one) {
-      return BigInt.one;
-    }
-    if (b < BigInt.zero || b > m) {
-      b = b % m;
-    }
-    var r = BigInt.one;
-    while (e > BigInt.zero) {
-      if ((e & BigInt.one) > BigInt.zero) {
-        r = (r * b) % m;
-      }
-      e >>= 1;
-      b = (b * b) % m;
-    }
-    return r;
+  RSAPublicKey _parsePublic(ASN1Sequence sequence) {
+    BigInt modulus = (sequence.elements[0] as ASN1Integer).valueAsBigInteger;
+    BigInt exponent = (sequence.elements[1] as ASN1Integer).valueAsBigInteger;
+
+    return RSAPublicKey(modulus, exponent);
   }
 
-  static BigInt bytes2BigInt(List<int> bytes) {
-    var number = BigInt.zero;
-    for (var i = 0; i < bytes.length; i++) {
-      number = (number << 8) | BigInt.from(bytes[i]);
-    }
-    return number;
+  RSAPrivateKey _parsePrivate(ASN1Sequence sequence) {
+    BigInt modulus = (sequence.elements[1] as ASN1Integer).valueAsBigInteger;
+    BigInt exponent = (sequence.elements[3] as ASN1Integer).valueAsBigInteger;
+    BigInt p = (sequence.elements[4] as ASN1Integer).valueAsBigInteger;
+    BigInt q = (sequence.elements[5] as ASN1Integer).valueAsBigInteger;
+
+    return RSAPrivateKey(modulus, exponent, p, q);
   }
 
-  static List<int> integer2Bytes(BigInt integer, int intendedLength) {
-    if (integer < BigInt.one) {
-      throw ArgumentError('Only positive integers are supported.');
-    }
-    var bytes = Uint8List(intendedLength);
-    for (int i = bytes.length - 1; i >= 0; i--) {
-      bytes[i] = (integer & _bigIntFF).toInt();
-      integer >>= 8;
-    }
-    return bytes;
+  ASN1Sequence _parseSequence(List<String> rows) {
+    String keyText = rows
+        .skipWhile((String row) => row.startsWith('-----BEGIN'))
+        .takeWhile((String row) => !row.startsWith('-----END'))
+        .map((String row) => row.trim())
+        .join('');
+
+    Uint8List keyBytes = Uint8List.fromList(base64.decode(keyText));
+    ASN1Parser asn1Parser = ASN1Parser(keyBytes);
+
+    return asn1Parser.nextObject() as ASN1Sequence;
+  }
+
+  ASN1Sequence _pkcs8PublicSequence(ASN1Sequence sequence) {
+    ASN1BitString bitString = sequence.elements[1];
+    Uint8List bytes = bitString.valueBytes().sublist(1);
+    ASN1Parser parser = ASN1Parser(Uint8List.fromList(bytes));
+
+    return parser.nextObject() as ASN1Sequence;
+  }
+
+  ASN1Sequence _pkcs8PrivateSequence(ASN1Sequence sequence) {
+    ASN1BitString bitString = sequence.elements[2];
+    Uint8List bytes = bitString.valueBytes();
+    ASN1Parser parser = ASN1Parser(bytes);
+
+    return parser.nextObject() as ASN1Sequence;
   }
 }
 
-final _bigIntFF = BigInt.from(0xff);
+class RSASigner {
+  RSASigner(this.rsaSigner, this.privateKey);
+
+  final Signer rsaSigner;
+  final RSAPrivateKey privateKey;
+
+  List<int> sign(List<int> message) {
+    rsaSigner
+      ..reset()
+      ..init(true, PrivateKeyParameter<PrivateKey>(privateKey));
+    Signature signature =
+        rsaSigner.generateSignature(Uint8List.fromList(message));
+    return Uint8List.fromList(signature.toString().codeUnits);
+  }
+
+  static RSASigner sha1Rsa(String privateKey) {
+    return RSASigner(
+        Signer('SHA-1/RSA'), RSAKeyParser().parsePrivate(privateKey));
+  }
+
+  static RSASigner sha256Rsa(String privateKey) {
+    return RSASigner(
+        Signer('SHA-256/RSA'), RSAKeyParser().parsePrivate(privateKey));
+  }
+}
+
+class RSAVerifier {
+  RSAVerifier(this.rsaSigner, this.publicKey);
+
+  final Signer rsaSigner;
+  final RSAPublicKey publicKey;
+
+  bool verify(List<int> message, List<int> signature) {
+    rsaSigner
+      ..reset()
+      ..init(false, PublicKeyParameter<PublicKey>(publicKey));
+    return rsaSigner.verifySignature(Uint8List.fromList(message),
+        RSASignature(Uint8List.fromList(signature)));
+  }
+
+  static RSAVerifier sha1Rsa(String publicKey) {
+    return RSAVerifier(
+        Signer('SHA-1/RSA'), RSAKeyParser().parsePublic(publicKey));
+  }
+
+  static RSAVerifier sha256Rsa(String publicKey) {
+    return RSAVerifier(
+        Signer('SHA-256/RSA'), RSAKeyParser().parsePublic(publicKey));
+  }
+}

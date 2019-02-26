@@ -1,23 +1,30 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:fake_alipay/crypto/rsa_sign.dart';
+import 'package:fake_alipay/crypto/rsa.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:meta/meta.dart';
 
 class FakeAlipayErrorCode {
+  FakeAlipayErrorCode._();
+
   static const int SUCCESS = 9000;
   static const int CHECK = 8000;
   static const int FAILURE = 4000;
   static const int REPEAT_REQUEST = 5000;
   static const int CANCLE = 6001;
   static const int NETWORK_ERROR = 6002;
-
-  FakeAlipayErrorCode._();
 }
 
 class FakeAlipayAuthResult {
+  FakeAlipayAuthResult._(
+    this.success,
+    this.resultCode,
+    this.authCode,
+    this.userId,
+  );
+
   final bool success;
 
   /// 200 业务处理成功，会返回authCode
@@ -26,16 +33,15 @@ class FakeAlipayAuthResult {
   final String resultCode;
   final String authCode;
   final String userId;
-
-  FakeAlipayAuthResult._(
-    this.success,
-    this.resultCode,
-    this.authCode,
-    this.userId,
-  );
 }
 
 class FakeAlipayResp {
+  FakeAlipayResp._({
+    @required this.resultStatus,
+    this.result,
+    this.memo,
+  });
+
   /// 支付状态，参考支付宝的文档https://docs.open.alipay.com/204/105695/
   /// 返回码，标识支付状态，含义如下：
   /// 9000——订单支付成功         下面的result有值
@@ -50,12 +56,6 @@ class FakeAlipayResp {
   final String result;
 
   final String memo;
-
-  FakeAlipayResp._({
-    @required this.resultStatus,
-    this.result,
-    this.memo,
-  });
 
   FakeAlipayAuthResult toAuthResult() {
     if ('${FakeAlipayErrorCode.SUCCESS}' == resultStatus) {
@@ -96,17 +96,12 @@ class FakeAlipay {
   static const int PRIVATEKEY_RSA2_MIN_LENGTH = 2048;
 
   static const MethodChannel _channel =
-      const MethodChannel('v7lin.github.io/fake_alipay');
-
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
-  }
+      MethodChannel('v7lin.github.io/fake_alipay');
 
   final StreamController<FakeAlipayResp> _payRespStreamController =
-      StreamController.broadcast();
+      StreamController<FakeAlipayResp>.broadcast();
   final StreamController<FakeAlipayResp> _authRespStreamController =
-      StreamController.broadcast();
+      StreamController<FakeAlipayResp>.broadcast();
 
   Future<void> registerApp() async {
     _channel.setMethodCallHandler(_handleMethod);
@@ -125,9 +120,9 @@ class FakeAlipay {
 
   FakeAlipayResp _toAlipayResp(dynamic arguments) {
     return FakeAlipayResp._(
-      resultStatus: arguments['resultStatus'],
-      result: arguments['result'],
-      memo: arguments['mono'],
+      resultStatus: arguments['resultStatus'] as String,
+      result: arguments['result'] as String,
+      memo: arguments['mono'] as String,
     );
   }
 
@@ -140,14 +135,14 @@ class FakeAlipay {
   }
 
   Future<bool> isAlipayInstalled() async {
-    return await _channel.invokeMethod(_METHOD_ISALIPAYINSTALLED);
+    return (await _channel.invokeMethod(_METHOD_ISALIPAYINSTALLED)) as bool;
   }
 
   Future<void> payOrderJson({
     @required String orderInfo,
-    String signType: SIGNTYPE_RSA2,
+    String signType = SIGNTYPE_RSA2,
     @required String privateKey,
-    bool isShowLoading: true,
+    bool isShowLoading = true,
   }) {
     assert(orderInfo != null && orderInfo.isNotEmpty);
 
@@ -158,7 +153,7 @@ class FakeAlipay {
             privateKey != null &&
             privateKey.length >= PRIVATEKEY_RSA2_MIN_LENGTH));
     return payOrderMap(
-      orderInfo: json.decode(orderInfo),
+      orderInfo: json.decode(orderInfo) as Map<String, String>,
       signType: signType,
       privateKey: privateKey,
       isShowLoading: isShowLoading,
@@ -167,9 +162,9 @@ class FakeAlipay {
 
   Future<void> payOrderMap({
     @required Map<String, String> orderInfo,
-    String signType: SIGNTYPE_RSA2,
+    String signType = SIGNTYPE_RSA2,
     @required String privateKey,
-    bool isShowLoading: true,
+    bool isShowLoading = true,
   }) {
     assert(orderInfo != null && orderInfo.isNotEmpty);
     assert((signType == SIGNTYPE_RSA &&
@@ -202,7 +197,7 @@ class FakeAlipay {
 
   Future<void> payOrderSign({
     @required String orderInfo,
-    bool isShowLoading: true,
+    bool isShowLoading = true,
   }) {
     assert(orderInfo != null && orderInfo.isNotEmpty);
 
@@ -219,12 +214,12 @@ class FakeAlipay {
     @required String appId, // 支付宝分配给开发者的应用ID
     @required String pid, // 签约的支付宝账号对应的支付宝唯一用户号，以2088开头的16位纯数字组成
     @required String targetId, // 商户标识该次用户授权请求的ID，该值在商户端应保持唯一
-    String authType:
+    String authType =
         AUTHTYPE_AUTHACCOUNT, // 标识授权类型，取值范围：AUTHACCOUNT 代表授权；LOGIN 代表登录
-    String signType:
+    String signType =
         SIGNTYPE_RSA2, // 商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA ，推荐使用 RSA2
     @required String privateKey,
-    bool isShowLoading: true,
+    bool isShowLoading = true,
   }) {
     assert(appId != null && appId.isNotEmpty && appId.length <= 16);
     assert(pid != null && pid.isNotEmpty && pid.length <= 16);
@@ -237,7 +232,7 @@ class FakeAlipay {
             privateKey != null &&
             privateKey.length >= PRIVATEKEY_RSA2_MIN_LENGTH));
 
-    Map<String, String> authInfo = {
+    Map<String, String> authInfo = <String, String>{
       'apiname': 'com.alipay.account.auth',
       'method': 'alipay.open.auth.sdk.code.get',
       'app_id': appId,
@@ -266,7 +261,7 @@ class FakeAlipay {
 
   Future<void> authSign({
     @required String info,
-    bool isShowLoading: true,
+    bool isShowLoading = true,
   }) {
     assert(info != null && info.isNotEmpty);
 
@@ -281,7 +276,7 @@ class FakeAlipay {
 
   String _param(Map<String, String> map, Encoding encoding) {
     List<String> keys = map.keys.toList();
-    return List.generate(keys.length, (int index) {
+    return List<String>.generate(keys.length, (int index) {
       String key = keys[index];
       String value = map[key];
       return '$key=${Uri.encodeQueryComponent(value, encoding: encoding)}';
@@ -296,7 +291,7 @@ class FakeAlipay {
     /// 参数排序
     List<String> keys = map.keys.toList();
     keys.sort();
-    String content = List.generate(keys.length, (int index) {
+    String content = List<String>.generate(keys.length, (int index) {
       String key = keys[index];
       String value = map[key];
       return '$key=$value';
@@ -318,13 +313,13 @@ class FakeAlipay {
 }
 
 class FakeAlipayProvider extends InheritedWidget {
-  final FakeAlipay alipay;
-
   FakeAlipayProvider({
     Key key,
     @required this.alipay,
     @required Widget child,
   }) : super(key: key, child: child);
+
+  final FakeAlipay alipay;
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
@@ -333,6 +328,7 @@ class FakeAlipayProvider extends InheritedWidget {
   }
 
   static FakeAlipayProvider of(BuildContext context) {
-    return context.inheritFromWidgetOfExactType(FakeAlipayProvider);
+    return context.inheritFromWidgetOfExactType(FakeAlipayProvider)
+        as FakeAlipayProvider;
   }
 }

@@ -36,12 +36,13 @@ class MyApp extends StatelessWidget {
 }
 
 class Home extends StatefulWidget {
-  final FakeAlipay alipay;
 
   Home({
     Key key,
     @required this.alipay,
   }) : super(key: key);
+
+  final FakeAlipay alipay;
 
   @override
   State<StatefulWidget> createState() {
@@ -50,11 +51,11 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  static const bool ALIPAY_USE_RSA2  = true;
-  static const String ALIPAY_APPID = 'your alipay appId';
-  static const String ALIPAY_PID = 'your alipay pid';
-  static const String ALIPAY_TARGETID = 'your alipay targetId';
-  static const String ALIPAY_PRIVATEKEY = 'your alipay rsa private key(pkcs8)';
+  static const bool _alipayUseRsa2  = true;
+  static const String _alipayAppId = 'your alipay appId';
+  static const String _alipayPid = 'your alipay pid';
+  static const String _alipayTargetId = 'your alipay targetId';
+  static const String _alipayPrivateKey = 'your alipay rsa private key(pkcs8)';
 
   StreamSubscription<FakeAlipayResp> _pay;
   StreamSubscription<FakeAlipayResp> _auth;
@@ -115,7 +116,7 @@ class _HomeState extends State<Home> {
                 'out_trade_no': '123456789',
               };
               Map<String, String> orderInfo = {
-                'app_id': ALIPAY_APPID,
+                'app_id': _alipayAppId,
                 'biz_content': json.encode(bizContent),
                 'charset': 'utf-8',
                 'method': 'alipay.trade.app.pay',
@@ -124,18 +125,18 @@ class _HomeState extends State<Home> {
               };
               widget.alipay.payOrderMap(
                 orderInfo: orderInfo,
-                signType: ALIPAY_USE_RSA2 ? FakeAlipay.SIGNTYPE_RSA2 : FakeAlipay.SIGNTYPE_RSA,
-                privateKey: ALIPAY_PRIVATEKEY,
+                signType: _alipayUseRsa2 ? FakeAlipay.SIGNTYPE_RSA2 : FakeAlipay.SIGNTYPE_RSA,
+                privateKey: _alipayPrivateKey,
               );
             },
           ),
           ListTile(
             title: const Text('授权'),
             onTap: () {
-              String appId = ALIPAY_APPID;
-              String pid = ALIPAY_PID;
-              String targetId = ALIPAY_TARGETID;
-              String privateKey = ALIPAY_PRIVATEKEY;
+              String appId = _alipayAppId;
+              String pid = _alipayPid;
+              String targetId = _alipayTargetId;
+              String privateKey = _alipayPrivateKey;
               widget.alipay.auth(
                 appId: appId,
                 pid: pid,
