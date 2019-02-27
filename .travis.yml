@@ -1,0 +1,120 @@
+jobs:
+  include:
+    - stage: analyze
+      os: linux
+      sudo: false
+      language: dart
+      addons:
+        apt:
+          # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
+          sources:
+          - ubuntu-toolchain-r-test # if we don't specify this, the libstdc++6 we get is the wrong version
+          packages:
+          - libstdc++6
+          - fonts-droid
+      before_install:
+      - git clone -b stable https://github.com/flutter/flutter.git
+      - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
+      - flutter doctor
+      - pub global activate flutter_plugin_tools
+      before_script:
+      - echo "orz"
+      script:
+      - flutter analyze
+      after_script:
+      - echo "orz"
+
+    - stage: test
+      os: linux
+      sudo: false
+      language: dart
+      addons:
+        apt:
+          # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
+          sources:
+          - ubuntu-toolchain-r-test # if we don't specify this, the libstdc++6 we get is the wrong version
+          packages:
+          - libstdc++6
+          - fonts-droid
+      before_install:
+      - git clone -b stable https://github.com/flutter/flutter.git
+      - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
+      - flutter doctor
+      - pub global activate flutter_plugin_tools
+      before_script:
+      - echo "orz"
+      script:
+      - pushd example/
+      - flutter test
+      after_script:
+      - echo "orz"
+
+    - stage: build-android
+      os: linux
+      sudo: false
+      language: android
+      jdk: oraclejdk8
+      android:
+        components:
+        - tools
+        - platform-tools
+        - build-tools-27.0.3
+        - android-27
+        - sys-img-armeabi-v7a-google_apis-25
+        - extra-android-m2repository
+        - extra-google-m2repository
+        - extra-google-android-support
+        licenses:
+        - 'android-sdk-preview-license-.+'
+        - 'android-sdk-license-.+'
+        - 'google-gdk-license-.+'
+      addons:
+        apt:
+          # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
+          sources:
+          - ubuntu-toolchain-r-test # if we don't specify this, the libstdc++6 we get is the wrong version
+          packages:
+          - libstdc++6
+          - fonts-droid
+      before_install:
+      - git clone -b stable https://github.com/flutter/flutter.git
+      - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
+      - flutter doctor
+      - pub global activate flutter_plugin_tools
+      before_script:
+      - echo "orz"
+      script:
+      - pushd example/
+      - flutter -v build apk
+      after_script:
+      - echo "orz"
+
+    # Build *.ipa
+    - stage: build-ios
+      os: osx
+      language: objective-c
+      osx_image: xcode10.1
+      cache: cocoapods
+      podfile: example/ios/Podfile
+      before_install:
+      - gem install cocoapods # Since Travis is not always on latest version
+      - pip install six
+      - brew update
+      - brew install --HEAD libimobiledevice
+      - brew install ideviceinstaller
+      - brew install ios-deploy
+      - git clone -b stable https://github.com/flutter/flutter.git
+      - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
+      - flutter doctor
+      install:
+      - pod install --project-directory=example/ios
+      before_script:
+      - echo "orz"
+      script:
+      - flutter -v build ios --no-codesign
+      after_script:
+      - echo "orz"
+
+cache:
+  directories:
+  - $HOME/.pub-cache
