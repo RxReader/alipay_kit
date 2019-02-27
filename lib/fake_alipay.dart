@@ -284,10 +284,6 @@ class FakeAlipay {
   }
 
   String _sign(Map<String, String> map, String signType, String privateKey) {
-    /// pkcs8
-    String pem =
-        '-----BEGIN PRIVATE KEY-----\n$privateKey\n-----END PRIVATE KEY-----';
-
     /// 参数排序
     List<String> keys = map.keys.toList();
     keys.sort();
@@ -299,11 +295,12 @@ class FakeAlipay {
     String sign;
     switch (signType) {
       case SIGNTYPE_RSA:
-        sign = base64.encode(RSASigner.sha1Rsa(pem).sign(utf8.encode(content)));
+        sign = base64
+            .encode(RSASigner.sha1Rsa(privateKey).sign(utf8.encode(content)));
         break;
       case SIGNTYPE_RSA2:
-        sign =
-            base64.encode(RSASigner.sha256Rsa(pem).sign(utf8.encode(content)));
+        sign = base64
+            .encode(RSASigner.sha256Rsa(privateKey).sign(utf8.encode(content)));
         break;
       default:
         throw UnsupportedError('Alipay sign_type($signType) is not supported!');

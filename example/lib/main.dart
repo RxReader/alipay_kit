@@ -55,7 +55,7 @@ class _HomeState extends State<Home> {
   static const String _alipayAppId = 'your alipay appId';
   static const String _alipayPid = 'your alipay pid';
   static const String _alipayTargetId = 'your alipay targetId';
-  static const String _alipayPrivateKey = 'your alipay rsa private key(pkcs8)';
+  static const String _alipayPrivateKey = 'your alipay rsa private key(pkcs1/pkcs8)';
 
   StreamSubscription<FakeAlipayResp> _pay;
   StreamSubscription<FakeAlipayResp> _auth;
