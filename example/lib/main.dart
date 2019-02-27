@@ -50,6 +50,8 @@ class Home extends StatefulWidget {
   }
 }
 
+/// pkcs1 -> '-----BEGIN RSA PRIVATE KEY-----\n${支付宝RSA签名工具生产的私钥}\n-----END RSA PRIVATE KEY-----'
+/// pkcs8 -> '-----BEGIN PRIVATE KEY-----\n${支付宝RSA签名工具生产的私钥}\n-----END PRIVATE KEY-----'
 class _HomeState extends State<Home> {
   static const bool _alipayUseRsa2  = true;
   static const String _alipayAppId = 'your alipay appId';

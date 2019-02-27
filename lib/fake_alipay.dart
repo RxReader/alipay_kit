@@ -296,11 +296,11 @@ class FakeAlipay {
     switch (signType) {
       case SIGNTYPE_RSA:
         sign = base64
-            .encode(RSASigner.sha1Rsa(privateKey).sign(utf8.encode(content)));
+            .encode(RsaSigner.sha1Rsa(privateKey).sign(utf8.encode(content)));
         break;
       case SIGNTYPE_RSA2:
         sign = base64
-            .encode(RSASigner.sha256Rsa(privateKey).sign(utf8.encode(content)));
+            .encode(RsaSigner.sha256Rsa(privateKey).sign(utf8.encode(content)));
         break;
       default:
         throw UnsupportedError('Alipay sign_type($signType) is not supported!');

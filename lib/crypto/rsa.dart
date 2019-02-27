@@ -2,14 +2,12 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:asn1lib/asn1lib.dart';
-import 'package:pointycastle/pointycastle.dart' as pointycastle;
-import 'package:pointycastle/signers/rsa_signer.dart' as pointycastle;
+import 'package:pointycastle/pointycastle.dart';
+import 'package:pointycastle/signers/rsa_signer.dart';
 
-/// RSA PEM parser.
-class RSAKeyParser {
-  /// Parses the PEM key no matter it is public or private, it will figure it out.
-  pointycastle.RSAPublicKey parsePublic(String key) {
-    List<String> rows = key.split('\n'); // LF-only, this could be a problem
+class RsaKeyParser {
+  RSAPublicKey parsePublic(String key) {
+    List<String> rows = key.split('\n');
     String header = rows.first;
 
     if (header == '-----BEGIN RSA PUBLIC KEY-----') {
@@ -23,8 +21,8 @@ class RSAKeyParser {
     throw UnsupportedError('PEMKey($key) is unsupported');
   }
 
-  pointycastle.RSAPrivateKey parsePrivate(String key) {
-    List<String> rows = key.split('\n'); // LF-only, this could be a problem
+  RSAPrivateKey parsePrivate(String key) {
+    List<String> rows = key.split('\n');
     String header = rows.first;
 
     if (header == '-----BEGIN RSA PRIVATE KEY-----') {
@@ -38,20 +36,20 @@ class RSAKeyParser {
     throw UnsupportedError('PEMKey($key) is unsupported');
   }
 
-  pointycastle.RSAPublicKey _parsePublic(ASN1Sequence sequence) {
+  RSAPublicKey _parsePublic(ASN1Sequence sequence) {
     BigInt modulus = (sequence.elements[0] as ASN1Integer).valueAsBigInteger;
     BigInt exponent = (sequence.elements[1] as ASN1Integer).valueAsBigInteger;
 
-    return pointycastle.RSAPublicKey(modulus, exponent);
+    return RSAPublicKey(modulus, exponent);
   }
 
-  pointycastle.RSAPrivateKey _parsePrivate(ASN1Sequence sequence) {
+  RSAPrivateKey _parsePrivate(ASN1Sequence sequence) {
     BigInt modulus = (sequence.elements[1] as ASN1Integer).valueAsBigInteger;
     BigInt exponent = (sequence.elements[3] as ASN1Integer).valueAsBigInteger;
     BigInt p = (sequence.elements[4] as ASN1Integer).valueAsBigInteger;
     BigInt q = (sequence.elements[5] as ASN1Integer).valueAsBigInteger;
 
-    return pointycastle.RSAPrivateKey(modulus, exponent, p, q);
+    return RSAPrivateKey(modulus, exponent, p, q);
   }
 
   ASN1Sequence _parseSequence(List<String> rows) {
@@ -84,59 +82,57 @@ class RSAKeyParser {
   }
 }
 
-class RSASigner {
-  RSASigner(this.rsaSigner, this.privateKey);
+class RsaSigner {
+  RsaSigner(RSASigner rsaSigner, RSAPrivateKey privateKey)
+      : _rsaSigner = rsaSigner,
+        _privateKey = privateKey;
 
-  final pointycastle.RSASigner rsaSigner;
-  final pointycastle.RSAPrivateKey privateKey;
+  final RSASigner _rsaSigner;
+  final RSAPrivateKey _privateKey;
 
   List<int> sign(List<int> message) {
-    rsaSigner
+    _rsaSigner
       ..reset()
-      ..init(
-          true,
-          pointycastle.PrivateKeyParameter<pointycastle.RSAPrivateKey>(
-              privateKey));
-    pointycastle.RSASignature signature =
-        rsaSigner.generateSignature(Uint8List.fromList(message));
+      ..init(true, PrivateKeyParameter<RSAPrivateKey>(_privateKey));
+    RSASignature signature =
+        _rsaSigner.generateSignature(Uint8List.fromList(message));
     return signature.bytes;
   }
 
-  static RSASigner sha1Rsa(String privateKey) {
-    return RSASigner(pointycastle.Signer('SHA-1/RSA') as pointycastle.RSASigner,
-        RSAKeyParser().parsePrivate(privateKey));
+  static RsaSigner sha1Rsa(String privateKey) {
+    return RsaSigner(Signer('SHA-1/RSA') as RSASigner,
+        RsaKeyParser().parsePrivate(privateKey));
   }
 
-  static RSASigner sha256Rsa(String privateKey) {
-    return RSASigner(pointycastle.Signer('SHA-256/RSA') as pointycastle.RSASigner,
-        RSAKeyParser().parsePrivate(privateKey));
+  static RsaSigner sha256Rsa(String privateKey) {
+    return RsaSigner(Signer('SHA-256/RSA') as RSASigner,
+        RsaKeyParser().parsePrivate(privateKey));
   }
 }
 
-class RSAVerifier {
-  RSAVerifier(this.rsaSigner, this.publicKey);
+class RsaVerifier {
+  RsaVerifier(RSASigner rsaSigner, RSAPublicKey publicKey)
+      : _rsaSigner = rsaSigner,
+        _publicKey = publicKey;
 
-  final pointycastle.RSASigner rsaSigner;
-  final pointycastle.RSAPublicKey publicKey;
+  final RSASigner _rsaSigner;
+  final RSAPublicKey _publicKey;
 
   bool verify(List<int> message, List<int> signature) {
-    rsaSigner
+    _rsaSigner
       ..reset()
-      ..init(
-          false,
-          pointycastle.PublicKeyParameter<pointycastle.RSAPublicKey>(
-              publicKey));
-    return rsaSigner.verifySignature(Uint8List.fromList(message),
-        pointycastle.RSASignature(Uint8List.fromList(signature)));
+      ..init(false, PublicKeyParameter<RSAPublicKey>(_publicKey));
+    return _rsaSigner.verifySignature(Uint8List.fromList(message),
+        RSASignature(Uint8List.fromList(signature)));
   }
 
-  static RSAVerifier sha1Rsa(String publicKey) {
-    return RSAVerifier(pointycastle.Signer('SHA-1/RSA') as pointycastle.RSASigner,
-        RSAKeyParser().parsePublic(publicKey));
+  static RsaVerifier sha1Rsa(String publicKey) {
+    return RsaVerifier(Signer('SHA-1/RSA') as RSASigner,
+        RsaKeyParser().parsePublic(publicKey));
   }
 
-  static RSAVerifier sha256Rsa(String publicKey) {
-    return RSAVerifier(pointycastle.Signer('SHA-256/RSA') as pointycastle.RSASigner,
-        RSAKeyParser().parsePublic(publicKey));
+  static RsaVerifier sha256Rsa(String publicKey) {
+    return RsaVerifier(Signer('SHA-256/RSA') as RSASigner,
+        RsaKeyParser().parsePublic(publicKey));
   }
 }
