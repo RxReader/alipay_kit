@@ -1,5 +1,7 @@
 # fake_alipay
 
+[![Build Status](https://travis-ci.org/v7lin/fake_alipay.svg?branch=master)](https://travis-ci.org/v7lin/fake_alipay)
+
 flutter版支付宝SDK
 
 ## Fake 系列 Library
