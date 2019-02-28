@@ -76,6 +76,7 @@ steps:
     - cd $BUILD_DIR
     - bash -lc 'flutter packages get'
     - if [ $? -ne 0 ]; then exit 1; fi; # 断言
+    - cd example/'
     - bash -lc 'flutter -v build ios --no-codesign'
     - if [ $? -ne 0 ]; then exit 1; fi; # 断言
     - date -R
