@@ -3,7 +3,6 @@ jobs:
     - stage: analyze
       os: linux
       sudo: false
-      language: generic
       addons:
         apt:
           # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
@@ -12,20 +11,16 @@ jobs:
           packages:
           - libstdc++6
           - fonts-droid
-      before_install:
+      before_script:
       - git clone -b stable https://github.com/flutter/flutter.git
       - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
       - flutter doctor
-      - pub global activate flutter_plugin_tools
-      before_script:
-      - flutter packages get
       script:
       - flutter analyze
 
     - stage: test
       os: linux
       sudo: false
-      language: generic
       addons:
         apt:
           # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
@@ -34,13 +29,10 @@ jobs:
           packages:
           - libstdc++6
           - fonts-droid
-      before_install:
+      before_script:
       - git clone -b stable https://github.com/flutter/flutter.git
       - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
       - flutter doctor
-      - pub global activate flutter_plugin_tools
-      before_script:
-      - flutter packages get
       script:
       - flutter test
       - pushd example/
@@ -71,15 +63,13 @@ jobs:
           sources:
           - ubuntu-toolchain-r-test # if we don't specify this, the libstdc++6 we get is the wrong version
           packages:
+          - lib32stdc++6 # https://github.com/flutter/flutter/issues/6207
           - libstdc++6
           - fonts-droid
-      before_install:
+      before_script:
       - git clone -b stable https://github.com/flutter/flutter.git
       - export PATH=`pwd`/flutter/bin:`pwd`/flutter/bin/cache/dart-sdk/bin:$PATH
       - flutter doctor
-      - pub global activate flutter_plugin_tools
-      before_script:
-      - flutter packages get
       script:
       - pushd example/
       - flutter -v build apk
@@ -103,8 +93,6 @@ jobs:
       - flutter doctor
       install:
       - pod install --project-directory=example/ios
-      before_script:
-      - flutter packages get
       script:
       - pushd example/
       - flutter -v build ios --no-codesign
