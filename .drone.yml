@@ -16,9 +16,9 @@ steps:
     source: ./*
     target: ~/.drone-build/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/${DRONE_BUILD_NUMBER}
     rm: true
-#  when:
-#    event:
-#    - tag
+  when:
+    event:
+    - tag
 
 - name: analyze
   image: nathansamson/flutter-builder-docker:v1.0.0
@@ -48,9 +48,9 @@ steps:
   - flutter packages get
   - pushd example/
   - flutter -v build apk
-#  when:
-#    event:
-#    - tag
+  when:
+    event:
+    - tag
 
 - name: build-ipa-mac
   image: appleboy/drone-ssh
@@ -61,7 +61,7 @@ steps:
       from_secret: MAC_PASSWORD
   settings:
     host:
-      from_secret: MAC_HOST
+      from_secret: MAC_HOST # 私有化 drone-server，将 drone-agent 部署到 mac 机器上效果更好。 mac 支持 host.docker.internal
     port:
       from_secret: MAC_PORT
     username:
@@ -80,9 +80,9 @@ steps:
     - bash -lc 'flutter -v build ios --no-codesign'
     - if [ $? -ne 0 ]; then exit 1; fi; # 断言
     - date -R
-#  when:
-#    event:
-#    - tag
+  when:
+    event:
+    - tag
 
 - name: clear-mac
   image: appleboy/drone-ssh
@@ -102,8 +102,8 @@ steps:
     - rm -rf $BUILD_DIR
     - date -R
   when:
-#    event:
-#    - tag
+    event:
+    - tag
     status:
     - success
     - failure
