@@ -44,6 +44,7 @@ jobs:
       before_script:
       - echo "orz"
       script:
+      - flutter test
       - pushd example/
       - flutter test
       after_script:
