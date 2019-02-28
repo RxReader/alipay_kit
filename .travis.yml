@@ -3,7 +3,7 @@ jobs:
     - stage: analyze
       os: linux
       sudo: false
-      language: dart
+      language: generic
       addons:
         apt:
           # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18
@@ -27,7 +27,7 @@ jobs:
     - stage: test
       os: linux
       sudo: false
-      language: dart
+      language: generic
       addons:
         apt:
           # Flutter depends on /usr/lib/x86_64-linux-gnu/libstdc++.so.6 version GLIBCXX_3.4.18

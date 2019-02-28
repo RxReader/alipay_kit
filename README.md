@@ -1,6 +1,7 @@
 # fake_alipay
 
 [![Build Status](https://travis-ci.org/v7lin/fake_alipay.svg?branch=master)](https://travis-ci.org/v7lin/fake_alipay)
+[![GitHub tag](https://img.shields.io/github/tag/v7lin/fake_alipay.svg)](https://github.com/v7lin/fake_alipay/releases)
 
 flutter版支付宝SDK
 
@@ -46,15 +47,28 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 
 ## flutter
 
+#### snapshot
 ````
-# pubspec.yml
-
 dependencies:
   fake_alipay:
     git:
       url: https://github.com/v7lin/fake_alipay.git
 ````
 
+#### release
+````
+latestVersion = 0.0.1
+````
+
+````
+dependencies:
+  fake_alipay:
+    git:
+      url: https://github.com/v7lin/fake_alipay.git
+      ref: ${latestVersion}
+````
+
+#### example
 [示例](./example/lib/main.dart)
 
 ## Getting Started
