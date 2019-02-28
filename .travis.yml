@@ -18,11 +18,9 @@ jobs:
       - flutter doctor
       - pub global activate flutter_plugin_tools
       before_script:
-      - echo "orz"
+      - flutter packages get
       script:
       - flutter analyze
-      after_script:
-      - echo "orz"
 
     - stage: test
       os: linux
