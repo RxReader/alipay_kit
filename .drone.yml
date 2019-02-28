@@ -1,0 +1,81 @@
+kind: pipeline
+name: default
+
+steps:
+- name: clone-ios
+  image: appleboy/drone-scp
+  settings:
+    host:
+      from_secret: MAC_HOST
+    port:
+      from_secret: MAC_PORT
+    username:
+      from_secret: MAC_USER
+    password:
+      from_secret: MAC_PASSWORD
+    source: ./*
+    target: ~/.drone-build/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/${DRONE_BUILD_NUMBER}
+    rm: true
+#  when:
+#  - tag
+
+- name: analyze
+  image: nathansamson/flutter-builder-docker:v1.0.0
+  volumes:
+  - name: pub-cache
+    path: /root/.pub-cache
+  commands:
+  - flutter analyze
+
+- name: test
+  image: nathansamson/flutter-builder-docker:v1.0.0
+  volumes:
+  - name: pub-cache
+    path: /root/.pub-cache
+  commands:
+  - flutter test
+  - pushd example/
+  - flutter test
+
+- name: build-apk
+  image: nathansamson/flutter-builder-docker:v1.0.0
+  volumes:
+  - name: pub-cache
+    path: /root/.pub-cache
+  commands:
+  - pushd example/
+  - flutter -v build apk
+#  when:
+#  - tag
+
+- name: build-ipa
+  image: appleboy/drone-ssh
+  environment:
+    MAC_USER:
+      from_secret: MAC_USER
+    MAC_PASSWORD:
+      from_secret: MAC_PASSWORD
+  settings:
+    host:
+      from_secret: MAC_HOST
+    port:
+      from_secret: MAC_PORT
+    username:
+      from_secret: MAC_USER
+    password:
+      from_secret: MAC_PASSWORD
+    command_timeout: 600
+    envs: [ MAC_USER,MAC_PASSWORD ]
+    script:
+    - date -R
+    - BUILD_DIR=~/.drone-build/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/${DRONE_BUILD_NUMBER}
+    - cd $BUILD_DIR
+    - bash -lc 'flutter -v build ios --no-codesign'
+    - if [ $? -ne 0 ]; then exit 1; fi;
+    - date -R
+#  when:
+#  - tag
+
+volumes:
+- name: pub-cache
+  temp: {}
