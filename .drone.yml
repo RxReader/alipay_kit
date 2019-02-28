@@ -2,7 +2,7 @@ kind: pipeline
 name: default
 
 steps:
-- name: clone-ios
+- name: clone-mac
   image: appleboy/drone-scp
   settings:
     host:
@@ -17,7 +17,8 @@ steps:
     target: ~/.drone-build/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/${DRONE_BUILD_NUMBER}
     rm: true
 #  when:
-#  - tag
+#    event:
+#    - tag
 
 - name: analyze
   image: nathansamson/flutter-builder-docker:v1.0.0
@@ -46,9 +47,10 @@ steps:
   - pushd example/
   - flutter -v build apk
 #  when:
-#  - tag
+#    event:
+#    - tag
 
-- name: build-ipa
+- name: build-ipa-mac
   image: appleboy/drone-ssh
   environment:
     MAC_USER:
@@ -74,7 +76,32 @@ steps:
     - if [ $? -ne 0 ]; then exit 1; fi;
     - date -R
 #  when:
-#  - tag
+#    event:
+#    - tag
+
+- name: clear-mac
+  image: appleboy/drone-ssh
+  settings:
+    host:
+      from_secret: MAC_HOST
+    port:
+      from_secret: MAC_PORT
+    username:
+      from_secret: MAC_USER
+    password:
+      from_secret: MAC_PASSWORD
+    command_timeout: 600
+    script:
+    - date -R
+    - BUILD_DIR=~/.drone-build/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/${DRONE_BUILD_NUMBER}
+    - rm -rf $BUILD_DIR
+    - date -R
+  when:
+#    event:
+#    - tag
+    status:
+    - success
+    - failure
 
 volumes:
 - name: pub-cache
