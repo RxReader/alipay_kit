@@ -1,6 +1,6 @@
 # fake_alipay
 
-[![Build Status](https://travis-ci.org/v7lin/fake_alipay.svg?branch=master)](https://travis-ci.org/v7lin/fake_alipay)
+[![Build Status](https://cloud.drone.io/api/badges/v7lin/fake_alipay/status.svg)](https://cloud.drone.io/v7lin/fake_alipay)
 [![GitHub tag](https://img.shields.io/github/tag/v7lin/fake_alipay.svg)](https://github.com/v7lin/fake_alipay/releases)
 
 flutter版支付宝SDK
