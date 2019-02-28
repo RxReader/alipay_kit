@@ -42,13 +42,11 @@ jobs:
       - flutter doctor
       - pub global activate flutter_plugin_tools
       before_script:
-      - echo "orz"
+      - flutter packages get
       script:
       - flutter test
       - pushd example/
       - flutter test
-      after_script:
-      - echo "orz"
 
     - stage: build-android
       os: linux
@@ -83,12 +81,10 @@ jobs:
       - flutter doctor
       - pub global activate flutter_plugin_tools
       before_script:
-      - echo "orz"
+      - flutter packages get
       script:
       - pushd example/
       - flutter -v build apk
-      after_script:
-      - echo "orz"
 
     # Build *.ipa
     - stage: build-ios
@@ -110,11 +106,10 @@ jobs:
       install:
       - pod install --project-directory=example/ios
       before_script:
-      - echo "orz"
+      - flutter packages get
       script:
+      - pushd example/
       - flutter -v build ios --no-codesign
-      after_script:
-      - echo "orz"
 
 cache:
   directories:
