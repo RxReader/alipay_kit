@@ -62,10 +62,7 @@ latestVersion = 0.0.1
 
 ````
 dependencies:
-  fake_alipay:
-    git:
-      url: https://github.com/v7lin/fake_alipay.git
-      ref: ${latestVersion}
+  fake_alipay: ^${latestVersion}
 ````
 
 #### example
