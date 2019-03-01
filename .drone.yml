@@ -20,11 +20,42 @@ steps:
     event:
     - tag
 
+- name: prepare
+  image: nathansamson/flutter-builder-docker:v1.0.0
+  volumes:
+  - name: pub-cache
+    path: /opt/flutter/.pub-cache
+  commands:
+  - flutter packages get
+
+- name: prepare-mac
+  image: appleboy/drone-ssh
+  settings:
+    host:
+      from_secret: MAC_HOST
+    port:
+      from_secret: MAC_PORT
+    username:
+      from_secret: MAC_USER
+    password:
+      from_secret: MAC_PASSWORD
+    command_timeout: 600
+    script:
+    - date -R
+    - BUILD_DIR=~/.drone-build/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/${DRONE_BUILD_NUMBER}
+    - cd $BUILD_DIR
+    - bash -lc 'flutter packages get'
+    - if [ $? -ne 0 ]; then exit 1; fi; # 断言
+    - date -R
+  when:
+    event:
+    - tag
+
 - name: analyze
   image: nathansamson/flutter-builder-docker:v1.0.0
   volumes:
   - name: pub-cache
-    path: /root/.pub-cache
+    path: /opt/flutter/.pub-cache
   commands:
   - flutter analyze
 
@@ -32,9 +63,8 @@ steps:
   image: nathansamson/flutter-builder-docker:v1.0.0
   volumes:
   - name: pub-cache
-    path: /root/.pub-cache
+    path: /opt/flutter/.pub-cache
   commands:
-  - flutter packages get
   - flutter test
   - pushd example/
   - flutter test
@@ -43,9 +73,8 @@ steps:
   image: nathansamson/flutter-builder-docker:v1.0.0
   volumes:
   - name: pub-cache
-    path: /root/.pub-cache
+    path: /opt/flutter/.pub-cache
   commands:
-  - flutter packages get
   - pushd example/
   - flutter -v build apk
   when:
@@ -54,11 +83,6 @@ steps:
 
 - name: build-ipa-mac
   image: appleboy/drone-ssh
-  environment:
-    MAC_USER:
-      from_secret: MAC_USER
-    MAC_PASSWORD:
-      from_secret: MAC_PASSWORD
   settings:
     host:
       from_secret: MAC_HOST # 私有化 drone-server，将 drone-agent 部署到 mac 机器上效果更好。 mac 支持 host.docker.internal
@@ -69,14 +93,10 @@ steps:
     password:
       from_secret: MAC_PASSWORD
     command_timeout: 600
-    envs: [ MAC_USER,MAC_PASSWORD ]
     script:
     - date -R
     - BUILD_DIR=~/.drone-build/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}/${DRONE_BUILD_NUMBER}
-    - cd $BUILD_DIR
-    - bash -lc 'flutter packages get'
-    - if [ $? -ne 0 ]; then exit 1; fi; # 断言
-    - cd example/
+    - cd $BUILD_DIR/example/
     - bash -lc 'flutter -v build ios --no-codesign'
     - if [ $? -ne 0 ]; then exit 1; fi; # 断言
     - date -R
