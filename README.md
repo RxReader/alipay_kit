@@ -5,7 +5,7 @@
 
 flutter版支付宝SDK
 
-## Fake 系列 Library
+## fake 系列 libraries
 
 1. [flutter版okhttp3](https://github.com/v7lin/fake_http)
 2. [flutter版微信SDK](https://github.com/v7lin/fake_wechat)
