@@ -1,5 +1,5 @@
 name: fake_alipay
-description: A new Flutter plugin.
+description: A powerful alipay plugin for Flutter.
 version: 0.0.1
 author: v7lin <v7lin@qq.com>
 homepage: https://github.com/v7lin/fake_alipay
@@ -12,8 +12,7 @@ dependencies:
     sdk: flutter
 
   meta: ^1.1.6
-  asn1lib: ^0.5.3
-  pointycastle: ^1.0.0
+  fake_crypto: ^0.0.1
 
 dev_dependencies:
   flutter_test:

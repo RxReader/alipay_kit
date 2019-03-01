@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:fake_crypto/fake_crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:fake_alipay/crypto//rsa.dart';
 
 void main() {
   test('smoke test - rsa pkcs1', () {
