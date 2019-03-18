@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:fake_alipay/src/alipay_resp.dart';
+import 'package:fake_alipay/src/domain/alipay_resp.dart';
 import 'package:fake_crypto/fake_crypto.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';

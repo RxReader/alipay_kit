@@ -1,6 +1,6 @@
+import 'package:fake_alipay/src/domain/alipay_auth_result.dart';
+import 'package:fake_alipay/src/domain/alipay_error_code.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
-import 'package:fake_alipay/src/alipay_auth_result.dart';
-import 'package:fake_alipay/src/alipay_error_code.dart';
 import 'package:meta/meta.dart';
 
 part 'alipay_resp.jser.dart';
