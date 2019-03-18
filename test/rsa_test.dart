@@ -2,8 +2,27 @@ import 'dart:convert';
 
 import 'package:fake_crypto/fake_crypto.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 void main() {
+  test('smoke test - snake case', () {
+    print('${toSnakeCase('oneField')}');
+    print('${toSnakeCase('oneField_street')}');
+    print('${toSnakeCase('one_field')}');
+  });
+
+  test('smoke test - kebab case', () {
+    print('${toKebabCase('oneField')}');
+    print('${toKebabCase('oneField_street')}');
+    print('${toKebabCase('one_field')}');
+  });
+
+  test('smoke test - camel case', () {
+    print('${toCamelCase('oneField')}');
+    print('${toCamelCase('oneField_street')}');
+    print('${toCamelCase('one_field')}');
+  });
+
   test('smoke test - rsa pkcs1', () {
     String privateKey =
         'MIIEowIBAAKCAQEA7NIOT2OterfDcmWB4GJEgMYBiQ71Ezh6eRwualxN2A5CkbupMK5Lvh40MddQEv/0L2AV0OdUbl1gRPaAiIFzZVwAdMpTmaf65m4HgI59mBaYWNF14ApHJZkOlEgpvX+TxJfP59on8hMKm1/WBjj/HwtTfnZUUVSP0dFyzy4c5Om/a/fAfGLcH460aDOFrZUfvL09BJf/EVbaW4FtfQ12MF1DwSaxHT7dfi5uq7/w+ZKlUxQ3+sdxcSLbn8OU1J9McUaLzQUINJyEnaT2mCuKW0qYrwlApBCxbCpOUXjL4EfgpNqbDtdge/SCVwmnrhdEu5K7MPegrIHIq53bJGODpwIDAQABAoIBADxg7d8V1dQU6BLRiIRx6W8/jIKqOpe07ZzVL4xUjlBIinZndyJ/PbZyMvKGJ9dARLyTbdx+LkuZKQNMKccj4gz0oPUl5JyndFOtt+Hx8lmFYUA73ybI2Azg8hOiNmonDcCwyAQf3dFdQ3YLwCCEBZ+fnqD+gE7gFW70TKY/5oQCCwsTptnb8rHq6NMtRZ2vkRUXRpMqc9U9GPP9HEJswV+3ynXx7c8eqewnCPn9zA7wYAY2lgKW48IovaAUmahDW/ABz5C3FYO7d7F4AoRhqBox72BgiJkVdeIjb/T7e2Q94A8GvG4IOzUq58hoYHk1olIopVMZxVUzsrZ8l593F1ECgYEA9s/D4t5KkrkrBHL7msfRavOr5ayoGV9B6deH292xJGMW6vy9PhpW+9wIOzYCuOiXPEjw5pDATgzdL7ib9WzLJesM6IJBuK09P/Ita+UWgUML/KpM/9l91fv1ZV9eGkmjvQoxizeAWbR/0Qmskbx6c6BuPTKgFCc+1aiWvIbkep8CgYEA9aMSNNUpdAKMRt6Gw1bQ4sjZBqfpqV2t01+d8ehF//MJ6utKdV67re1z+AduSLWGHNa936rx4fBz0mhWtVjzodp6yidQuIL9lv2vOAVeejZpRRjiS7StzrZvAYuB78/E97IHN+DzktqLTqkG97ypR7HDv1eCXVzYEhhxJ7cOYfkCgYAPKXBFLZazMMDdwxqFxaStx05WC6c/98Qa02y7KwFI1PWBdglCGWgijL/Ms2KzbUZtI6X45AeMQ+oKlnKuPwKzz565Ydcbuzi6BuyXZjlds3q3CNc2GGxMiu/mTFeBkeiHImssvDocSKRZeRiq00NKex6Kj+OZmVeY1IR+DGNYzQKBgQCsd53t6Ikdgjh5/f5DIy6xPPJcoQMHvtWwpt8gHcUga8XX4vK5rBU8jo+xY45EkOekUgapB76jtA+ueUIAPH97cgpq6+XaV2a0YFRpkiN+zbtmH42sOCUdEaypOgm2lnwmqiI1UsXSo43SYg2ZXibBRwg4zbmj0e+H7Q9uIjKACQKBgACwd1oIxcJfgCvKfSoxwjMQeLtQ4k3CSd5hwxoIZVoF1E5UYNPJJlJ+MGnjYtK1EfLEf1Tj8K1ylBx86i7SJ2iOfFiWXrsaB0o/9d1c5IrJ7/b8ru7qSLnu5fwHzPCF6hbl+vjySaqASbo4YbwJSdmzGo3ScdMVcGJb6t0E4Jo0';

@@ -24,9 +24,9 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    FakeAlipay alipay = FakeAlipay();
+    Alipay alipay = Alipay();
     alipay.registerApp();
-    return FakeAlipayProvider(
+    return AlipayProvider(
       alipay: alipay,
       child: MaterialApp(
         home: Home(alipay: alipay),
@@ -42,7 +42,7 @@ class Home extends StatefulWidget {
     @required this.alipay,
   }) : super(key: key);
 
-  final FakeAlipay alipay;
+  final Alipay alipay;
 
   @override
   State<StatefulWidget> createState() {
@@ -59,8 +59,8 @@ class _HomeState extends State<Home> {
   static const String _alipayTargetId = 'your alipay targetId';
   static const String _alipayPrivateKey = 'your alipay rsa private key(pkcs1/pkcs8)';
 
-  StreamSubscription<FakeAlipayResp> _pay;
-  StreamSubscription<FakeAlipayResp> _auth;
+  StreamSubscription<AlipayResp> _pay;
+  StreamSubscription<AlipayResp> _auth;
 
   @override
   void initState() {
@@ -69,12 +69,12 @@ class _HomeState extends State<Home> {
     _auth = widget.alipay.authResp().listen(_listenAuth);
   }
 
-  void _listenPay(FakeAlipayResp resp) {
+  void _listenPay(AlipayResp resp) {
     String content = 'pay: ${resp.resultStatus} - ${resp.result}';
     _showTips('支付', content);
   }
 
-  void _listenAuth(FakeAlipayResp resp) {
+  void _listenAuth(AlipayResp resp) {
     String content = 'pay: ${resp.resultStatus} - ${resp.result}';
     _showTips('授权登录', content);
   }
@@ -127,7 +127,7 @@ class _HomeState extends State<Home> {
               };
               widget.alipay.payOrderMap(
                 orderInfo: orderInfo,
-                signType: _alipayUseRsa2 ? FakeAlipay.SIGNTYPE_RSA2 : FakeAlipay.SIGNTYPE_RSA,
+                signType: _alipayUseRsa2 ? Alipay.SIGNTYPE_RSA2 : Alipay.SIGNTYPE_RSA,
                 privateKey: _alipayPrivateKey,
               );
             },
