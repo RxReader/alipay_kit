@@ -9,15 +9,17 @@ part of 'alipay_auth_result.dart';
 abstract class _$AlipayAuthResultSerializer
     implements Serializer<AlipayAuthResult> {
   final _boolToStringProcessor = const BoolToStringProcessor();
+  final _safeNumProcessor = const SafeNumProcessor();
   @override
   Map<String, dynamic> toMap(AlipayAuthResult model) {
     if (model == null) return null;
     Map<String, dynamic> ret = <String, dynamic>{};
     setMapValue(
         ret, 'success', _boolToStringProcessor.serialize(model.success));
-    setMapValue(ret, 'resultCode', model.resultCode);
-    setMapValue(ret, 'authCode', model.authCode);
-    setMapValue(ret, 'userId', model.userId);
+    setMapValue(
+        ret, 'result_code', _safeNumProcessor.serialize(model.resultCode));
+    setMapValue(ret, 'auth_code', model.authCode);
+    setMapValue(ret, 'user_id', model.userId);
     return ret;
   }
 
@@ -27,9 +29,10 @@ abstract class _$AlipayAuthResultSerializer
     final obj = new AlipayAuthResult(
         success: _boolToStringProcessor.deserialize(map['success'] as String) ??
             getJserDefault('success'),
-        resultCode: map['resultCode'] as String ?? getJserDefault('resultCode'),
-        authCode: map['authCode'] as String ?? getJserDefault('authCode'),
-        userId: map['userId'] as String ?? getJserDefault('userId'));
+        resultCode: _safeNumProcessor.deserialize(map['result_code']) as int ??
+            getJserDefault('resultCode'),
+        authCode: map['auth_code'] as String ?? getJserDefault('authCode'),
+        userId: map['user_id'] as String ?? getJserDefault('userId'));
     return obj;
   }
 }

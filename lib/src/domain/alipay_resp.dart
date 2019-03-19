@@ -1,11 +1,16 @@
 import 'package:fake_alipay/src/domain/alipay_auth_result.dart';
-import 'package:fake_alipay/src/domain/alipay_error_code.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 import 'package:meta/meta.dart';
 
 part 'alipay_resp.jser.dart';
 
-@GenSerializer()
+@GenSerializer(
+  fields: <String, Field<dynamic>>{
+    'resultStatus': Field<int>(
+      processor: safeNumProcessor,
+    ),
+  },
+)
 class AlipayRespSerializer extends Serializer<AlipayResp>
     with _$AlipayRespSerializer {}
 
@@ -24,7 +29,7 @@ class AlipayResp {
   /// 5000——重复请求
   /// 6001——用户中途取消
   /// 6002——网络连接出错
-  final String resultStatus;
+  final int resultStatus;
 
   /// 支付后结果
   final String result;
@@ -32,7 +37,7 @@ class AlipayResp {
   final String memo;
 
   AlipayAuthResult toAuthResult() {
-    if ('${AlipayErrorCode.SUCCESS}' == resultStatus) {
+    if (resultStatus == 9000) {
       if (result != null && result.isNotEmpty) {
         Map<String, String> params = Uri.parse(result).queryParameters;
         return AlipayAuthResultSerializer().fromMap(params);
