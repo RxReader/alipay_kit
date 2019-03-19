@@ -1,10 +1,17 @@
+import 'package:fake_alipay/src/jaguar/jaguar_serializer.dart';
 import 'package:jaguar_serializer/jaguar_serializer.dart';
 
 import 'package:meta/meta.dart';
 
 part 'alipay_auth_result.jser.dart';
 
-@GenSerializer()
+@GenSerializer(
+  fields: <String, Field<dynamic>>{
+    'success': Field<bool>(
+      processor: boolToStringProcessor,
+    ),
+  },
+)
 class AlipayAuthResultSerializer extends Serializer<AlipayAuthResult>
     with _$AlipayAuthResultSerializer {}
 
