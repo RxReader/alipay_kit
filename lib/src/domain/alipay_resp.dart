@@ -36,10 +36,10 @@ class AlipayResp {
 
   final String memo;
 
-  AlipayAuthResult toAuthResult() {
+  AlipayAuthResult parseAuthResult() {
     if (resultStatus == 9000) {
       if (result != null && result.isNotEmpty) {
-        Map<String, String> params = Uri.parse(result).queryParameters;
+        Map<String, String> params = Uri.parse('alipay://alipay?$result').queryParameters;
         return AlipayAuthResultSerializer().fromMap(params);
       }
     }
