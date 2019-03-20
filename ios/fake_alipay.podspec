@@ -15,6 +15,7 @@ A new Flutter plugin.
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
+  # 支付宝
   s.dependency 'AlipaySDK-iOS', '~> 15.5.5'
 
   s.ios.deployment_target = '8.0'
