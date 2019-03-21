@@ -59,7 +59,7 @@ dependencies:
 
 #### release
 ````
-latestVersion = 0.1.1
+latestVersion = 0.1.1+1
 ````
 
 ````

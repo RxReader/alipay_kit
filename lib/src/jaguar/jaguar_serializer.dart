@@ -5,12 +5,12 @@ class BoolToStringProcessor implements FieldProcessor<bool, String> {
 
   @override
   bool deserialize(String value) {
-    return value == true.toString();
+    return value != null ? value == true.toString() : null;
   }
 
   @override
   String serialize(bool value) {
-    return value.toString();
+    return value?.toString();
   }
 }
 
@@ -19,12 +19,12 @@ class StringToBoolProcessor implements FieldProcessor<String, bool> {
 
   @override
   String deserialize(bool value) {
-    return value.toString();
+    return value?.toString();
   }
 
   @override
   bool serialize(String value) {
-    return value == true.toString();
+    return value != null ? value == true.toString() : null;
   }
 }
 
