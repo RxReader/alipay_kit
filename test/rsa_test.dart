@@ -16,7 +16,8 @@ void main() {
     expect(
       base64.encode(
           sha1RsaSigner.sign('aaa=bbb&ccc=ddd&sign_type=RSA'.codeUnits)),
-      equals('MElKG6FEvNP28ef6pFcH8cs6UoVgyaN1nGE4aMZzpbYcVhcmQfXJdMCzwv17P9MuAUWnRNO9dZVdyGNM47ZHo6QDjkj2HFso8GvA0Gwd3dWY5hUFjkwcErxe7ABC9wYtZR+9xqKphDrs1B4PT/CEnbk/umYzrV2ckwNHyul7RKa0sgjtpi0OBLiQ2NIm8oj2JkmZvkDNZuGCCJOABmitK1/+8gnsCf4JB57MZDha15Cll797e/cIoVF7eczbpGYJW06HDY0sP1+RVyhOmWV8vXTN+cYOMQh9tNE0rdZG4I10Hb6OxrVSbMODN9CSXlw40NxsLaakET+QiZMebR6ZvQ=='),
+      equals(
+          'MElKG6FEvNP28ef6pFcH8cs6UoVgyaN1nGE4aMZzpbYcVhcmQfXJdMCzwv17P9MuAUWnRNO9dZVdyGNM47ZHo6QDjkj2HFso8GvA0Gwd3dWY5hUFjkwcErxe7ABC9wYtZR+9xqKphDrs1B4PT/CEnbk/umYzrV2ckwNHyul7RKa0sgjtpi0OBLiQ2NIm8oj2JkmZvkDNZuGCCJOABmitK1/+8gnsCf4JB57MZDha15Cll797e/cIoVF7eczbpGYJW06HDY0sP1+RVyhOmWV8vXTN+cYOMQh9tNE0rdZG4I10Hb6OxrVSbMODN9CSXlw40NxsLaakET+QiZMebR6ZvQ=='),
     );
 
     RsaVerifier sha1RsaVerifier = RsaVerifier.sha1Rsa(
@@ -32,8 +33,10 @@ void main() {
     RsaSigner sha256RsaSigner = RsaSigner.sha256Rsa(
         '-----BEGIN RSA PRIVATE KEY-----\n$privateKey\n-----END RSA PRIVATE KEY-----');
     expect(
-      base64.encode(sha256RsaSigner.sign('aaa=bbb&ccc=ddd&sign_type=RSA2'.codeUnits)),
-      equals('w3VvL+9rd0cXGz9whyuvLKYNlyeqhpQDVuk7oiN4cX8RjAKc/YAkZMgT7nWeHLXUNBw3KnWWy4e1HYaDowA9aIsyNuQq54lzGdnb89S7tA7EB7zhG65M+UbAz9juHNG4AyA/xJ1MKxrmJpJZ4UBEXuDo537l9zM95LlslIrM+g9UpeNe52oZtTJBtwYsR4FbKYY5dy5dEXVzsje1ZNATaOcohzPc9RhGHvusdLq+FMDU7ZrUdaqX+bWLm0nlLZOaKlh6CrR/XchiU7un6gkrjEwQTZ7jE6U4aptMwc1VmaPOgiQPM8mt5lkWG8rTYaX/LSLD0lcmXS512Rx0ZOxogw=='),
+      base64.encode(
+          sha256RsaSigner.sign('aaa=bbb&ccc=ddd&sign_type=RSA2'.codeUnits)),
+      equals(
+          'w3VvL+9rd0cXGz9whyuvLKYNlyeqhpQDVuk7oiN4cX8RjAKc/YAkZMgT7nWeHLXUNBw3KnWWy4e1HYaDowA9aIsyNuQq54lzGdnb89S7tA7EB7zhG65M+UbAz9juHNG4AyA/xJ1MKxrmJpJZ4UBEXuDo537l9zM95LlslIrM+g9UpeNe52oZtTJBtwYsR4FbKYY5dy5dEXVzsje1ZNATaOcohzPc9RhGHvusdLq+FMDU7ZrUdaqX+bWLm0nlLZOaKlh6CrR/XchiU7un6gkrjEwQTZ7jE6U4aptMwc1VmaPOgiQPM8mt5lkWG8rTYaX/LSLD0lcmXS512Rx0ZOxogw=='),
     );
 
     RsaVerifier sha256RsaVerifier = RsaVerifier.sha256Rsa(

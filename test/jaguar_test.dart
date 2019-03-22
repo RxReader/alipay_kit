@@ -26,7 +26,8 @@ void main() {
     Map<String, String> result = <String, String>{
       'resultStatus': '9000',
       'memo': '处理成功',
-      'result': 'success=true&auth_code=d9d1b5acc26e461dbfcb6974c8ff5E64&result_code=200&user_id=2088003646494707',
+      'result':
+          'success=true&auth_code=d9d1b5acc26e461dbfcb6974c8ff5E64&result_code=200&user_id=2088003646494707',
     };
 
     AlipayResp resp = AlipayRespSerializer().fromMap(result);
@@ -34,7 +35,8 @@ void main() {
     expect(resp.resultStatus, equals(9000));
 
     AlipayAuthResult authResult = resp.parseAuthResult();
-    print('${authResult.success} - ${authResult.resultCode} - ${authResult.authCode} - ${authResult.userId}');
+    print(
+        '${authResult.success} - ${authResult.resultCode} - ${authResult.authCode} - ${authResult.userId}');
     expect(authResult.success, equals(true));
     expect(authResult.resultCode, equals(200));
   });

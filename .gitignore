@@ -7,5 +7,5 @@ pubspec.lock
 
 build/
 
-.idea/
 *.iml
+.idea/

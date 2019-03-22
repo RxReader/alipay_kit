@@ -16,7 +16,8 @@ void main() {
   });
 
   if (Platform.isAndroid) {
-    SystemUiOverlayStyle systemUiOverlayStyle = SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+    SystemUiOverlayStyle systemUiOverlayStyle =
+        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 }
@@ -36,7 +37,6 @@ class MyApp extends StatelessWidget {
 }
 
 class Home extends StatefulWidget {
-
   Home({
     Key key,
     @required this.alipay,
@@ -53,11 +53,12 @@ class Home extends StatefulWidget {
 /// pkcs1 -> '-----BEGIN RSA PRIVATE KEY-----\n${支付宝RSA签名工具生产的私钥}\n-----END RSA PRIVATE KEY-----'
 /// pkcs8 -> '-----BEGIN PRIVATE KEY-----\n${支付宝RSA签名工具生产的私钥}\n-----END PRIVATE KEY-----'
 class _HomeState extends State<Home> {
-  static const bool _alipayUseRsa2  = true;
+  static const bool _alipayUseRsa2 = true;
   static const String _alipayAppId = 'your alipay appId';
   static const String _alipayPid = 'your alipay pid';
   static const String _alipayTargetId = 'your alipay targetId';
-  static const String _alipayPrivateKey = 'your alipay rsa private key(pkcs1/pkcs8)';
+  static const String _alipayPrivateKey =
+      'your alipay rsa private key(pkcs1/pkcs8)';
 
   StreamSubscription<AlipayResp> _pay;
   StreamSubscription<AlipayResp> _auth;
@@ -127,7 +128,8 @@ class _HomeState extends State<Home> {
               };
               widget.alipay.payOrderMap(
                 orderInfo: orderInfo,
-                signType: _alipayUseRsa2 ? Alipay.SIGNTYPE_RSA2 : Alipay.SIGNTYPE_RSA,
+                signType:
+                    _alipayUseRsa2 ? Alipay.SIGNTYPE_RSA2 : Alipay.SIGNTYPE_RSA,
                 privateKey: _alipayPrivateKey,
               );
             },
