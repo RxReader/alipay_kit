@@ -15,7 +15,14 @@ flutter版支付宝SDK
 5. [flutter版支付宝SDK](https://github.com/v7lin/fake_alipay)
 
 ## dart/flutter 私服
+
 [simple_pub_server](https://github.com/v7lin/simple_pub_server)
+
+## docs
+
+* [蚂蚁金服开放平台](https://openhome.alipay.com/platform/appManage.htm)
+* [支付宝支付](https://docs.open.alipay.com/204/105051/)
+* [支付宝登录](https://docs.open.alipay.com/218/105329/)
 
 ## android
 
