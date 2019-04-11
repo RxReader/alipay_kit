@@ -70,13 +70,13 @@ class Alipay {
     bool isShowLoading = true,
   }) {
     assert(orderInfo != null && orderInfo.isNotEmpty);
-
     assert((signType == SIGNTYPE_RSA &&
             privateKey != null &&
             privateKey.isNotEmpty) ||
         (signType == SIGNTYPE_RSA2 &&
             privateKey != null &&
             privateKey.length >= PRIVATEKEY_RSA2_MIN_LENGTH));
+
     return payOrderMap(
       orderInfo: json.decode(orderInfo) as Map<String, String>,
       signType: signType,
