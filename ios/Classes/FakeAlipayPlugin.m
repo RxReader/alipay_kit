@@ -39,7 +39,7 @@ static NSString * const ARGUMENT_KEY_ISSHOWLOADING = @"isShowLoading";
         result([NSNumber numberWithBool:isAlipayInstalled]);
     } else if ([METHOD_PAY isEqualToString:call.method]) {
         NSString * orderInfo = call.arguments[ARGUMENT_KEY_ORDERINFO];
-        NSNumber * isShowLoading = call.arguments[ARGUMENT_KEY_ISSHOWLOADING];
+//        NSNumber * isShowLoading = call.arguments[ARGUMENT_KEY_ISSHOWLOADING];
         NSString * scheme = [self fetchUrlScheme];
         [[AlipaySDK defaultService] payOrder:orderInfo fromScheme:scheme callback:^(NSDictionary *resultDic) {
             [self -> _channel invokeMethod:METHOD_ONPAYRESP arguments:resultDic];
@@ -47,7 +47,7 @@ static NSString * const ARGUMENT_KEY_ISSHOWLOADING = @"isShowLoading";
         result(nil);
     } else if ([METHOD_AUTH isEqualToString:call.method]) {
         NSString * authInfo = call.arguments[ARGUMENT_KEY_AUTHINFO];
-        NSNumber * isShowLoading = call.arguments[ARGUMENT_KEY_ISSHOWLOADING];
+//        NSNumber * isShowLoading = call.arguments[ARGUMENT_KEY_ISSHOWLOADING];
         NSString * scheme = [self fetchUrlScheme];
         [[AlipaySDK defaultService] auth_V2WithInfo:authInfo fromScheme:scheme callback:^(NSDictionary *resultDic) {
             [self -> _channel invokeMethod:METHOD_ONAUTHRESP arguments:resultDic];

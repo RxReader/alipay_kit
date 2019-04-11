@@ -54,11 +54,11 @@ class Home extends StatefulWidget {
 /// pkcs8 -> '-----BEGIN PRIVATE KEY-----\n${支付宝RSA签名工具生产的私钥}\n-----END PRIVATE KEY-----'
 class _HomeState extends State<Home> {
   static const bool _alipayUseRsa2 = true;
-  static const String _alipayAppId = 'your alipay appId';
-  static const String _alipayPid = 'your alipay pid';
-  static const String _alipayTargetId = 'your alipay targetId';
+  static const String _alipayAppId = 'your alipay appId'; // 支付/登录
+  static const String _alipayPid = 'your alipay pid'; // 登录
+  static const String _alipayTargetId = 'your alipay targetId'; // 登录
   static const String _alipayPrivateKey =
-      'your alipay rsa private key(pkcs1/pkcs8)';
+      'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
   StreamSubscription<AlipayResp> _pay;
   StreamSubscription<AlipayResp> _auth;
@@ -137,15 +137,11 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('授权'),
             onTap: () {
-              String appId = _alipayAppId;
-              String pid = _alipayPid;
-              String targetId = _alipayTargetId;
-              String privateKey = _alipayPrivateKey;
               widget.alipay.auth(
-                appId: appId,
-                pid: pid,
-                targetId: targetId,
-                privateKey: privateKey,
+                appId: _alipayAppId,
+                pid: _alipayPid,
+                targetId: _alipayTargetId,
+                privateKey: _alipayPrivateKey,
               );
             },
           ),
