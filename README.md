@@ -69,12 +69,8 @@ dependencies:
 * release
 
 ````
-latestVersion = 0.1.1+1
-````
-
-````
 dependencies:
-  fake_alipay: ^${latestVersion}
+  fake_alipay: ^${latestTag}
 ````
 
 * example
