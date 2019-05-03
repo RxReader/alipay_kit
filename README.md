@@ -1,8 +1,9 @@
 # fake_alipay
 
 [![Build Status](https://cloud.drone.io/api/badges/v7lin/fake_alipay/status.svg)](https://cloud.drone.io/v7lin/fake_alipay)
-[![GitHub tag](https://img.shields.io/github/tag/v7lin/fake_alipay.svg)](https://github.com/v7lin/fake_alipay/releases)
-[![pub package](https://img.shields.io/pub/v/fake_alipay.svg)](https://pub.dartlang.org/packages/fake_alipay)
+[![GitHub Tag](https://img.shields.io/github/tag/v7lin/fake_alipay.svg)](https://github.com/v7lin/fake_alipay/releases)
+[![Pub Package](https://img.shields.io/pub/v/fake_alipay.svg)](https://pub.dartlang.org/packages/fake_alipay)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/v7lin/fake_wechat/blob/master/LICENSE)
 
 flutter版支付宝SDK
 
