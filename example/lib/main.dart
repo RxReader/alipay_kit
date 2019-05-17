@@ -25,24 +25,13 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Alipay alipay = Alipay();
-    alipay.registerApp();
-    return AlipayProvider(
-      alipay: alipay,
-      child: MaterialApp(
-        home: Home(alipay: alipay),
-      ),
+    return  MaterialApp(
+      home: Home(),
     );
   }
 }
 
 class Home extends StatefulWidget {
-  Home({
-    Key key,
-    @required this.alipay,
-  }) : super(key: key);
-
-  final Alipay alipay;
 
   @override
   State<StatefulWidget> createState() {
@@ -60,14 +49,17 @@ class _HomeState extends State<Home> {
   static const String _alipayPrivateKey =
       'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
+  Alipay _alipay = Alipay();
+
   StreamSubscription<AlipayResp> _pay;
   StreamSubscription<AlipayResp> _auth;
 
   @override
   void initState() {
     super.initState();
-    _pay = widget.alipay.payResp().listen(_listenPay);
-    _auth = widget.alipay.authResp().listen(_listenAuth);
+    _alipay.registerApp();
+    _pay = _alipay.payResp().listen(_listenPay);
+    _auth = _alipay.authResp().listen(_listenAuth);
   }
 
   void _listenPay(AlipayResp resp) {
@@ -103,7 +95,7 @@ class _HomeState extends State<Home> {
             title: const Text('环境检查'),
             onTap: () async {
               String content =
-                  'alipay: ${await widget.alipay.isAlipayInstalled()}';
+                  'alipay: ${await _alipay.isAlipayInstalled()}';
               _showTips('环境检查', content);
             },
           ),
@@ -126,7 +118,7 @@ class _HomeState extends State<Home> {
                 'timestamp': '2016-07-29 16:55:53',
                 'version': '1.0',
               };
-              widget.alipay.payOrderMap(
+              _alipay.payOrderMap(
                 orderInfo: orderInfo,
                 signType:
                     _alipayUseRsa2 ? Alipay.SIGNTYPE_RSA2 : Alipay.SIGNTYPE_RSA,
@@ -137,7 +129,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('授权'),
             onTap: () {
-              widget.alipay.auth(
+              _alipay.auth(
                 appId: _alipayAppId,
                 pid: _alipayPid,
                 targetId: _alipayTargetId,

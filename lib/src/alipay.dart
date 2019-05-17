@@ -24,10 +24,10 @@ class Alipay {
   static const String AUTHTYPE_AUTHACCOUNT = 'AUTHACCOUNT';
   static const String AUTHTYPE_LOGIN = 'LOGIN';
 
-  static const int PRIVATEKEY_RSA2_MIN_LENGTH = 2048;
+  static const int _PRIVATEKEY_RSA2_MIN_LENGTH = 2048;
 
-  static const MethodChannel _channel =
-      MethodChannel('v7lin.github.io/fake_alipay');
+  final MethodChannel _channel =
+      const MethodChannel('v7lin.github.io/fake_alipay');
 
   final StreamController<AlipayResp> _payRespStreamController =
       StreamController<AlipayResp>.broadcast();
@@ -75,7 +75,7 @@ class Alipay {
             privateKey.isNotEmpty) ||
         (signType == SIGNTYPE_RSA2 &&
             privateKey != null &&
-            privateKey.length >= PRIVATEKEY_RSA2_MIN_LENGTH));
+            privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
 
     return payOrderMap(
       orderInfo: json.decode(orderInfo) as Map<String, String>,
@@ -97,7 +97,7 @@ class Alipay {
             privateKey.isNotEmpty) ||
         (signType == SIGNTYPE_RSA2 &&
             privateKey != null &&
-            privateKey.length >= PRIVATEKEY_RSA2_MIN_LENGTH));
+            privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
 
     orderInfo.putIfAbsent('sign_type', () => signType);
 
@@ -155,7 +155,7 @@ class Alipay {
             privateKey.isNotEmpty) ||
         (signType == SIGNTYPE_RSA2 &&
             privateKey != null &&
-            privateKey.length >= PRIVATEKEY_RSA2_MIN_LENGTH));
+            privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
 
     Map<String, String> authInfo = <String, String>{
       'apiname': 'com.alipay.account.auth',

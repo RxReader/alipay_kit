@@ -1,6 +1,7 @@
 # fake_alipay
 
 [![Build Status](https://cloud.drone.io/api/badges/v7lin/fake_alipay/status.svg)](https://cloud.drone.io/v7lin/fake_alipay)
+[![Codecov](https://codecov.io/gh/v7lin/fake_alipay/branch/master/graph/badge.svg)](https://codecov.io/gh/v7lin/fake_alipay)
 [![GitHub Tag](https://img.shields.io/github/tag/v7lin/fake_alipay.svg)](https://github.com/v7lin/fake_alipay/releases)
 [![Pub Package](https://img.shields.io/pub/v/fake_alipay.svg)](https://pub.dartlang.org/packages/fake_alipay)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/v7lin/fake_alipay/blob/master/LICENSE)
