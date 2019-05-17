@@ -11,10 +11,10 @@ dependencies:
   flutter:
     sdk: flutter
 
-  meta: ^1.1.6
-  fake_crypto: ^0.0.1+2
+  meta: '>=1.1.6'
+  fake_crypto: '>=0.0.1+2'
 
-  jaguar_serializer: ^2.2.12
+  jaguar_serializer: '>=2.2.12 <3.0.0'
 
 dev_dependencies:
   flutter_test:
@@ -22,8 +22,8 @@ dev_dependencies:
 
   pedantic: '>=1.4.0 <3.0.0'
 
-  build_runner: ^1.2.3
-  jaguar_serializer_cli: ^2.2.5
+  build_runner:
+  jaguar_serializer_cli:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec

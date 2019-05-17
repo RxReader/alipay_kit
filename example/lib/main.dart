@@ -25,14 +25,13 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
       home: Home(),
     );
   }
 }
 
 class Home extends StatefulWidget {
-
   @override
   State<StatefulWidget> createState() {
     return _HomeState();
@@ -94,8 +93,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('环境检查'),
             onTap: () async {
-              String content =
-                  'alipay: ${await _alipay.isAlipayInstalled()}';
+              String content = 'alipay: ${await _alipay.isAlipayInstalled()}';
               _showTips('环境检查', content);
             },
           ),
