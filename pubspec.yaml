@@ -11,7 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  meta: '>=1.1.6'
+  meta: '>=1.1.6 <2.0.0'
   fake_crypto: '>=0.0.1+2'
 
   jaguar_serializer: '>=2.2.12 <3.0.0'
