@@ -14,21 +14,5 @@ class BoolToStringProcessor implements FieldProcessor<bool, String> {
   }
 }
 
-class StringToBoolProcessor implements FieldProcessor<String, bool> {
-  const StringToBoolProcessor();
-
-  @override
-  String deserialize(bool value) {
-    return value?.toString();
-  }
-
-  @override
-  bool serialize(String value) {
-    return value != null ? value == true.toString() : null;
-  }
-}
-
 const FieldProcessor<bool, String> boolToStringProcessor =
     BoolToStringProcessor();
-const FieldProcessor<String, bool> stringToBoolProcessor =
-    StringToBoolProcessor();
