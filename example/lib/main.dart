@@ -41,11 +41,11 @@ class Home extends StatefulWidget {
 /// pkcs1 -> '-----BEGIN RSA PRIVATE KEY-----\n${支付宝RSA签名工具生产的私钥}\n-----END RSA PRIVATE KEY-----'
 /// pkcs8 -> '-----BEGIN PRIVATE KEY-----\n${支付宝RSA签名工具生产的私钥}\n-----END PRIVATE KEY-----'
 class _HomeState extends State<Home> {
-  static const bool _alipayUseRsa2 = true;
-  static const String _alipayAppId = 'your alipay appId'; // 支付/登录
-  static const String _alipayPid = 'your alipay pid'; // 登录
-  static const String _alipayTargetId = 'your alipay targetId'; // 登录
-  static const String _alipayPrivateKey =
+  static const bool _ALIPAY_USE_RSA2 = true;
+  static const String _ALIPAY_APPID = 'your alipay appId'; // 支付/登录
+  static const String _ALIPAY_PID = 'your alipay pid'; // 登录
+  static const String _ALIPAY_TARGETID = 'your alipay targetId'; // 登录
+  static const String _ALIPAY_PRIVATEKEY =
       'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
   Alipay _alipay = Alipay()..registerApp();
@@ -108,7 +108,7 @@ class _HomeState extends State<Home> {
                 'out_trade_no': '123456789',
               };
               Map<String, String> orderInfo = {
-                'app_id': _alipayAppId,
+                'app_id': _ALIPAY_APPID,
                 'biz_content': json.encode(bizContent),
                 'charset': 'utf-8',
                 'method': 'alipay.trade.app.pay',
@@ -117,9 +117,10 @@ class _HomeState extends State<Home> {
               };
               _alipay.payOrderMap(
                 orderInfo: orderInfo,
-                signType:
-                    _alipayUseRsa2 ? Alipay.SIGNTYPE_RSA2 : Alipay.SIGNTYPE_RSA,
-                privateKey: _alipayPrivateKey,
+                signType: _ALIPAY_USE_RSA2
+                    ? Alipay.SIGNTYPE_RSA2
+                    : Alipay.SIGNTYPE_RSA,
+                privateKey: _ALIPAY_PRIVATEKEY,
               );
             },
           ),
@@ -127,10 +128,10 @@ class _HomeState extends State<Home> {
             title: const Text('授权'),
             onTap: () {
               _alipay.auth(
-                appId: _alipayAppId,
-                pid: _alipayPid,
-                targetId: _alipayTargetId,
-                privateKey: _alipayPrivateKey,
+                appId: _ALIPAY_APPID,
+                pid: _ALIPAY_PID,
+                targetId: _ALIPAY_TARGETID,
+                privateKey: _ALIPAY_PRIVATEKEY,
               );
             },
           ),

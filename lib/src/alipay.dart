@@ -170,7 +170,7 @@ class Alipay {
       'auth_type': authType,
     };
     authInfo.putIfAbsent('sign_type', () => signType);
-    Encoding encoding = utf8;// utf-8
+    Encoding encoding = utf8; // utf-8
     String param = _param(authInfo, encoding);
     String sign = _sign(authInfo, signType, privateKey);
     return authSign(
