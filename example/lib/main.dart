@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
   static const String _alipayPrivateKey =
       'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
-  Alipay _alipay = Alipay();
+  Alipay _alipay = Alipay()..registerApp();
 
   StreamSubscription<AlipayResp> _pay;
   StreamSubscription<AlipayResp> _auth;
@@ -56,7 +56,6 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _alipay.registerApp();
     _pay = _alipay.payResp().listen(_listenPay);
     _auth = _alipay.authResp().listen(_listenAuth);
   }

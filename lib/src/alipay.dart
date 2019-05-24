@@ -51,18 +51,22 @@ class Alipay {
     }
   }
 
+  /// 支付
   Stream<AlipayResp> payResp() {
     return _payRespStreamController.stream;
   }
 
+  /// 登录
   Stream<AlipayResp> authResp() {
     return _authRespStreamController.stream;
   }
 
+  /// 检测支付宝是否已安装
   Future<bool> isAlipayInstalled() async {
     return (await _channel.invokeMethod(_METHOD_ISALIPAYINSTALLED)) as bool;
   }
 
+  /// 支付
   Future<void> payOrderJson({
     @required String orderInfo,
     String signType = SIGNTYPE_RSA2,
@@ -76,7 +80,6 @@ class Alipay {
         (signType == SIGNTYPE_RSA2 &&
             privateKey != null &&
             privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
-
     return payOrderMap(
       orderInfo: json.decode(orderInfo) as Map<String, String>,
       signType: signType,
@@ -85,6 +88,7 @@ class Alipay {
     );
   }
 
+  /// 支付
   Future<void> payOrderMap({
     @required Map<String, String> orderInfo,
     String signType = SIGNTYPE_RSA2,
@@ -98,9 +102,7 @@ class Alipay {
         (signType == SIGNTYPE_RSA2 &&
             privateKey != null &&
             privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
-
     orderInfo.putIfAbsent('sign_type', () => signType);
-
     String charset = orderInfo['charset'];
     Encoding encoding;
     if (charset != null && charset.isNotEmpty) {
@@ -109,10 +111,8 @@ class Alipay {
     if (encoding == null) {
       encoding = utf8;
     }
-
     String param = _param(orderInfo, encoding);
     String sign = _sign(orderInfo, signType, privateKey);
-
     return payOrderSign(
       orderInfo:
           '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
@@ -120,12 +120,12 @@ class Alipay {
     );
   }
 
+  /// 支付
   Future<void> payOrderSign({
     @required String orderInfo,
     bool isShowLoading = true,
   }) {
     assert(orderInfo != null && orderInfo.isNotEmpty);
-
     return _channel.invokeMethod(
       _METHOD_PAY,
       <String, dynamic>{
@@ -135,6 +135,7 @@ class Alipay {
     );
   }
 
+  /// 登录
   Future<void> auth({
     @required String appId, // 支付宝分配给开发者的应用ID
     @required String pid, // 签约的支付宝账号对应的支付宝唯一用户号，以2088开头的16位纯数字组成
@@ -156,7 +157,6 @@ class Alipay {
         (signType == SIGNTYPE_RSA2 &&
             privateKey != null &&
             privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
-
     Map<String, String> authInfo = <String, String>{
       'apiname': 'com.alipay.account.auth',
       'method': 'alipay.open.auth.sdk.code.get',
@@ -169,27 +169,22 @@ class Alipay {
       'target_id': targetId,
       'auth_type': authType,
     };
-
     authInfo.putIfAbsent('sign_type', () => signType);
-
-    // utf-8
-    Encoding encoding = utf8;
-
+    Encoding encoding = utf8;// utf-8
     String param = _param(authInfo, encoding);
     String sign = _sign(authInfo, signType, privateKey);
-
     return authSign(
       info: '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
       isShowLoading: isShowLoading,
     );
   }
 
+  /// 登录
   Future<void> authSign({
     @required String info,
     bool isShowLoading = true,
   }) {
     assert(info != null && info.isNotEmpty);
-
     return _channel.invokeMethod(
       _METHOD_AUTH,
       <String, dynamic>{
@@ -209,7 +204,7 @@ class Alipay {
   }
 
   String _sign(Map<String, String> map, String signType, String privateKey) {
-    /// 参数排序
+    // 参数排序
     List<String> keys = map.keys.toList();
     keys.sort();
     String content = List<String>.generate(keys.length, (int index) {
