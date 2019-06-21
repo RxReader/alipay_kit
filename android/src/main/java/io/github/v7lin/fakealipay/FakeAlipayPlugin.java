@@ -64,8 +64,15 @@ public class FakeAlipayPlugin implements MethodCallHandler {
                 @Override
                 public void run() {
                     PayTask task = new PayTask(registrar.activity());
-                    Map<String, String> result = task.payV2(orderInfo, isShowLoading);
-                    channel.invokeMethod(METHOD_ONPAYRESP, result);
+                    final Map<String, String> result = task.payV2(orderInfo, isShowLoading);
+                    if (registrar.activity() != null && !registrar.activity().isFinishing()) {
+                        registrar.activity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                channel.invokeMethod(METHOD_ONPAYRESP, result);
+                            }
+                        });
+                    }
                 }
             };
             new Thread(pay).start();
@@ -77,8 +84,15 @@ public class FakeAlipayPlugin implements MethodCallHandler {
                 @Override
                 public void run() {
                     AuthTask task = new AuthTask(registrar.activity());
-                    Map<String, String> result = task.authV2(authInfo, isShowLoading);
-                    channel.invokeMethod(METHOD_ONAUTHRESP, result);
+                    final Map<String, String> result = task.authV2(authInfo, isShowLoading);
+                    if (registrar.activity() != null && !registrar.activity().isFinishing()) {
+                        registrar.activity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                channel.invokeMethod(METHOD_ONAUTHRESP, result);
+                            }
+                        });
+                    }
                 }
             };
             new Thread(auth).start();
