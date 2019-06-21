@@ -17,7 +17,7 @@ void main() {
 
   if (Platform.isAndroid) {
     SystemUiOverlayStyle systemUiOverlayStyle =
-        SystemUiOverlayStyle(statusBarColor: Colors.transparent);
+        const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
     SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
   }
 }
@@ -99,7 +99,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('支付'),
             onTap: () {
-              Map<String, String> bizContent = {
+              Map<String, String> bizContent = <String, String>{
                 'timeout_express': '30m',
                 'product_code': 'QUICK_MSECURITY_PAY',
                 'total_amount': '0.01',
@@ -107,7 +107,7 @@ class _HomeState extends State<Home> {
                 'body': '我是测试数据',
                 'out_trade_no': '123456789',
               };
-              Map<String, String> orderInfo = {
+              Map<String, String> orderInfo = <String, String>{
                 'app_id': _ALIPAY_APPID,
                 'biz_content': json.encode(bizContent),
                 'charset': 'utf-8',
