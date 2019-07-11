@@ -7,6 +7,10 @@ import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 class Alipay {
+  Alipay() {
+    _channel.setMethodCallHandler(_handleMethod);
+  }
+
   static const String _METHOD_ISALIPAYINSTALLED = 'isAlipayInstalled';
   static const String _METHOD_PAY = 'pay';
   static const String _METHOD_AUTH = 'auth';
@@ -33,10 +37,6 @@ class Alipay {
       StreamController<AlipayResp>.broadcast();
   final StreamController<AlipayResp> _authRespStreamController =
       StreamController<AlipayResp>.broadcast();
-
-  Future<void> registerApp() async {
-    _channel.setMethodCallHandler(_handleMethod);
-  }
 
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {

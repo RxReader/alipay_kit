@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
   static const String _ALIPAY_PRIVATEKEY =
       'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
-  Alipay _alipay = Alipay()..registerApp();
+  Alipay _alipay = Alipay();
 
   StreamSubscription<AlipayResp> _pay;
   StreamSubscription<AlipayResp> _auth;
