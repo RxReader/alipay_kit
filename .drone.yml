@@ -62,6 +62,10 @@ steps:
       from_secret: CODECOV_TOKEN
     files:
     - ./coverage/lcov.info
+  when:
+    event:
+      exclude:
+      - pull_request
 
 volumes:
 - name: pub-cache
