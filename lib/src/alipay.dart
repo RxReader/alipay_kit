@@ -28,8 +28,6 @@ class Alipay {
   static const String AUTHTYPE_AUTHACCOUNT = 'AUTHACCOUNT';
   static const String AUTHTYPE_LOGIN = 'LOGIN';
 
-  static const int _PRIVATEKEY_RSA2_MIN_LENGTH = 2048;
-
   final MethodChannel _channel =
       const MethodChannel('v7lin.github.io/fake_alipay');
 
@@ -74,12 +72,7 @@ class Alipay {
     bool isShowLoading = true,
   }) {
     assert(orderInfo != null && orderInfo.isNotEmpty);
-    assert((signType == SIGNTYPE_RSA &&
-            privateKey != null &&
-            privateKey.isNotEmpty) ||
-        (signType == SIGNTYPE_RSA2 &&
-            privateKey != null &&
-            privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
+    assert(privateKey != null && privateKey.isNotEmpty);
     return payOrderMap(
       orderInfo: json.decode(orderInfo) as Map<String, String>,
       signType: signType,
@@ -96,12 +89,7 @@ class Alipay {
     bool isShowLoading = true,
   }) {
     assert(orderInfo != null && orderInfo.isNotEmpty);
-    assert((signType == SIGNTYPE_RSA &&
-            privateKey != null &&
-            privateKey.isNotEmpty) ||
-        (signType == SIGNTYPE_RSA2 &&
-            privateKey != null &&
-            privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
+    assert(privateKey != null && privateKey.isNotEmpty);
     orderInfo.putIfAbsent('sign_type', () => signType);
     String charset = orderInfo['charset'];
     Encoding encoding;
@@ -151,12 +139,7 @@ class Alipay {
     assert(pid != null && pid.isNotEmpty && pid.length <= 16);
     assert(targetId != null && targetId.isNotEmpty && targetId.length <= 32);
     assert(authType == AUTHTYPE_AUTHACCOUNT || authType == AUTHTYPE_LOGIN);
-    assert((signType == SIGNTYPE_RSA &&
-            privateKey != null &&
-            privateKey.isNotEmpty) ||
-        (signType == SIGNTYPE_RSA2 &&
-            privateKey != null &&
-            privateKey.length >= _PRIVATEKEY_RSA2_MIN_LENGTH));
+    assert(privateKey != null && privateKey.isNotEmpty);
     Map<String, String> authInfo = <String, String>{
       'apiname': 'com.alipay.account.auth',
       'method': 'alipay.open.auth.sdk.code.get',
