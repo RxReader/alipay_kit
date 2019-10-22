@@ -19,6 +19,7 @@ abstract class _$AlipayRespSerializer implements Serializer<AlipayResp> {
     return ret;
   }
 
+  // override 的语法特征是什么？
   @override
   AlipayResp fromMap(Map map) {
     if (map == null) return null;

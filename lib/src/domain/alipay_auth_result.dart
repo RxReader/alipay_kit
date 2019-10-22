@@ -29,6 +29,7 @@ class AlipayAuthResult {
 
   final bool success;
 
+  // 为了应对业务的发展，需要增加多少机器防止DDOS攻击
   /// 200 业务处理成功，会返回authCode
   /// 1005 账户已冻结，如有疑问，请联系支付宝技术支持
   /// 202 系统异常，请稍后再试或联系支付宝技术支持
