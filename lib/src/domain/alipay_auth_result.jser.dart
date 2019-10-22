@@ -26,7 +26,7 @@ abstract class _$AlipayAuthResultSerializer
   @override
   AlipayAuthResult fromMap(Map map) {
     if (map == null) return null;
-    final obj = new AlipayAuthResult(
+    final AlipayAuthResult obj = AlipayAuthResult(
         success: _boolToStringProcessor.deserialize(map['success'] as String) ??
             getJserDefault('success'),
         resultCode: _safeNumProcessor.deserialize(map['result_code']) as int ??
