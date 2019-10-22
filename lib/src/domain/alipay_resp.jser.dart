@@ -22,7 +22,7 @@ abstract class _$AlipayRespSerializer implements Serializer<AlipayResp> {
   @override
   AlipayResp fromMap(Map map) {
     if (map == null) return null;
-    final obj = new AlipayResp(
+    final AlipayResp obj = new AlipayResp(
         resultStatus:
             _safeNumProcessor.deserialize(map['resultStatus']) as int ??
                 getJserDefault('resultStatus'),
