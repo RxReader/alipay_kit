@@ -7,7 +7,7 @@ part of 'alipay_resp.dart';
 // **************************************************************************
 
 abstract class _$AlipayRespSerializer implements Serializer<AlipayResp> {
-  final _safeNumProcessor = const SafeNumProcessor();
+  final SafeNumProcessor _safeNumProcessor = const SafeNumProcessor();
   @override
   Map<String, dynamic> toMap(AlipayResp model) {
     if (model == null) return null;
