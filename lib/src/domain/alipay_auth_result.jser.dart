@@ -9,7 +9,7 @@ part of 'alipay_auth_result.dart';
 abstract class _$AlipayAuthResultSerializer
     implements Serializer<AlipayAuthResult> {
   final BoolToStringProcessor _boolToStringProcessor = const BoolToStringProcessor();
-  final _safeNumProcessor = const SafeNumProcessor();
+  final SafeNumProcessor _safeNumProcessor = const SafeNumProcessor();
   @override
   Map<String, dynamic> toMap(AlipayAuthResult model) {
     if (model == null) return null;
