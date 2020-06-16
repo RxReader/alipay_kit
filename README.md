@@ -64,7 +64,7 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 
 ````
 dependencies:
-  fake_alipay:
+  alipay_kit:
     git:
       url: https://github.com/v7lin/fake_alipay.git
 ````
@@ -73,7 +73,7 @@ dependencies:
 
 ````
 dependencies:
-  fake_alipay: ^${latestTag}
+  alipay_kit: ^${latestTag}
 ````
 
 * example
