@@ -1,6 +1,6 @@
 name: alipay_kit_example
 description: Demonstrates how to use the alipay_kit plugin.
-
+version: 1.0.0+1000
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
