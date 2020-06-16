@@ -59,8 +59,8 @@ steps:
     path: /opt/flutter/.pub-cache
   commands:
   - flutter test
-  - cd example/
-  - flutter test
+#  - cd example/
+#  - flutter test
 
 - name: proguard
   image: v7lin/flutter:1.17.3-stable
