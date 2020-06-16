@@ -84,7 +84,7 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Fake Alipay Demo'),
+        title: const Text('Alipay Kit Demo'),
       ),
       body: ListView(
         children: <Widget>[
