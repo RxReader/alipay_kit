@@ -1,8 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:alipay_kit/src/alipay.dart';
-import 'package:alipay_kit/src/model/alipay_resp.dart';
+import 'package:alipay_kit/alipay_kit.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pedantic/pedantic.dart';
