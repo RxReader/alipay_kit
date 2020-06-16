@@ -1,9 +1,9 @@
-# fake_alipay
+# alipay_kit
 
 [![Build Status](https://cloud.drone.io/api/badges/v7lin/fake_alipay/status.svg)](https://cloud.drone.io/v7lin/fake_alipay)
 [![Codecov](https://codecov.io/gh/v7lin/fake_alipay/branch/master/graph/badge.svg)](https://codecov.io/gh/v7lin/fake_alipay)
 [![GitHub Tag](https://img.shields.io/github/tag/v7lin/fake_alipay.svg)](https://github.com/v7lin/fake_alipay/releases)
-[![Pub Package](https://img.shields.io/pub/v/fake_alipay.svg)](https://pub.dartlang.org/packages/fake_alipay)
+[![Pub Package](https://img.shields.io/pub/v/alipay_kit.svg)](https://pub.dartlang.org/packages/alipay_kit)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/v7lin/fake_alipay/blob/master/LICENSE)
 
 flutter版支付宝SDK
@@ -14,6 +14,7 @@ flutter版支付宝SDK
 * [flutter版腾讯(QQ)SDK](https://github.com/v7lin/fake_tencent)
 * [flutter版新浪微博SDK](https://github.com/v7lin/fake_weibo)
 * [flutter版支付宝SDK](https://github.com/v7lin/fake_alipay)
+* [flutter版walle渠道打包工具](https://github.com/v7lin/walle_kit)
 * [flutter版腾讯(信鸽)推送SDK](https://github.com/v7lin/fake_push)
 * [flutter版talkingdata移动统计SDK](https://github.com/v7lin/fake_analytics)
 
@@ -79,13 +80,14 @@ dependencies:
 
 [示例](./example/lib/main.dart)
 
+
 ## Getting Started
 
 This project is a starting point for a Flutter
-[plug-in package](https://flutter.io/developing-packages/),
+[plug-in package](https://flutter.dev/developing-packages/),
 a specialized package that includes platform-specific implementation code for
 Android and/or iOS.
 
 For help getting started with Flutter, view our 
-[online documentation](https://flutter.io/docs), which offers tutorials, 
+[online documentation](https://flutter.dev/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.

@@ -1,5 +1,5 @@
-group 'io.github.v7lin.fakealipay'
-version '1.0-SNAPSHOT'
+group 'io.github.v7lin.alipay_kit'
+version '1.0.0'
 
 buildscript {
     repositories {
@@ -8,7 +8,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.5.0'
     }
 }
 
@@ -20,21 +20,22 @@ rootProject.allprojects {
 }
 
 apply plugin: 'com.android.library'
+apply from: './quality.gradle'
 
 android {
     compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 16
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+
     lintOptions {
         disable 'InvalidPackage'
     }
 }
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar','*.aar'], dir: 'libs')
 
-    implementation 'io.github.v7lin:alipay-android:15.5.5'
+    implementation 'androidx.annotation:annotation:1.0.0'
 }

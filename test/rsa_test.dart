@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:fake_crypto/fake_crypto.dart';
+import 'package:alipay_kit/src/crypto/rsa.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

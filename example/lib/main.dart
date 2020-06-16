@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:alipay_kit/alipay_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:fake_alipay/fake_alipay.dart';
 
 void main() {
   runZoned(() {
@@ -141,7 +140,7 @@ class _HomeState extends State<Home> {
   }
 
   void _showTips(String title, String content) {
-    showDialog(
+    showDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(

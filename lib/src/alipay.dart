@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:fake_alipay/src/domain/alipay_resp.dart';
-import 'package:fake_crypto/fake_crypto.dart';
+import 'package:alipay_kit/src/crypto/rsa.dart';
+import 'package:alipay_kit/src/model/alipay_resp.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
-import 'package:meta/meta.dart';
 
 class Alipay {
   Alipay() {
@@ -29,7 +29,7 @@ class Alipay {
   static const String AUTHTYPE_LOGIN = 'LOGIN';
 
   final MethodChannel _channel =
-      const MethodChannel('v7lin.github.io/fake_alipay');
+      const MethodChannel('v7lin.github.io/alipay_kit');
 
   final StreamController<AlipayResp> _payRespStreamController =
       StreamController<AlipayResp>.broadcast();
@@ -39,12 +39,12 @@ class Alipay {
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case _METHOD_ONPAYRESP:
-        _payRespStreamController.add(AlipayRespSerializer()
-            .fromMap(call.arguments as Map<dynamic, dynamic>));
+        _payRespStreamController
+            .add(AlipayResp.fromJson(call.arguments as Map<dynamic, dynamic>));
         break;
       case _METHOD_ONAUTHRESP:
-        _authRespStreamController.add(AlipayRespSerializer()
-            .fromMap(call.arguments as Map<dynamic, dynamic>));
+        _authRespStreamController
+            .add(AlipayResp.fromJson(call.arguments as Map<dynamic, dynamic>));
         break;
     }
   }
@@ -60,8 +60,8 @@ class Alipay {
   }
 
   /// 检测支付宝是否已安装
-  Future<bool> isAlipayInstalled() async {
-    return (await _channel.invokeMethod(_METHOD_ISALIPAYINSTALLED)) as bool;
+  Future<bool> isAlipayInstalled() {
+    return _channel.invokeMethod<bool>(_METHOD_ISALIPAYINSTALLED);
   }
 
   /// 支付
@@ -71,8 +71,8 @@ class Alipay {
     @required String privateKey,
     bool isShowLoading = true,
   }) {
-    assert(orderInfo != null && orderInfo.isNotEmpty);
-    assert(privateKey != null && privateKey.isNotEmpty);
+    assert(orderInfo?.isNotEmpty ?? false);
+    assert(privateKey?.isNotEmpty ?? false);
     return payOrderMap(
       orderInfo: json.decode(orderInfo) as Map<String, String>,
       signType: signType,
@@ -88,19 +88,18 @@ class Alipay {
     @required String privateKey,
     bool isShowLoading = true,
   }) {
-    assert(orderInfo != null && orderInfo.isNotEmpty);
-    assert(privateKey != null && privateKey.isNotEmpty);
-    orderInfo.putIfAbsent('sign_type', () => signType);
+    assert(orderInfo?.isNotEmpty ?? false);
+    assert(privateKey?.isNotEmpty ?? false);
     String charset = orderInfo['charset'];
-    Encoding encoding;
-    if (charset != null && charset.isNotEmpty) {
-      encoding = Encoding.getByName(charset);
-    }
-    if (encoding == null) {
-      encoding = utf8;
-    }
-    String param = _param(orderInfo, encoding);
-    String sign = _sign(orderInfo, signType, privateKey);
+    Encoding encoding =
+        (charset?.isNotEmpty ?? false) ? Encoding.getByName(charset) : null;
+    encoding ??= utf8;
+    Map<String, String> clone = <String, String>{
+      ...orderInfo,
+      'sign_type': signType,
+    };
+    String param = _param(clone, encoding);
+    String sign = _sign(clone, signType, privateKey);
     return payOrderSign(
       orderInfo:
           '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
@@ -113,8 +112,8 @@ class Alipay {
     @required String orderInfo,
     bool isShowLoading = true,
   }) {
-    assert(orderInfo != null && orderInfo.isNotEmpty);
-    return _channel.invokeMethod(
+    assert(orderInfo?.isNotEmpty ?? false);
+    return _channel.invokeMethod<void>(
       _METHOD_PAY,
       <String, dynamic>{
         _ARGUMENT_KEY_ORDERINFO: orderInfo,
@@ -135,11 +134,11 @@ class Alipay {
     @required String privateKey,
     bool isShowLoading = true,
   }) {
-    assert(appId != null && appId.isNotEmpty && appId.length <= 16);
-    assert(pid != null && pid.isNotEmpty && pid.length <= 16);
-    assert(targetId != null && targetId.isNotEmpty && targetId.length <= 32);
+    assert((appId?.isNotEmpty ?? false) && appId.length <= 16);
+    assert((pid?.isNotEmpty ?? false) && pid.length <= 16);
+    assert((targetId?.isNotEmpty ?? false) && targetId.length <= 32);
     assert(authType == AUTHTYPE_AUTHACCOUNT || authType == AUTHTYPE_LOGIN);
-    assert(privateKey != null && privateKey.isNotEmpty);
+    assert(privateKey?.isNotEmpty ?? false);
     Map<String, String> authInfo = <String, String>{
       'apiname': 'com.alipay.account.auth',
       'method': 'alipay.open.auth.sdk.code.get',
@@ -152,7 +151,7 @@ class Alipay {
       'target_id': targetId,
       'auth_type': authType,
     };
-    authInfo.putIfAbsent('sign_type', () => signType);
+    authInfo['sign_type'] = signType;
     Encoding encoding = utf8; // utf-8
     String param = _param(authInfo, encoding);
     String sign = _sign(authInfo, signType, privateKey);
@@ -168,7 +167,7 @@ class Alipay {
     bool isShowLoading = true,
   }) {
     assert(info != null && info.isNotEmpty);
-    return _channel.invokeMethod(
+    return _channel.invokeMethod<void>(
       _METHOD_AUTH,
       <String, dynamic>{
         _ARGUMENT_KEY_AUTHINFO: info,
@@ -178,23 +177,17 @@ class Alipay {
   }
 
   String _param(Map<String, String> map, Encoding encoding) {
-    List<String> keys = map.keys.toList();
-    return List<String>.generate(keys.length, (int index) {
-      String key = keys[index];
-      String value = map[key];
-      return '$key=${Uri.encodeQueryComponent(value, encoding: encoding)}';
-    }).join('&');
+    return map.entries
+        .map((MapEntry<String, String> e) =>
+            '${e.key}=${Uri.encodeQueryComponent(e.value, encoding: encoding)}')
+        .join('&');
   }
 
   String _sign(Map<String, String> map, String signType, String privateKey) {
     // 参数排序
     List<String> keys = map.keys.toList();
     keys.sort();
-    String content = List<String>.generate(keys.length, (int index) {
-      String key = keys[index];
-      String value = map[key];
-      return '$key=$value';
-    }).join('&');
+    String content = keys.map((String e) => '$e=${map[e]}').join('&');
     String sign;
     switch (signType) {
       case SIGNTYPE_RSA:
