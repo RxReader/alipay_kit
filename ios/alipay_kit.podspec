@@ -15,12 +15,15 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
-  s.resources = "Libraries/*.bundle"
-  s.vendored_frameworks = 'Libraries/*.framework'
-  s.frameworks = 'CFNetwork', 'CoreGraphics', 'CoreMotion', 'CoreTelephony', 'CoreText', 'Foundation', 'SystemConfiguration', 'UIKit', 'WebKit'
-  s.libraries = 'c++', 'z'
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
+
+  s.subspec 'vendor' do |sp|
+    sp.resources = "Libraries/*.bundle"
+    sp.vendored_frameworks = 'Libraries/*.framework'
+    sp.frameworks = 'CFNetwork', 'CoreGraphics', 'CoreMotion', 'CoreTelephony', 'CoreText', 'Foundation', 'SystemConfiguration', 'UIKit', 'WebKit'
+    sp.libraries = 'c++', 'z'
+  end
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
