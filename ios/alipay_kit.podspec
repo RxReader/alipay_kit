@@ -15,12 +15,11 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
-  s.dependency 'Flutter'
   s.resources = "Libraries/*.bundle"
   s.vendored_frameworks = 'Libraries/*.framework'
   s.frameworks = 'CFNetwork', 'CoreGraphics', 'CoreMotion', 'CoreTelephony', 'CoreText', 'Foundation', 'SystemConfiguration', 'UIKit', 'WebKit'
   s.libraries = 'c++', 'z'
-  # s.requires_arc = true
+  s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 
   # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
