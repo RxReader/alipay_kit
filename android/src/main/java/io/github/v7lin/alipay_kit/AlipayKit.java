@@ -22,7 +22,7 @@ import io.flutter.plugin.common.MethodChannel;
 public class AlipayKit implements MethodChannel.MethodCallHandler {
     //
 
-    private static final String METHOD_ISALIPAYINSTALLED = "isAlipayInstalled";
+    private static final String METHOD_ISINSTALLED = "isInstalled";
     private static final String METHOD_PAY = "pay";
     private static final String METHOD_AUTH = "auth";
 
@@ -73,15 +73,15 @@ public class AlipayKit implements MethodChannel.MethodCallHandler {
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull MethodChannel.Result result) {
-        if (METHOD_ISALIPAYINSTALLED.equals(call.method)) {
-            boolean isAlipayInstalled = false;
+        if (METHOD_ISINSTALLED.equals(call.method)) {
+            boolean isInstalled = false;
             try {
                 final PackageManager packageManager = applicationContext.getPackageManager();
                 PackageInfo info = packageManager.getPackageInfo("com.eg.android.AlipayGphone", PackageManager.GET_SIGNATURES);
-                isAlipayInstalled = info != null;
+                isInstalled = info != null;
             } catch (PackageManager.NameNotFoundException e) {
             }
-            result.success(isAlipayInstalled);
+            result.success(isInstalled);
         } else if (METHOD_PAY.equals(call.method)) {
             final String orderInfo = call.argument(ARGUMENT_KEY_ORDERINFO);
             final boolean isShowLoading = call.argument(ARGUMENT_KEY_ISSHOWLOADING);

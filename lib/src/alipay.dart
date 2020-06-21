@@ -11,7 +11,7 @@ class Alipay {
     _channel.setMethodCallHandler(_handleMethod);
   }
 
-  static const String _METHOD_ISALIPAYINSTALLED = 'isAlipayInstalled';
+  static const String _METHOD_ISINSTALLED = 'isInstalled';
   static const String _METHOD_PAY = 'pay';
   static const String _METHOD_AUTH = 'auth';
 
@@ -60,8 +60,8 @@ class Alipay {
   }
 
   /// 检测支付宝是否已安装
-  Future<bool> isAlipayInstalled() {
-    return _channel.invokeMethod<bool>(_METHOD_ISALIPAYINSTALLED);
+  Future<bool> isInstalled() {
+    return _channel.invokeMethod<bool>(_METHOD_ISINSTALLED);
   }
 
   /// 支付

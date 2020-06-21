@@ -14,7 +14,7 @@
     [registrar addMethodCallDelegate:instance channel:channel];
 }
 
-static NSString *const METHOD_ISALIPAYINSTALLED = @"isAlipayInstalled";
+static NSString *const METHOD_ISINSTALLED = @"isInstalled";
 static NSString *const METHOD_PAY = @"pay";
 static NSString *const METHOD_AUTH = @"auth";
 
@@ -34,9 +34,9 @@ static NSString *const ARGUMENT_KEY_ISSHOWLOADING = @"isShowLoading";
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-    if ([METHOD_ISALIPAYINSTALLED isEqualToString:call.method]) {
-        BOOL isAlipayInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay:"]];
-        result([NSNumber numberWithBool:isAlipayInstalled]);
+    if ([METHOD_ISINSTALLED isEqualToString:call.method]) {
+        BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay:"]];
+        result([NSNumber numberWithBool:isInstalled]);
     } else if ([METHOD_PAY isEqualToString:call.method]) {
         NSString *orderInfo = call.arguments[ARGUMENT_KEY_ORDERINFO];
         //        NSNumber * isShowLoading = call.arguments[ARGUMENT_KEY_ISSHOWLOADING];
