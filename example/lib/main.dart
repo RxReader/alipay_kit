@@ -91,7 +91,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('环境检查'),
             onTap: () async {
-              String content = 'alipay: ${await _alipay.isAlipayInstalled()}';
+              String content = 'alipay: ${await _alipay.isInstalled()}';
               _showTips('环境检查', content);
             },
           ),

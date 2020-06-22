@@ -18,7 +18,7 @@ void main() {
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall call) async {
       switch (call.method) {
-        case 'isAlipayInstalled':
+        case 'isInstalled':
           return true;
         case 'pay':
           unawaited(channel.binaryMessenger.handlePlatformMessage(
@@ -43,8 +43,8 @@ void main() {
     channel.setMockMethodCallHandler(null);
   });
 
-  test('isAlipayInstalled', () async {
-    expect(await alipay.isAlipayInstalled(), true);
+  test('isInstalled', () async {
+    expect(await alipay.isInstalled(), true);
   });
 
   test('pay', () async {
