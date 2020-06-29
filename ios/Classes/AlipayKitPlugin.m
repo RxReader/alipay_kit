@@ -86,15 +86,18 @@ static NSString *const ARGUMENT_KEY_ISSHOWLOADING = @"isShowLoading";
 - (BOOL)handleOpenURL:(NSURL *)url {
     if ([url.host isEqualToString:@"safepay"]) {
         // 支付跳转支付宝钱包进行支付，处理支付结果
+        __weak typeof(self) weakSelf = self;
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url
                                                   standbyCallback:^(NSDictionary *resultDic) {
-                                                      [self->_channel invokeMethod:METHOD_ONPAYRESP arguments:resultDic];
+                                                      __strong typeof(weakSelf) strongSelf = weakSelf;
+                                                      [strongSelf->_channel invokeMethod:METHOD_ONPAYRESP arguments:resultDic];
                                                   }];
 
         // 授权跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processAuth_V2Result:url
                                          standbyCallback:^(NSDictionary *resultDic) {
-                                             [self->_channel invokeMethod:METHOD_ONAUTHRESP arguments:resultDic];
+                                             __strong typeof(weakSelf) strongSelf = weakSelf;
+                                             [strongSelf->_channel invokeMethod:METHOD_ONAUTHRESP arguments:resultDic];
                                          }];
 
         return YES;
