@@ -98,7 +98,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('支付'),
             onTap: () {
-              Map<String, String> bizContent = <String, String>{
+              Map<String, dynamic> bizContent = <String, dynamic>{
                 'timeout_express': '30m',
                 'product_code': 'QUICK_MSECURITY_PAY',
                 'total_amount': '0.01',
@@ -106,7 +106,7 @@ class _HomeState extends State<Home> {
                 'body': '我是测试数据',
                 'out_trade_no': '123456789',
               };
-              Map<String, String> orderInfo = <String, String>{
+              Map<String, dynamic> orderInfo = <String, dynamic>{
                 'app_id': _ALIPAY_APPID,
                 'biz_content': json.encode(bizContent),
                 'charset': 'utf-8',
@@ -114,8 +114,8 @@ class _HomeState extends State<Home> {
                 'timestamp': '2016-07-29 16:55:53',
                 'version': '1.0',
               };
-              _alipay.payOrderMap(
-                orderInfo: orderInfo,
+              _alipay.payOrderJson(
+                orderInfo: json.encode(orderInfo),
                 signType: _ALIPAY_USE_RSA2
                     ? Alipay.SIGNTYPE_RSA2
                     : Alipay.SIGNTYPE_RSA,

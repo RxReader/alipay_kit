@@ -74,7 +74,7 @@ class Alipay {
     assert(orderInfo?.isNotEmpty ?? false);
     assert(privateKey?.isNotEmpty ?? false);
     return payOrderMap(
-      orderInfo: json.decode(orderInfo) as Map<String, String>,
+      orderInfo: json.decode(orderInfo) as Map<String, dynamic>,
       signType: signType,
       privateKey: privateKey,
       isShowLoading: isShowLoading,
@@ -83,18 +83,18 @@ class Alipay {
 
   /// 支付
   Future<void> payOrderMap({
-    @required Map<String, String> orderInfo,
+    @required Map<String, dynamic> orderInfo,
     String signType = SIGNTYPE_RSA2,
     @required String privateKey,
     bool isShowLoading = true,
   }) {
     assert(orderInfo?.isNotEmpty ?? false);
     assert(privateKey?.isNotEmpty ?? false);
-    String charset = orderInfo['charset'];
+    String charset = orderInfo['charset'] as String;
     Encoding encoding =
         (charset?.isNotEmpty ?? false) ? Encoding.getByName(charset) : null;
     encoding ??= utf8;
-    Map<String, String> clone = <String, String>{
+    Map<String, dynamic> clone = <String, dynamic>{
       ...orderInfo,
       'sign_type': signType,
     };
@@ -139,7 +139,7 @@ class Alipay {
     assert((targetId?.isNotEmpty ?? false) && targetId.length <= 32);
     assert(authType == AUTHTYPE_AUTHACCOUNT || authType == AUTHTYPE_LOGIN);
     assert(privateKey?.isNotEmpty ?? false);
-    Map<String, String> authInfo = <String, String>{
+    Map<String, dynamic> authInfo = <String, dynamic>{
       'apiname': 'com.alipay.account.auth',
       'method': 'alipay.open.auth.sdk.code.get',
       'app_id': appId,
@@ -176,14 +176,14 @@ class Alipay {
     );
   }
 
-  String _param(Map<String, String> map, Encoding encoding) {
+  String _param(Map<String, dynamic> map, Encoding encoding) {
     return map.entries
-        .map((MapEntry<String, String> e) =>
-            '${e.key}=${Uri.encodeQueryComponent(e.value, encoding: encoding)}')
+        .map((MapEntry<String, dynamic> e) =>
+            '${e.key}=${Uri.encodeQueryComponent('${e.value}', encoding: encoding)}')
         .join('&');
   }
 
-  String _sign(Map<String, String> map, String signType, String privateKey) {
+  String _sign(Map<String, dynamic> map, String signType, String privateKey) {
     // 参数排序
     List<String> keys = map.keys.toList();
     keys.sort();
