@@ -6,7 +6,9 @@ import 'package:alipay_kit/src/model/alipay_resp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
+///
 class Alipay {
+  ///
   Alipay() {
     _channel.setMethodCallHandler(_handleMethod);
   }
