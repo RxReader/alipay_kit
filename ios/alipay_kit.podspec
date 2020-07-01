@@ -5,9 +5,9 @@
 Pod::Spec.new do |s|
   s.name             = 'alipay_kit'
   s.version          = '1.0.2'
-  s.summary          = 'A powerful alipay plugin for Flutter.'
+  s.summary          = 'A powerful Flutter plugin allowing developers to auth/pay with natvie Android & iOS Alipay SDKs.'
   s.description      = <<-DESC
-A new flutter plugin project.
+A powerful Flutter plugin allowing developers to auth/pay with natvie Android & iOS Alipay SDKs.
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
