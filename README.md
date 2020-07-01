@@ -1,22 +1,20 @@
 # alipay_kit
 
-[![Build Status](https://cloud.drone.io/api/badges/v7lin/fake_alipay/status.svg)](https://cloud.drone.io/v7lin/fake_alipay)
-[![Codecov](https://codecov.io/gh/v7lin/fake_alipay/branch/master/graph/badge.svg)](https://codecov.io/gh/v7lin/fake_alipay)
-[![GitHub Tag](https://img.shields.io/github/tag/v7lin/fake_alipay.svg)](https://github.com/v7lin/fake_alipay/releases)
+[![Build Status](https://cloud.drone.io/api/badges/v7lin/alipay_kit/status.svg)](https://cloud.drone.io/v7lin/alipay_kit)
+[![Codecov](https://codecov.io/gh/v7lin/alipay_kit/branch/master/graph/badge.svg)](https://codecov.io/gh/v7lin/alipay_kit)
+[![GitHub Tag](https://img.shields.io/github/tag/v7lin/alipay_kit.svg)](https://github.com/v7lin/alipay_kit/releases)
 [![Pub Package](https://img.shields.io/pub/v/alipay_kit.svg)](https://pub.dartlang.org/packages/alipay_kit)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/v7lin/fake_alipay/blob/master/LICENSE)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/v7lin/alipay_kit/blob/master/LICENSE)
 
 flutter版支付宝SDK
 
 ## fake 系列 libraries
 
-* [flutter版微信SDK](https://github.com/v7lin/fake_wechat)
-* [flutter版腾讯(QQ)SDK](https://github.com/v7lin/fake_tencent)
-* [flutter版新浪微博SDK](https://github.com/v7lin/fake_weibo)
-* [flutter版支付宝SDK](https://github.com/v7lin/fake_alipay)
+* [flutter版微信SDK](https://github.com/v7lin/wechat_kit)
+* [flutter版腾讯(QQ)SDK](https://github.com/v7lin/tencent_kit)
+* [flutter版新浪微博SDK](https://github.com/v7lin/weibo_kit)
+* [flutter版支付宝SDK](https://github.com/v7lin/alipay_kit)
 * [flutter版walle渠道打包工具](https://github.com/v7lin/walle_kit)
-* [flutter版腾讯(信鸽)推送SDK](https://github.com/v7lin/fake_push)
-* [flutter版talkingdata移动统计SDK](https://github.com/v7lin/fake_analytics)
 
 ## dart/flutter 私服
 
@@ -66,7 +64,7 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 dependencies:
   alipay_kit:
     git:
-      url: https://github.com/v7lin/fake_alipay.git
+      url: https://github.com/v7lin/alipay_kit.git
 ````
 
 * release
