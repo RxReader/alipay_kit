@@ -1,6 +1,6 @@
 name: alipay_kit
-description: A powerful alipay plugin for Flutter.
-version: 1.0.1
+description: A powerful Flutter plugin allowing developers to pay/auth with natvie Android & iOS Alipay SDKs.
+version: 1.0.2
 # author: v7lin <v7lin@qq.com>
 homepage: https://github.com/v7lin/fake_alipay
 
@@ -12,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  asn1lib: ^0.5.3
+  asn1lib: ^0.6.5
   pointycastle: ^1.0.0
 
   json_annotation: '>=2.0.0 <4.0.0'

@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'alipay_kit'
-  s.version          = '1.0.1'
+  s.version          = '1.0.2'
   s.summary          = 'A powerful alipay plugin for Flutter.'
   s.description      = <<-DESC
 A new flutter plugin project.
