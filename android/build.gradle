@@ -51,5 +51,6 @@ android {
 dependencies {
     implementation 'androidx.annotation:annotation:1.0.0'
 
+    // v15.7.6
     vendorImplementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 }
