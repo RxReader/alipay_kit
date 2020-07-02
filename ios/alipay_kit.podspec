@@ -18,7 +18,7 @@ A powerful Flutter plugin allowing developers to auth/pay with natvie Android & 
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 
-  // v15.7.6
+  # v15.7.6
   s.subspec 'vendor' do |sp|
     sp.resources = "Libraries/*.bundle"
     sp.vendored_frameworks = 'Libraries/*.framework'
