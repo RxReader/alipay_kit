@@ -71,12 +71,10 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    if (_pay != null) {
-      _pay.cancel();
-    }
-    if (_auth != null) {
-      _auth.cancel();
-    }
+    _pay?.cancel();
+    _pay = null;
+    _auth?.cancel();
+    _auth = null;
     super.dispose();
   }
 

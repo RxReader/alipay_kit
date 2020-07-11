@@ -42,9 +42,9 @@ public class AlipayKitPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        alipayKit.setApplicationContext(null);
-        alipayKit.setActivity(null);
         alipayKit.stopListening();
+        alipayKit.setActivity(null);
+        alipayKit.setApplicationContext(null);
     }
 
     // --- ActivityAware
