@@ -25,6 +25,7 @@ flutter版支付宝SDK
 * [蚂蚁金服开放平台](https://openhome.alipay.com/platform/appManage.htm)
 * [支付宝支付](https://docs.open.alipay.com/204/105051/)
 * [支付宝登录](https://docs.open.alipay.com/218/105329/)
+* [应用签名工具](https://opendocs.alipay.com/open/common/104062)
 
 ## android
 
