@@ -16,6 +16,11 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+
+        // 私仓
+        flatDir {
+            dirs project(':alipay_kit').file('libs')
+        }
     }
 }
 
@@ -52,5 +57,5 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.0.0'
 
     // v15.7.6
-    vendorImplementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
+    vendorImplementation(name: 'alipaySdk-15.7.6-20200521195109', ext: 'aar')
 }

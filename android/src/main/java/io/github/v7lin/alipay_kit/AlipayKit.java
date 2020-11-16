@@ -86,6 +86,7 @@ public class AlipayKit implements MethodChannel.MethodCallHandler {
             final String orderInfo = call.argument(ARGUMENT_KEY_ORDERINFO);
             final boolean isShowLoading = call.argument(ARGUMENT_KEY_ISSHOWLOADING);
             final WeakReference<Activity> activityRef = new WeakReference<>(activity);
+            final WeakReference<MethodChannel> channelRef = new WeakReference<>(channel);
             new AsyncTask<String, String, Map<String, String>>() {
                 @Override
                 protected Map<String, String> doInBackground(String... params) {
@@ -101,10 +102,9 @@ public class AlipayKit implements MethodChannel.MethodCallHandler {
                 protected void onPostExecute(Map<String, String> result) {
                     if (result != null) {
                         Activity activity = activityRef.get();
-                        if (activity != null && !activity.isFinishing()) {
-                            if (channel != null) {
-                                channel.invokeMethod(METHOD_ONPAYRESP, result);
-                            }
+                        MethodChannel channel = channelRef.get();
+                        if (activity != null && !activity.isFinishing() && channel != null) {
+                            channel.invokeMethod(METHOD_ONPAYRESP, result);
                         }
                     }
                 }
@@ -114,6 +114,7 @@ public class AlipayKit implements MethodChannel.MethodCallHandler {
             final String authInfo = call.argument(ARGUMENT_KEY_AUTHINFO);
             final boolean isShowLoading = call.argument(ARGUMENT_KEY_ISSHOWLOADING);
             final WeakReference<Activity> activityRef = new WeakReference<>(activity);
+            final WeakReference<MethodChannel> channelRef = new WeakReference<>(channel);
             new AsyncTask<String, String, Map<String, String>>(){
                 @Override
                 protected Map<String, String> doInBackground(String... strings) {
@@ -129,10 +130,9 @@ public class AlipayKit implements MethodChannel.MethodCallHandler {
                 protected void onPostExecute(Map<String, String> result) {
                     if (result != null) {
                         Activity activity = activityRef.get();
-                        if (activity != null && !activity.isFinishing()) {
-                            if (channel != null) {
-                                channel.invokeMethod(METHOD_ONAUTHRESP, result);
-                            }
+                        MethodChannel channel = channelRef.get();
+                        if (activity != null && !activity.isFinishing() && channel != null) {
+                            channel.invokeMethod(METHOD_ONAUTHRESP, result);
                         }
                     }
                 }
