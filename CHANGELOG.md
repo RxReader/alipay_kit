@@ -1,3 +1,7 @@
+## 2.0.0
+
+* 升级 Android/iOS SDK
+
 ## 1.1.1
 
 * gradle 依赖兼容 4.x.x

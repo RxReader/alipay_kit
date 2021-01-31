@@ -1,0 +1,8 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="io.github.v7lin.alipay_kit">
+
+    <queries>
+        <!-- targetSdkVersion>=30 -> Android 11 软件包可见性 -->
+        <package android:name="com.eg.android.AlipayGphone" />
+    </queries>
+</manifest>
