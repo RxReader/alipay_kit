@@ -6,7 +6,7 @@ part of 'alipay_resp.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AlipayResp _$AlipayRespFromJson(Map json) {
+AlipayResp _$AlipayRespFromJson(Map<String, dynamic> json) {
   return AlipayResp(
     resultStatus: intFromString(json['resultStatus'] as String),
     result: json['result'] as String,

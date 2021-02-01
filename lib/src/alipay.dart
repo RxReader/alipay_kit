@@ -41,12 +41,12 @@ class Alipay {
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case _METHOD_ONPAYRESP:
-        _payRespStreamController
-            .add(AlipayResp.fromJson(call.arguments as Map<dynamic, dynamic>));
+        _payRespStreamController.add(AlipayResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONAUTHRESP:
-        _authRespStreamController
-            .add(AlipayResp.fromJson(call.arguments as Map<dynamic, dynamic>));
+        _authRespStreamController.add(AlipayResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
     }
   }
@@ -61,7 +61,7 @@ class Alipay {
     return _authRespStreamController.stream;
   }
 
-  /// 检测支付宝是否已安装
+  /// 检测支付宝是否已安装 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
   Future<bool> isInstalled() {
     return _channel.invokeMethod<bool>(_METHOD_ISINSTALLED);
   }
@@ -109,7 +109,7 @@ class Alipay {
     );
   }
 
-  /// 支付
+  /// 支付 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
   Future<void> payOrderSign({
     @required String orderInfo,
     bool isShowLoading = true,
@@ -163,7 +163,7 @@ class Alipay {
     );
   }
 
-  /// 登录
+  /// 登录 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
   Future<void> authSign({
     @required String info,
     bool isShowLoading = true,

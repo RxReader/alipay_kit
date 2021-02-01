@@ -4,7 +4,6 @@ import 'package:json_annotation/json_annotation.dart';
 part 'alipay_auth_result.g.dart';
 
 @JsonSerializable(
-  anyMap: true,
   explicitToJson: true,
   fieldRename: FieldRename.snake,
 )
@@ -16,7 +15,7 @@ class AlipayAuthResult {
     this.userId,
   });
 
-  factory AlipayAuthResult.fromJson(Map<dynamic, dynamic> json) =>
+  factory AlipayAuthResult.fromJson(Map<String, dynamic> json) =>
       _$AlipayAuthResultFromJson(json);
 
   @JsonKey(
@@ -37,5 +36,5 @@ class AlipayAuthResult {
   final String authCode;
   final String userId;
 
-  Map<dynamic, dynamic> toJson() => _$AlipayAuthResultToJson(this);
+  Map<String, dynamic> toJson() => _$AlipayAuthResultToJson(this);
 }

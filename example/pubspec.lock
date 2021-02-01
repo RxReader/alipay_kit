@@ -7,7 +7,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.0.0"
+    version: "2.0.0-Android-Only"
   asn1lib:
     dependency: transitive
     description:
@@ -87,7 +87,7 @@ packages:
       name: json_annotation
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.0.1"
+    version: "3.1.1"
   matcher:
     dependency: transitive
     description:
@@ -115,7 +115,7 @@ packages:
       name: pedantic
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.9.0"
+    version: "1.9.2"
   pointycastle:
     dependency: transitive
     description:

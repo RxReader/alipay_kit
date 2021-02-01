@@ -5,7 +5,6 @@ import 'package:json_annotation/json_annotation.dart';
 part 'alipay_resp.g.dart';
 
 @JsonSerializable(
-  anyMap: true,
   explicitToJson: true,
 )
 class AlipayResp {
@@ -15,7 +14,7 @@ class AlipayResp {
     this.memo,
   });
 
-  factory AlipayResp.fromJson(Map<dynamic, dynamic> json) =>
+  factory AlipayResp.fromJson(Map<String, dynamic> json) =>
       _$AlipayRespFromJson(json);
 
   /// 支付状态，参考支付宝的文档https://docs.open.alipay.com/204/105695/
@@ -48,5 +47,5 @@ class AlipayResp {
     return null;
   }
 
-  Map<dynamic, dynamic> toJson() => _$AlipayRespToJson(this);
+  Map<String, dynamic> toJson() => _$AlipayRespToJson(this);
 }

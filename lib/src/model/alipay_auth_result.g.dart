@@ -6,7 +6,7 @@ part of 'alipay_auth_result.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AlipayAuthResult _$AlipayAuthResultFromJson(Map json) {
+AlipayAuthResult _$AlipayAuthResultFromJson(Map<String, dynamic> json) {
   return AlipayAuthResult(
     success: boolFromString(json['success'] as String),
     resultCode: intFromString(json['result_code'] as String),

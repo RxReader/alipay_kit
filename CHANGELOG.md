@@ -2,6 +2,11 @@
 
 * 升级 Android/iOS SDK
 
+## 2.0.0-Android-Only
+
+* 升级 Android
+* 移除 iOS 模块
+
 ## 1.1.1
 
 * gradle 依赖兼容 4.x.x
