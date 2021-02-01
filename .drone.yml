@@ -27,7 +27,7 @@ steps:
 #    path: /root/.gradle
 #  commands:
 #  - cd example/android/
-#  - ./gradlew :wechat_kit:check
+#  - ./gradlew :alipay_kit:check
 
 # docker run --rm -it -v ${PWD}:/src v7lin/clang:5.0.2-r0 sh -c "clang-format -style=file -i src/Classes/*.h src/Classes/*.m"
 #- name: ios-format
