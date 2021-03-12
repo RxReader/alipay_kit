@@ -5,7 +5,7 @@ version: 2.0.0 #-Android-Only
 homepage: https://github.com/v7lin/fake_alipay
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
+  sdk: ">=2.12.0 <3.0.0"
   flutter: ">=1.10.0"
 
 dependencies:
