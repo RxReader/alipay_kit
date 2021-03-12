@@ -62,19 +62,19 @@ class Alipay {
   }
 
   /// 检测支付宝是否已安装 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
-  Future<bool> isInstalled() {
+  Future<bool?> isInstalled() {
     return _channel.invokeMethod<bool>(_METHOD_ISINSTALLED);
   }
 
   /// 支付
   Future<void> payOrderJson({
-    @required String orderInfo,
+    required String orderInfo,
     String signType = SIGNTYPE_RSA2,
-    @required String privateKey,
+    required String privateKey,
     bool isShowLoading = true,
   }) {
-    assert(orderInfo?.isNotEmpty ?? false);
-    assert(privateKey?.isNotEmpty ?? false);
+    assert(orderInfo.isNotEmpty);
+    assert(privateKey.isNotEmpty);
     return payOrderMap(
       orderInfo: json.decode(orderInfo) as Map<String, dynamic>,
       signType: signType,
@@ -85,16 +85,16 @@ class Alipay {
 
   /// 支付
   Future<void> payOrderMap({
-    @required Map<String, dynamic> orderInfo,
+    required Map<String, dynamic> orderInfo,
     String signType = SIGNTYPE_RSA2,
-    @required String privateKey,
+    required String privateKey,
     bool isShowLoading = true,
   }) {
-    assert(orderInfo?.isNotEmpty ?? false);
-    assert(privateKey?.isNotEmpty ?? false);
+    assert(orderInfo.isNotEmpty);
+    assert(privateKey.isNotEmpty);
     String charset = orderInfo['charset'] as String;
-    Encoding encoding =
-        (charset?.isNotEmpty ?? false) ? Encoding.getByName(charset) : null;
+    Encoding? encoding =
+        charset.isNotEmpty ? Encoding.getByName(charset) : null;
     encoding ??= utf8;
     Map<String, dynamic> clone = <String, dynamic>{
       ...orderInfo,
@@ -111,10 +111,10 @@ class Alipay {
 
   /// 支付 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
   Future<void> payOrderSign({
-    @required String orderInfo,
+    required String orderInfo,
     bool isShowLoading = true,
   }) {
-    assert(orderInfo?.isNotEmpty ?? false);
+    assert(orderInfo.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_PAY,
       <String, dynamic>{
@@ -126,21 +126,21 @@ class Alipay {
 
   /// 登录
   Future<void> auth({
-    @required String appId, // 支付宝分配给开发者的应用ID
-    @required String pid, // 签约的支付宝账号对应的支付宝唯一用户号，以2088开头的16位纯数字组成
-    @required String targetId, // 商户标识该次用户授权请求的ID，该值在商户端应保持唯一
+    required String appId, // 支付宝分配给开发者的应用ID
+    required String pid, // 签约的支付宝账号对应的支付宝唯一用户号，以2088开头的16位纯数字组成
+    required String targetId, // 商户标识该次用户授权请求的ID，该值在商户端应保持唯一
     String authType =
         AUTHTYPE_AUTHACCOUNT, // 标识授权类型，取值范围：AUTHACCOUNT 代表授权；LOGIN 代表登录
     String signType =
         SIGNTYPE_RSA2, // 商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA ，推荐使用 RSA2
-    @required String privateKey,
+    required String privateKey,
     bool isShowLoading = true,
   }) {
-    assert((appId?.isNotEmpty ?? false) && appId.length <= 16);
-    assert((pid?.isNotEmpty ?? false) && pid.length <= 16);
-    assert((targetId?.isNotEmpty ?? false) && targetId.length <= 32);
+    assert(appId.isNotEmpty && appId.length <= 16);
+    assert(pid.isNotEmpty && pid.length <= 16);
+    assert(targetId.isNotEmpty && targetId.length <= 32);
     assert(authType == AUTHTYPE_AUTHACCOUNT || authType == AUTHTYPE_LOGIN);
-    assert(privateKey?.isNotEmpty ?? false);
+    assert(privateKey.isNotEmpty);
     Map<String, dynamic> authInfo = <String, dynamic>{
       'apiname': 'com.alipay.account.auth',
       'method': 'alipay.open.auth.sdk.code.get',
@@ -165,10 +165,10 @@ class Alipay {
 
   /// 登录 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
   Future<void> authSign({
-    @required String info,
+    required String info,
     bool isShowLoading = true,
   }) {
-    assert(info != null && info.isNotEmpty);
+    assert(info.isNotEmpty);
     return _channel.invokeMethod<void>(
       _METHOD_AUTH,
       <String, dynamic>{
