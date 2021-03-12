@@ -12,10 +12,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-  asn1lib: ^0.6.5
-  pointycastle: ^1.0.0
-
-  json_annotation: '>=2.0.0 <4.0.0'
+  asn1lib: ^0.9.0-nullsafety.0
+  pointycastle: ^3.0.0-nullsafety.0
+  json_annotation: ^4.0.0
 
 dev_dependencies:
   flutter_test:
