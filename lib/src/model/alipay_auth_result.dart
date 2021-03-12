@@ -22,7 +22,7 @@ class AlipayAuthResult {
     fromJson: boolFromString,
     toJson: boolToString,
   )
-  final bool success;
+  final bool? success;
 
   /// 200 业务处理成功，会返回authCode
   /// 1005 账户已冻结，如有疑问，请联系支付宝技术支持
@@ -31,10 +31,10 @@ class AlipayAuthResult {
     fromJson: intFromString,
     toJson: intToString,
   )
-  final int resultCode;
+  final int? resultCode;
 
-  final String authCode;
-  final String userId;
+  final String? authCode;
+  final String? userId;
 
   Map<String, dynamic> toJson() => _$AlipayAuthResultToJson(this);
 }
