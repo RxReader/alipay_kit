@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:asn1lib/asn1lib.dart';
+// import 'package:asn1lib/asn1lib.dart';
 import 'package:pointycastle/pointycastle.dart';
 import 'package:pointycastle/signers/rsa_signer.dart';
 
@@ -31,16 +31,16 @@ class RsaKeyParser {
   }
 
   RSAPublicKey _parsePublic(ASN1Sequence sequence) {
-    BigInt modulus = (sequence.elements[0] as ASN1Integer).valueAsBigInteger;
-    BigInt exponent = (sequence.elements[1] as ASN1Integer).valueAsBigInteger;
+    BigInt modulus = (sequence.elements![0] as ASN1Integer).integer!;
+    BigInt exponent = (sequence.elements![1] as ASN1Integer).integer!;
     return RSAPublicKey(modulus, exponent);
   }
 
   RSAPrivateKey _parsePrivate(ASN1Sequence sequence) {
-    BigInt modulus = (sequence.elements[1] as ASN1Integer).valueAsBigInteger;
-    BigInt exponent = (sequence.elements[3] as ASN1Integer).valueAsBigInteger;
-    BigInt p = (sequence.elements[4] as ASN1Integer).valueAsBigInteger;
-    BigInt q = (sequence.elements[5] as ASN1Integer).valueAsBigInteger;
+    BigInt modulus = (sequence.elements![1] as ASN1Integer).integer!;
+    BigInt exponent = (sequence.elements![3] as ASN1Integer).integer!;
+    BigInt? p = (sequence.elements![4] as ASN1Integer).integer;
+    BigInt? q = (sequence.elements![5] as ASN1Integer).integer;
     return RSAPrivateKey(modulus, exponent, p, q);
   }
 
@@ -56,15 +56,15 @@ class RsaKeyParser {
   }
 
   ASN1Sequence _pkcs8PublicSequence(ASN1Sequence sequence) {
-    ASN1Object object = sequence.elements[1];
-    List<int> bytes = object.valueBytes().sublist(1);
+    ASN1Object object = sequence.elements![1];
+    List<int> bytes = object.valueBytes!.sublist(1);
     ASN1Parser parser = ASN1Parser(Uint8List.fromList(bytes));
     return parser.nextObject() as ASN1Sequence;
   }
 
   ASN1Sequence _pkcs8PrivateSequence(ASN1Sequence sequence) {
-    ASN1Object object = sequence.elements[2];
-    Uint8List bytes = object.valueBytes();
+    ASN1Object object = sequence.elements![2];
+    Uint8List bytes = object.valueBytes!;
     ASN1Parser parser = ASN1Parser(bytes);
     return parser.nextObject() as ASN1Sequence;
   }
