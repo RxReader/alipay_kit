@@ -2,7 +2,7 @@ int? intFromString(String json) {
   return json.isNotEmpty ? int.parse(json) : null;
 }
 
-String intToString(int object) {
+String? intToString(int? object) {
   return object.toString();
 }
 

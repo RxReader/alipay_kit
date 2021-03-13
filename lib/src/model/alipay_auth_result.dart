@@ -9,7 +9,7 @@ part 'alipay_auth_result.g.dart';
 )
 class AlipayAuthResult {
   AlipayAuthResult({
-    this.success,
+    required this.success,
     this.resultCode,
     this.authCode,
     this.userId,
@@ -22,7 +22,7 @@ class AlipayAuthResult {
     fromJson: boolFromString,
     toJson: boolToString,
   )
-  final bool? success;
+  final bool success;
 
   /// 200 业务处理成功，会返回authCode
   /// 1005 账户已冻结，如有疑问，请联系支付宝技术支持
