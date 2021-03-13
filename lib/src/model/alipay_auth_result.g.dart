@@ -10,8 +10,8 @@ AlipayAuthResult _$AlipayAuthResultFromJson(Map<String, dynamic> json) {
   return AlipayAuthResult(
     success: boolFromString(json['success'] as String),
     resultCode: intFromString(json['result_code'] as String),
-    authCode: json['auth_code'] as String,
-    userId: json['user_id'] as String,
+    authCode: json['auth_code'] as String?,
+    userId: json['user_id'] as String?,
   );
 }
 

@@ -21,8 +21,8 @@ dev_dependencies:
 
   pedantic:
 
-  build_runner:
-  json_serializable: 
+  build_runner: 1.11.5
+  json_serializable: 4.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

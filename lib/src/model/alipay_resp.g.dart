@@ -9,8 +9,8 @@ part of 'alipay_resp.dart';
 AlipayResp _$AlipayRespFromJson(Map<String, dynamic> json) {
   return AlipayResp(
     resultStatus: intFromString(json['resultStatus'] as String),
-    result: json['result'] as String,
-    memo: json['memo'] as String,
+    result: json['result'] as String?,
+    memo: json['memo'] as String?,
   );
 }
 
