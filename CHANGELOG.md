@@ -1,4 +1,4 @@
-## 2.1.0
+## 2.1.0-nullsafety
 
 * nullsafety
 * 不再支持 Android embedding v1
