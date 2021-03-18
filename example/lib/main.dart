@@ -36,8 +36,10 @@ class _HomeState extends State<Home> {
 
   final Alipay _alipay = Alipay();
 
-  late final StreamSubscription<AlipayResp> _pay = _alipay.payResp().listen(_listenPay);
-  late final StreamSubscription<AlipayResp> _auth = _alipay.authResp().listen(_listenAuth);
+  late final StreamSubscription<AlipayResp> _pay =
+      _alipay.payResp().listen(_listenPay);
+  late final StreamSubscription<AlipayResp> _auth =
+      _alipay.authResp().listen(_listenAuth);
 
   @override
   void initState() {

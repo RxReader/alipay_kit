@@ -29,18 +29,23 @@ class Alipay {
   static const String AUTHTYPE_AUTHACCOUNT = 'AUTHACCOUNT';
   static const String AUTHTYPE_LOGIN = 'LOGIN';
 
-  final MethodChannel _channel = const MethodChannel('v7lin.github.io/alipay_kit');
+  final MethodChannel _channel =
+      const MethodChannel('v7lin.github.io/alipay_kit');
 
-  final StreamController<AlipayResp> _payRespStreamController = StreamController<AlipayResp>.broadcast();
-  final StreamController<AlipayResp> _authRespStreamController = StreamController<AlipayResp>.broadcast();
+  final StreamController<AlipayResp> _payRespStreamController =
+      StreamController<AlipayResp>.broadcast();
+  final StreamController<AlipayResp> _authRespStreamController =
+      StreamController<AlipayResp>.broadcast();
 
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {
       case _METHOD_ONPAYRESP:
-        _payRespStreamController.add(AlipayResp.fromJson((call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _payRespStreamController.add(AlipayResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
       case _METHOD_ONAUTHRESP:
-        _authRespStreamController.add(AlipayResp.fromJson((call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
+        _authRespStreamController.add(AlipayResp.fromJson(
+            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
         break;
     }
   }
@@ -91,7 +96,8 @@ class Alipay {
     final String param = _param(clone, encoding);
     final String sign = _sign(clone, signType, privateKey);
     return payOrderSign(
-      orderInfo: '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
+      orderInfo:
+          '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
       isShowLoading: isShowLoading,
     );
   }
@@ -115,8 +121,10 @@ class Alipay {
     required String appId, // 支付宝分配给开发者的应用ID
     required String pid, // 签约的支付宝账号对应的支付宝唯一用户号，以2088开头的16位纯数字组成
     required String targetId, // 商户标识该次用户授权请求的ID，该值在商户端应保持唯一
-    String authType = AUTHTYPE_AUTHACCOUNT, // 标识授权类型，取值范围：AUTHACCOUNT 代表授权；LOGIN 代表登录
-    String signType = SIGNTYPE_RSA2, // 商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA ，推荐使用 RSA2
+    String authType =
+        AUTHTYPE_AUTHACCOUNT, // 标识授权类型，取值范围：AUTHACCOUNT 代表授权；LOGIN 代表登录
+    String signType =
+        SIGNTYPE_RSA2, // 商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA ，推荐使用 RSA2
     required String privateKey,
     bool isShowLoading = true,
   }) {
@@ -158,7 +166,10 @@ class Alipay {
   }
 
   String _param(Map<String, dynamic> map, Encoding encoding) {
-    return map.entries.map((MapEntry<String, dynamic> e) => '${e.key}=${Uri.encodeQueryComponent('${e.value}', encoding: encoding)}').join('&');
+    return map.entries
+        .map((MapEntry<String, dynamic> e) =>
+            '${e.key}=${Uri.encodeQueryComponent('${e.value}', encoding: encoding)}')
+        .join('&');
   }
 
   String _sign(Map<String, dynamic> map, String signType, String privateKey) {
@@ -169,10 +180,12 @@ class Alipay {
     String sign;
     switch (signType) {
       case SIGNTYPE_RSA:
-        sign = base64.encode(RsaSigner.sha1Rsa(privateKey).sign(utf8.encode(content)));
+        sign = base64
+            .encode(RsaSigner.sha1Rsa(privateKey).sign(utf8.encode(content)));
         break;
       case SIGNTYPE_RSA2:
-        sign = base64.encode(RsaSigner.sha256Rsa(privateKey).sign(utf8.encode(content)));
+        sign = base64
+            .encode(RsaSigner.sha256Rsa(privateKey).sign(utf8.encode(content)));
         break;
       default:
         throw UnsupportedError('Alipay sign_type($signType) is not supported!');

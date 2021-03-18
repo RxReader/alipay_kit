@@ -14,7 +14,8 @@ class NullableStringToBoolConverter implements JsonConverter<bool, String?> {
   }
 }
 
-class NullableStringToNullableIntConverter implements JsonConverter<int?, String?> {
+class NullableStringToNullableIntConverter
+    implements JsonConverter<int?, String?> {
   const NullableStringToNullableIntConverter();
 
   @override
