@@ -29,16 +29,16 @@ class AlipayResp {
     fromJson: intFromString,
     toJson: intToString,
   )
-  final int resultStatus;
+  final int? resultStatus;
 
   /// 支付后结果
-  final String result;
+  final String? result;
 
-  final String memo;
+  final String? memo;
 
-  AlipayAuthResult parseAuthResult() {
+  AlipayAuthResult? parseAuthResult() {
     if (resultStatus == 9000) {
-      if (result != null && result.isNotEmpty) {
+      if (result != null && result!.isNotEmpty) {
         Map<String, String> params =
             Uri.parse('alipay://alipay?$result').queryParameters;
         return AlipayAuthResult.fromJson(params);

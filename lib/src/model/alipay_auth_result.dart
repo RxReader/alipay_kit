@@ -9,7 +9,7 @@ part 'alipay_auth_result.g.dart';
 )
 class AlipayAuthResult {
   AlipayAuthResult({
-    this.success,
+    required this.success,
     this.resultCode,
     this.authCode,
     this.userId,
@@ -31,10 +31,10 @@ class AlipayAuthResult {
     fromJson: intFromString,
     toJson: intToString,
   )
-  final int resultCode;
+  final int? resultCode;
 
-  final String authCode;
-  final String userId;
+  final String? authCode;
+  final String? userId;
 
   Map<String, dynamic> toJson() => _$AlipayAuthResultToJson(this);
 }

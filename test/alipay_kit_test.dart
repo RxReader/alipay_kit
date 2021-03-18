@@ -27,7 +27,7 @@ void main() {
                 'onPayResp',
                 json.decode(
                     '{"resultStatus":"6001","result":"","memo":"支付未完成。"}'))),
-            (ByteData data) {
+            (ByteData? data) {
               // mock success
             },
           ));

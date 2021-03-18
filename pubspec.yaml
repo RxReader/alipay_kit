@@ -5,17 +5,15 @@ version: 2.0.0 #-Android-Only
 homepage: https://github.com/v7lin/fake_alipay
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-  flutter: ">=1.10.0"
+  sdk: ">=2.12.0 <3.0.0"
+  # flutter: ">=1.10.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-  asn1lib: ^0.6.5
-  pointycastle: ^1.0.0
-
-  json_annotation: '>=2.0.0 <4.0.0'
+  pointycastle: ^3.0.0-nullsafety.0
+  json_annotation: ^4.0.0
 
 dev_dependencies:
   flutter_test:
@@ -23,8 +21,8 @@ dev_dependencies:
 
   pedantic:
 
-  build_runner:
-  json_serializable:
+  build_runner: 1.11.5
+  json_serializable: 4.0.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
