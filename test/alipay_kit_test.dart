@@ -48,7 +48,7 @@ void main() {
   });
 
   test('pay', () async {
-    StreamSubscription<AlipayResp> sub =
+    final StreamSubscription<AlipayResp> sub =
         alipay.payResp().listen((AlipayResp resp) {
       expect(resp.resultStatus, 6001);
     });

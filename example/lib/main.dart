@@ -1,24 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:alipay_kit/alipay_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 void main() {
-  runZoned(() {
-    runApp(MyApp());
-  }, onError: (Object error, StackTrace stack) {
-    print(error);
-    print(stack);
-  });
-
-  if (Platform.isAndroid) {
-    SystemUiOverlayStyle systemUiOverlayStyle =
-        const SystemUiOverlayStyle(statusBarColor: Colors.transparent);
-    SystemChrome.setSystemUIOverlayStyle(systemUiOverlayStyle);
-  }
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -47,34 +34,30 @@ class _HomeState extends State<Home> {
   static const String _ALIPAY_PRIVATEKEY =
       'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
-  Alipay _alipay = Alipay();
+  final Alipay _alipay = Alipay();
 
-  StreamSubscription<AlipayResp> _pay;
-  StreamSubscription<AlipayResp> _auth;
+  late final StreamSubscription<AlipayResp> _pay = _alipay.payResp().listen(_listenPay);
+  late final StreamSubscription<AlipayResp> _auth = _alipay.authResp().listen(_listenAuth);
 
   @override
   void initState() {
     super.initState();
-    _pay = _alipay.payResp().listen(_listenPay);
-    _auth = _alipay.authResp().listen(_listenAuth);
   }
 
   void _listenPay(AlipayResp resp) {
-    String content = 'pay: ${resp.resultStatus} - ${resp.result}';
+    final String content = 'pay: ${resp.resultStatus} - ${resp.result}';
     _showTips('支付', content);
   }
 
   void _listenAuth(AlipayResp resp) {
-    String content = 'pay: ${resp.resultStatus} - ${resp.result}';
+    final String content = 'pay: ${resp.resultStatus} - ${resp.result}';
     _showTips('授权登录', content);
   }
 
   @override
   void dispose() {
-    _pay?.cancel();
-    _pay = null;
-    _auth?.cancel();
-    _auth = null;
+    _pay.cancel();
+    _auth.cancel();
     super.dispose();
   }
 
@@ -89,14 +72,14 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('环境检查'),
             onTap: () async {
-              String content = 'alipay: ${await _alipay.isInstalled()}';
+              final String content = 'alipay: ${await _alipay.isInstalled()}';
               _showTips('环境检查', content);
             },
           ),
           ListTile(
             title: const Text('支付'),
             onTap: () {
-              Map<String, dynamic> bizContent = <String, dynamic>{
+              final Map<String, dynamic> bizContent = <String, dynamic>{
                 'timeout_express': '30m',
                 'product_code': 'QUICK_MSECURITY_PAY',
                 'total_amount': '0.01',
@@ -104,7 +87,7 @@ class _HomeState extends State<Home> {
                 'body': '我是测试数据',
                 'out_trade_no': '123456789',
               };
-              Map<String, dynamic> orderInfo = <String, dynamic>{
+              final Map<String, dynamic> orderInfo = <String, dynamic>{
                 'app_id': _ALIPAY_APPID,
                 'biz_content': json.encode(bizContent),
                 'charset': 'utf-8',

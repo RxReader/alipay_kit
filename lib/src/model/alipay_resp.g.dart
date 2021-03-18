@@ -8,7 +8,8 @@ part of 'alipay_resp.dart';
 
 AlipayResp _$AlipayRespFromJson(Map<String, dynamic> json) {
   return AlipayResp(
-    resultStatus: intFromString(json['resultStatus'] as String),
+    resultStatus: const NullableStringToNullableIntConverter()
+        .fromJson(json['resultStatus'] as String?),
     result: json['result'] as String?,
     memo: json['memo'] as String?,
   );
@@ -16,7 +17,8 @@ AlipayResp _$AlipayRespFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$AlipayRespToJson(AlipayResp instance) =>
     <String, dynamic>{
-      'resultStatus': intToString(instance.resultStatus),
+      'resultStatus': const NullableStringToNullableIntConverter()
+          .toJson(instance.resultStatus),
       'result': instance.result,
       'memo': instance.memo,
     };

@@ -1,3 +1,8 @@
+## 2.1.0
+
+* nullsafety
+* 不再支持 Android embedding v1
+
 ## 2.0.0
 
 * 升级 Android/iOS SDK

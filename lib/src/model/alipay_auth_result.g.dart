@@ -8,8 +8,10 @@ part of 'alipay_auth_result.dart';
 
 AlipayAuthResult _$AlipayAuthResultFromJson(Map<String, dynamic> json) {
   return AlipayAuthResult(
-    success: boolFromString(json['success'] as String),
-    resultCode: intFromString(json['result_code'] as String),
+    success: const NullableStringToBoolConverter()
+        .fromJson(json['success'] as String?),
+    resultCode: const NullableStringToNullableIntConverter()
+        .fromJson(json['result_code'] as String?),
     authCode: json['auth_code'] as String?,
     userId: json['user_id'] as String?,
   );
@@ -17,8 +19,9 @@ AlipayAuthResult _$AlipayAuthResultFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$AlipayAuthResultToJson(AlipayAuthResult instance) =>
     <String, dynamic>{
-      'success': boolToString(instance.success),
-      'result_code': intToString(instance.resultCode),
+      'success': const NullableStringToBoolConverter().toJson(instance.success),
+      'result_code': const NullableStringToNullableIntConverter()
+          .toJson(instance.resultCode),
       'auth_code': instance.authCode,
       'user_id': instance.userId,
     };

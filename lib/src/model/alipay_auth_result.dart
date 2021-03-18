@@ -1,4 +1,4 @@
-import 'package:alipay_kit/src/json/string_converter.dart';
+import 'package:alipay_kit/src/json/jser_converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'alipay_auth_result.g.dart';
@@ -18,19 +18,13 @@ class AlipayAuthResult {
   factory AlipayAuthResult.fromJson(Map<String, dynamic> json) =>
       _$AlipayAuthResultFromJson(json);
 
-  @JsonKey(
-    fromJson: boolFromString,
-    toJson: boolToString,
-  )
+  @NullableStringToBoolConverter()
   final bool success;
 
   /// 200 业务处理成功，会返回authCode
   /// 1005 账户已冻结，如有疑问，请联系支付宝技术支持
   /// 202 系统异常，请稍后再试或联系支付宝技术支持
-  @JsonKey(
-    fromJson: intFromString,
-    toJson: intToString,
-  )
+  @NullableStringToNullableIntConverter()
   final int? resultCode;
 
   final String? authCode;

@@ -1,4 +1,4 @@
-import 'package:alipay_kit/src/json/string_converter.dart';
+import 'package:alipay_kit/src/json/jser_converter.dart';
 import 'package:alipay_kit/src/model/alipay_auth_result.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -25,10 +25,7 @@ class AlipayResp {
   /// 5000——重复请求
   /// 6001——用户中途取消
   /// 6002——网络连接出错
-  @JsonKey(
-    fromJson: intFromString,
-    toJson: intToString,
-  )
+  @NullableStringToNullableIntConverter()
   final int? resultStatus;
 
   /// 支付后结果
@@ -36,10 +33,14 @@ class AlipayResp {
 
   final String? memo;
 
+  bool get isSuccessful => resultStatus == 9000;
+
+  bool get isCancelled => resultStatus == 6001;
+
   AlipayAuthResult? parseAuthResult() {
-    if (resultStatus == 9000) {
-      if (result != null && result!.isNotEmpty) {
-        Map<String, String> params =
+    if (isSuccessful) {
+      if (result?.isNotEmpty ?? false) {
+        final Map<String, String> params =
             Uri.parse('alipay://alipay?$result').queryParameters;
         return AlipayAuthResult.fromJson(params);
       }

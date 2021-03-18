@@ -6,8 +6,8 @@ import 'package:pointycastle/signers/rsa_signer.dart';
 
 class RsaKeyParser {
   RSAPublicKey parsePublic(String key) {
-    List<String> rows = key.split('\n');
-    String header = rows.first;
+    final List<String> rows = key.split('\n');
+    final String header = rows.first;
     if (header == '-----BEGIN RSA PUBLIC KEY-----') {
       return _parsePublic(_parseSequence(rows));
     }
@@ -18,8 +18,8 @@ class RsaKeyParser {
   }
 
   RSAPrivateKey parsePrivate(String key) {
-    List<String> rows = key.split('\n');
-    String header = rows.first;
+    final List<String> rows = key.split('\n');
+    final String header = rows.first;
     if (header == '-----BEGIN RSA PRIVATE KEY-----') {
       return _parsePrivate(_parseSequence(rows));
     }
@@ -30,41 +30,41 @@ class RsaKeyParser {
   }
 
   RSAPublicKey _parsePublic(ASN1Sequence sequence) {
-    BigInt modulus = (sequence.elements![0] as ASN1Integer).integer!;
-    BigInt exponent = (sequence.elements![1] as ASN1Integer).integer!;
+    final BigInt modulus = (sequence.elements![0] as ASN1Integer).integer!;
+    final BigInt exponent = (sequence.elements![1] as ASN1Integer).integer!;
     return RSAPublicKey(modulus, exponent);
   }
 
   RSAPrivateKey _parsePrivate(ASN1Sequence sequence) {
-    BigInt modulus = (sequence.elements![1] as ASN1Integer).integer!;
-    BigInt exponent = (sequence.elements![3] as ASN1Integer).integer!;
-    BigInt? p = (sequence.elements![4] as ASN1Integer).integer;
-    BigInt? q = (sequence.elements![5] as ASN1Integer).integer;
+    final BigInt modulus = (sequence.elements![1] as ASN1Integer).integer!;
+    final BigInt exponent = (sequence.elements![3] as ASN1Integer).integer!;
+    final BigInt? p = (sequence.elements?[4] as ASN1Integer?)?.integer;
+    final BigInt? q = (sequence.elements?[5] as ASN1Integer?)?.integer;
     return RSAPrivateKey(modulus, exponent, p, q);
   }
 
   ASN1Sequence _parseSequence(List<String> rows) {
-    String keyText = rows
+    final String keyText = rows
         .skipWhile((String row) => row.startsWith('-----BEGIN'))
         .takeWhile((String row) => !row.startsWith('-----END'))
         .map((String row) => row.trim())
         .join('');
-    Uint8List keyBytes = Uint8List.fromList(base64.decode(keyText));
-    ASN1Parser asn1Parser = ASN1Parser(keyBytes);
+    final Uint8List keyBytes = Uint8List.fromList(base64.decode(keyText));
+    final ASN1Parser asn1Parser = ASN1Parser(keyBytes);
     return asn1Parser.nextObject() as ASN1Sequence;
   }
 
   ASN1Sequence _pkcs8PublicSequence(ASN1Sequence sequence) {
-    ASN1Object object = sequence.elements![1];
-    List<int> bytes = object.valueBytes!.sublist(1);
-    ASN1Parser parser = ASN1Parser(Uint8List.fromList(bytes));
+    final ASN1Object object = sequence.elements![1];
+    final List<int> bytes = object.valueBytes!.sublist(1);
+    final ASN1Parser parser = ASN1Parser(Uint8List.fromList(bytes));
     return parser.nextObject() as ASN1Sequence;
   }
 
   ASN1Sequence _pkcs8PrivateSequence(ASN1Sequence sequence) {
-    ASN1Object object = sequence.elements![2];
-    Uint8List bytes = object.valueBytes!;
-    ASN1Parser parser = ASN1Parser(bytes);
+    final ASN1Object object = sequence.elements![2];
+    final Uint8List bytes = object.valueBytes!;
+    final ASN1Parser parser = ASN1Parser(bytes);
     return parser.nextObject() as ASN1Sequence;
   }
 }
@@ -81,7 +81,7 @@ class RsaSigner {
     _rsaSigner
       ..reset()
       ..init(true, PrivateKeyParameter<RSAPrivateKey>(_privateKey));
-    RSASignature signature =
+    final RSASignature signature =
         _rsaSigner.generateSignature(Uint8List.fromList(message));
     return signature.bytes;
   }

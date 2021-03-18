@@ -1,57 +1,73 @@
 package io.github.v7lin.alipay_kit;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.os.AsyncTask;
+
 import androidx.annotation.NonNull;
+
+import com.alipay.sdk.app.AuthTask;
+import com.alipay.sdk.app.PayTask;
+
+import java.lang.ref.WeakReference;
+import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
 import io.flutter.embedding.engine.plugins.activity.ActivityAware;
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.flutter.plugin.common.MethodCall;
+import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
+import io.flutter.plugin.common.MethodChannel.Result;
 
 /**
  * AlipayKitPlugin
  */
-public class AlipayKitPlugin implements FlutterPlugin, ActivityAware {
-    // This static function is optional and equivalent to onAttachedToEngine. It supports the old
-    // pre-Flutter-1.12 Android projects. You are encouraged to continue supporting
-    // plugin registration via this function while apps migrate to use the new Android APIs
-    // post-flutter-1.12 via https://flutter.dev/go/android-project-migration.
+public class AlipayKitPlugin implements FlutterPlugin, ActivityAware, MethodCallHandler {
     //
-    // It is encouraged to share logic between onAttachedToEngine and registerWith to keep
-    // them functionally equivalent. Only one of onAttachedToEngine or registerWith will be called
-    // depending on the user's project. onAttachedToEngine or registerWith must both be defined
-    // in the same class.
-    public static void registerWith(Registrar registrar) {
-        AlipayKit alipayKit = new AlipayKit(registrar.context(), registrar.activity());
-        alipayKit.startListening(registrar.messenger());
-    }
+
+    private static final String METHOD_ISINSTALLED = "isInstalled";
+    private static final String METHOD_PAY = "pay";
+    private static final String METHOD_AUTH = "auth";
+
+    private static final String METHOD_ONPAYRESP = "onPayResp";
+    private static final String METHOD_ONAUTHRESP = "onAuthResp";
+
+    private static final String ARGUMENT_KEY_ORDERINFO = "orderInfo";
+    private static final String ARGUMENT_KEY_AUTHINFO = "authInfo";
+    private static final String ARGUMENT_KEY_ISSHOWLOADING = "isShowLoading";
+
+    /// The MethodChannel that will the communication between Flutter and native Android
+    ///
+    /// This local reference serves to register the plugin with the Flutter Engine and unregister it
+    /// when the Flutter Engine is detached from the Activity
+    private MethodChannel channel;
+    private Context applicationContext;
+    private Activity activity;
 
     // --- FlutterPlugin
 
-    private final AlipayKit alipayKit;
-
-    public AlipayKitPlugin() {
-        alipayKit = new AlipayKit();
-    }
-
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding binding) {
-        alipayKit.setApplicationContext(binding.getApplicationContext());
-        alipayKit.setActivity(null);
-        alipayKit.startListening(binding.getBinaryMessenger());
+        channel = new MethodChannel(binding.getBinaryMessenger(), "v7lin.github.io/alipay_kit");
+        channel.setMethodCallHandler(this);
+        applicationContext = binding.getApplicationContext();
     }
 
     @Override
     public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
-        alipayKit.stopListening();
-        alipayKit.setActivity(null);
-        alipayKit.setApplicationContext(null);
+        channel.setMethodCallHandler(null);
+        channel = null;
+        applicationContext = null;
     }
 
     // --- ActivityAware
 
     @Override
     public void onAttachedToActivity(@NonNull ActivityPluginBinding binding) {
-        alipayKit.setActivity(binding.getActivity());
+        activity = binding.getActivity();
     }
 
     @Override
@@ -66,6 +82,80 @@ public class AlipayKitPlugin implements FlutterPlugin, ActivityAware {
 
     @Override
     public void onDetachedFromActivity() {
-        alipayKit.setActivity(null);
+        activity = null;
+    }
+
+    // --- MethodCallHandler
+
+    @Override
+    public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
+        if (METHOD_ISINSTALLED.equals(call.method)) {
+            boolean isInstalled = false;
+            try {
+                final PackageManager packageManager = applicationContext.getPackageManager();
+                PackageInfo info = packageManager.getPackageInfo("com.eg.android.AlipayGphone", PackageManager.GET_SIGNATURES);
+                isInstalled = info != null;
+            } catch (PackageManager.NameNotFoundException ignore) {
+            }
+            result.success(isInstalled);
+        } else if (METHOD_PAY.equals(call.method)) {
+            final String orderInfo = call.argument(ARGUMENT_KEY_ORDERINFO);
+            final boolean isShowLoading = call.argument(ARGUMENT_KEY_ISSHOWLOADING);
+            final WeakReference<Activity> activityRef = new WeakReference<>(activity);
+            final WeakReference<MethodChannel> channelRef = new WeakReference<>(channel);
+            new AsyncTask<String, String, Map<String, String>>() {
+                @Override
+                protected Map<String, String> doInBackground(String... params) {
+                    Activity activity = activityRef.get();
+                    if (activity != null && !activity.isFinishing()) {
+                        PayTask task = new PayTask(activity);
+                        return task.payV2(orderInfo, isShowLoading);
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Map<String, String> result) {
+                    if (result != null) {
+                        Activity activity = activityRef.get();
+                        MethodChannel channel = channelRef.get();
+                        if (activity != null && !activity.isFinishing() && channel != null) {
+                            channel.invokeMethod(METHOD_ONPAYRESP, result);
+                        }
+                    }
+                }
+            }.execute();
+            result.success(null);
+        } else if (METHOD_AUTH.equals(call.method)) {
+            final String authInfo = call.argument(ARGUMENT_KEY_AUTHINFO);
+            final boolean isShowLoading = call.argument(ARGUMENT_KEY_ISSHOWLOADING);
+            final WeakReference<Activity> activityRef = new WeakReference<>(activity);
+            final WeakReference<MethodChannel> channelRef = new WeakReference<>(channel);
+            new AsyncTask<String, String, Map<String, String>>(){
+                @Override
+                protected Map<String, String> doInBackground(String... strings) {
+                    Activity activity = activityRef.get();
+                    if (activity != null && !activity.isFinishing()) {
+                        AuthTask task = new AuthTask(activity);
+                        return task.authV2(authInfo, isShowLoading);
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Map<String, String> result) {
+                    if (result != null) {
+                        Activity activity = activityRef.get();
+                        MethodChannel channel = channelRef.get();
+                        if (activity != null && !activity.isFinishing() && channel != null) {
+                            channel.invokeMethod(METHOD_ONAUTHRESP, result);
+                        }
+                    }
+                }
+            }.execute();
+            result.success(null);
+        } else {
+            result.notImplemented();
+        }
     }
 }
