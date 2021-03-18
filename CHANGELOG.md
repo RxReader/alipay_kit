@@ -1,3 +1,7 @@
+## 2.1.0-nullsafety-Android-Only
+
+* 同 2.1.0-nullsafety
+
 ## 2.1.0-nullsafety
 
 * nullsafety
