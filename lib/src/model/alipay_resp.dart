@@ -8,7 +8,7 @@ part 'alipay_resp.g.dart';
   explicitToJson: true,
 )
 class AlipayResp {
-  AlipayResp({
+  const AlipayResp({
     this.resultStatus,
     this.result,
     this.memo,

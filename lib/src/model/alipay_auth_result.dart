@@ -8,7 +8,7 @@ part 'alipay_auth_result.g.dart';
   fieldRename: FieldRename.snake,
 )
 class AlipayAuthResult {
-  AlipayAuthResult({
+  const AlipayAuthResult({
     required this.success,
     this.resultCode,
     this.authCode,
