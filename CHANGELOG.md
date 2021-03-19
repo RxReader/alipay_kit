@@ -1,3 +1,7 @@
+## 2.2.0-nullsafety
+
+* 同 2.2.0-nullsafety-Android-Only
+
 ## 2.2.0-nullsafety-Android-Only
 
 * Alipay 单例
