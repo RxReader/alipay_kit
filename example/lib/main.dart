@@ -34,12 +34,10 @@ class _HomeState extends State<Home> {
   static const String _ALIPAY_PRIVATEKEY =
       'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
-  final Alipay _alipay = Alipay();
-
   late final StreamSubscription<AlipayResp> _pay =
-      _alipay.payResp().listen(_listenPay);
+      Alipay.instance.payResp().listen(_listenPay);
   late final StreamSubscription<AlipayResp> _auth =
-      _alipay.authResp().listen(_listenAuth);
+      Alipay.instance.authResp().listen(_listenAuth);
 
   @override
   void initState() {
@@ -74,7 +72,8 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('环境检查'),
             onTap: () async {
-              final String content = 'alipay: ${await _alipay.isInstalled()}';
+              final String content =
+                  'alipay: ${await Alipay.instance.isInstalled()}';
               _showTips('环境检查', content);
             },
           ),
@@ -97,7 +96,7 @@ class _HomeState extends State<Home> {
                 'timestamp': '2016-07-29 16:55:53',
                 'version': '1.0',
               };
-              _alipay.payOrderJson(
+              Alipay.instance.payOrderJson(
                 orderInfo: json.encode(orderInfo),
                 signType: _ALIPAY_USE_RSA2
                     ? Alipay.SIGNTYPE_RSA2
@@ -109,7 +108,7 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('授权'),
             onTap: () {
-              _alipay.auth(
+              Alipay.instance.auth(
                 appId: _ALIPAY_APPID,
                 pid: _ALIPAY_PID,
                 targetId: _ALIPAY_TARGETID,

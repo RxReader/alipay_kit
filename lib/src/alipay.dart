@@ -8,9 +8,11 @@ import 'package:flutter/services.dart';
 ///
 class Alipay {
   ///
-  Alipay() {
-    _channel.setMethodCallHandler(_handleMethod);
-  }
+  Alipay._();
+
+  static Alipay get instance => _instance;
+
+  static final Alipay _instance = Alipay._();
 
   static const String _METHOD_ISINSTALLED = 'isInstalled';
   static const String _METHOD_PAY = 'pay';
@@ -29,8 +31,9 @@ class Alipay {
   static const String AUTHTYPE_AUTHACCOUNT = 'AUTHACCOUNT';
   static const String AUTHTYPE_LOGIN = 'LOGIN';
 
-  final MethodChannel _channel =
-      const MethodChannel('v7lin.github.io/alipay_kit');
+  late final MethodChannel _channel =
+      const MethodChannel('v7lin.github.io/alipay_kit')
+        ..setMethodCallHandler(_handleMethod);
 
   final StreamController<AlipayResp> _payRespStreamController =
       StreamController<AlipayResp>.broadcast();

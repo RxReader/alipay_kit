@@ -1,8 +1,8 @@
 PODS:
-  - alipay_kit (2.1.0):
-    - alipay_kit/vendor (= 2.1.0)
+  - alipay_kit (2.2.0):
+    - alipay_kit/vendor (= 2.2.0)
     - Flutter
-  - alipay_kit/vendor (2.1.0):
+  - alipay_kit/vendor (2.2.0):
     - Flutter
   - Flutter (1.0.0)
 
@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  alipay_kit: 50907f754fbab382240403051c032d2fbbd6dcf6
+  alipay_kit: 8c2d593fc2a981a835898029a0c8156ac698dadc
   Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
 
 PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d

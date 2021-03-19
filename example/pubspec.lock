@@ -7,7 +7,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.1.0-nullsafety-Android-Only"
+    version: "2.2.0-nullsafety-Android-Only"
   async:
     dependency: transitive
     description:
