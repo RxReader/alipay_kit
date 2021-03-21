@@ -90,8 +90,9 @@ dependencies:
 
 ```
 dependencies:
+  # 请不要加 ^
   # 请不要进行配置 iOS 相关配置，否则 Apple Store 审核时会拒绝
-  alipay_kit: ^${latestTag}-Android-Only
+  alipay_kit: ${latestTag}-Android-Only
 ```
 
 * example
