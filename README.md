@@ -1,7 +1,5 @@
 # alipay_kit
 
-[![Build Status](https://cloud.drone.io/api/badges/rxreader/alipay_kit/status.svg)](https://cloud.drone.io/rxreader/alipay_kit)
-[![Codecov](https://codecov.io/gh/rxreader/alipay_kit/branch/master/graph/badge.svg)](https://codecov.io/gh/rxreader/alipay_kit)
 [![GitHub Tag](https://img.shields.io/github/tag/rxreader/alipay_kit.svg)](https://github.com/rxreader/alipay_kit/releases)
 [![Pub Package](https://img.shields.io/pub/v/alipay_kit.svg)](https://pub.dartlang.org/packages/alipay_kit)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/rxreader/alipay_kit/blob/master/LICENSE)
