@@ -41,6 +41,23 @@ buildscript {
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
 ```
 
+UTDID冲突的问题解决方案
+```shell
+java.lang.RuntimeException: Duplicate class com.ta.utdid2.a.a.a found in modules alicloud-android-utdid-2.5.1-proguard.jar
+```
+```groovy
+rootProject.subprojects {
+    project.configurations.all {
+        resolutionStrategy.eachDependency { details ->
+            if (details.requested.group == 'com.aliyun.ams' && details.requested.name == 'alicloud-android-utdid') {
+                // 用已存在的包替换掉冲突包
+                details.useTarget group: 'androidx.annotation', name: 'annotation', version: '1.1.0'
+            }
+        }
+    }
+}
+```
+
 ## ios
 
 ```
