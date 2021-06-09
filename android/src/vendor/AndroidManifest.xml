@@ -4,5 +4,6 @@
     <queries>
         <!-- targetSdkVersion>=30 -> Android 11 软件包可见性 -->
         <package android:name="com.eg.android.AlipayGphone" />
+        <package android:name="hk.alipay.wallet" />
     </queries>
 </manifest>

@@ -7,14 +7,14 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "2.2.0-nullsafety"
+    version: "2.2.1"
   async:
     dependency: transitive
     description:
       name: async
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.5.0"
+    version: "2.6.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -50,13 +50,20 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "1.15.0"
+  convert:
+    dependency: transitive
+    description:
+      name: convert
+      url: "https://pub.flutter-io.cn"
+    source: hosted
+    version: "3.0.0"
   cupertino_icons:
     dependency: "direct main"
     description:
       name: cupertino_icons
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.3"
   fake_async:
     dependency: transitive
     description:
@@ -80,7 +87,7 @@ packages:
       name: json_annotation
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "4.0.0"
+    version: "4.0.1"
   matcher:
     dependency: transitive
     description:
@@ -115,7 +122,7 @@ packages:
       name: pointycastle
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "3.0.0-nullsafety.2"
+    version: "3.1.1"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -127,7 +134,7 @@ packages:
       name: source_span
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "1.8.0"
+    version: "1.8.1"
   stack_trace:
     dependency: transitive
     description:
@@ -162,7 +169,7 @@ packages:
       name: test_api
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.2.19"
+    version: "0.3.0"
   typed_data:
     dependency: transitive
     description:

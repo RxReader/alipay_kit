@@ -1,5 +1,5 @@
 group 'io.github.v7lin.alipay_kit'
-version '2.2.0'
+version '2.2.1'
 
 buildscript {
     repositories {
@@ -55,6 +55,6 @@ android {
 dependencies {
     implementation 'androidx.annotation:annotation:1.0.0'
 
-    // v15.8.01
-    vendorImplementation(name: 'alipaysdk-15.8.01.210112203525', ext: 'aar')
+    // v15.8.03
+    vendorImplementation(name: 'alipaysdk-15.8.03.210428205839', ext: 'aar')
 }
