@@ -62,7 +62,7 @@ rootProject.subprojects {
 
 #### 获取 android 微信签名信息
 
-非官方方法
+非官方方法 -> 反编译 GenSignature_0630.apk 所得
 
 命令：
 
