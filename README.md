@@ -41,10 +41,12 @@ buildscript {
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
 ```
 
-UTDID冲突的问题解决方案
+#### UTDID冲突的问题解决方案
+
 ```shell
 java.lang.RuntimeException: Duplicate class com.ta.utdid2.a.a.a found in modules alicloud-android-utdid-2.5.1-proguard.jar
 ```
+
 ```groovy
 rootProject.subprojects {
     project.configurations.all {
