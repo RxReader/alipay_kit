@@ -28,7 +28,7 @@ extension UnsafeAlipay on Alipay {
     final String sign = _sign(clone, signType, privateKey);
     return pay(
       orderInfo:
-      '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
+          '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
       isShowLoading: isShowLoading,
     );
   }
@@ -71,7 +71,7 @@ extension UnsafeAlipay on Alipay {
   String _param(Map<String, dynamic> map, Encoding encoding) {
     return map.entries
         .map((MapEntry<String, dynamic> e) =>
-    '${e.key}=${Uri.encodeQueryComponent('${e.value}', encoding: encoding)}')
+            '${e.key}=${Uri.encodeQueryComponent('${e.value}', encoding: encoding)}')
         .join('&');
   }
 
