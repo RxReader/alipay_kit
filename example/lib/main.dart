@@ -35,9 +35,9 @@ class _HomeState extends State<Home> {
   static const String _ALIPAY_PRIVATEKEY =
       'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
-  late final StreamSubscription<AlipayResp> _pay =
+  late final StreamSubscription<AlipayResp> _paySubs =
       Alipay.instance.payResp().listen(_listenPay);
-  late final StreamSubscription<AlipayResp> _auth =
+  late final StreamSubscription<AlipayResp> _authSubs =
       Alipay.instance.authResp().listen(_listenAuth);
 
   @override
@@ -57,8 +57,8 @@ class _HomeState extends State<Home> {
 
   @override
   void dispose() {
-    _pay.cancel();
-    _auth.cancel();
+    _paySubs.cancel();
+    _authSubs.cancel();
     super.dispose();
   }
 
