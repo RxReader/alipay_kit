@@ -106,6 +106,7 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 ## flutter
 
 * break change
+    * 3.0.0: 重构
     * 2.2.0: Alipay 单例
     * 2.1.0: nullsafety & 不再支持 Android embedding v1
 

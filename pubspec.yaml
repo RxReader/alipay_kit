@@ -12,7 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  pointycastle: ^3.1.1
   json_annotation: ^4.0.0
 
 dev_dependencies:
@@ -20,6 +19,8 @@ dev_dependencies:
     sdk: flutter
 
   pedantic:
+
+  pointycastle: ^3.1.1
 
   build_runner:
   json_serializable:

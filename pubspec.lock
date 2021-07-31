@@ -306,7 +306,7 @@ packages:
     source: hosted
     version: "1.11.0"
   pointycastle:
-    dependency: "direct main"
+    dependency: "direct dev"
     description:
       name: pointycastle
       url: "https://pub.flutter-io.cn"

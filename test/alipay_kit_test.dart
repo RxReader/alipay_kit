@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:pedantic/pedantic.dart';
 
+import 'alipay.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
@@ -51,7 +53,7 @@ void main() {
         Alipay.instance.payResp().listen((AlipayResp resp) {
       expect(resp.resultStatus, 6001);
     });
-    await Alipay.instance.payOrderMap(
+    await Alipay.instance.unsafePay(
       orderInfo: <String, String>{
         'app_id': 'mock app id',
         'biz_content': json.encode(<String, String>{

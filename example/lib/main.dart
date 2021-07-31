@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:alipay_kit/alipay_kit.dart';
+import 'package:alipay_kit_example/alipay.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -96,11 +97,11 @@ class _HomeState extends State<Home> {
                 'timestamp': '2016-07-29 16:55:53',
                 'version': '1.0',
               };
-              Alipay.instance.payOrderJson(
-                orderInfo: json.encode(orderInfo),
+              Alipay.instance.unsafePay(
+                orderInfo: orderInfo,
                 signType: _ALIPAY_USE_RSA2
-                    ? Alipay.SIGNTYPE_RSA2
-                    : Alipay.SIGNTYPE_RSA,
+                    ? UnsafeAlipay.SIGNTYPE_RSA2
+                    : UnsafeAlipay.SIGNTYPE_RSA,
                 privateKey: _ALIPAY_PRIVATEKEY,
               );
             },
@@ -108,10 +109,13 @@ class _HomeState extends State<Home> {
           ListTile(
             title: const Text('授权'),
             onTap: () {
-              Alipay.instance.auth(
+              Alipay.instance.unsafeAuth(
                 appId: _ALIPAY_APPID,
                 pid: _ALIPAY_PID,
                 targetId: _ALIPAY_TARGETID,
+                signType: _ALIPAY_USE_RSA2
+                    ? UnsafeAlipay.SIGNTYPE_RSA2
+                    : UnsafeAlipay.SIGNTYPE_RSA,
                 privateKey: _ALIPAY_PRIVATEKEY,
               );
             },
