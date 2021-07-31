@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:alipay_kit/src/json/jser_converter.dart';
 import 'package:alipay_kit/src/model/auth_result.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -49,4 +51,7 @@ class AlipayResp {
   }
 
   Map<String, dynamic> toJson() => _$AlipayRespToJson(this);
+
+  @override
+  String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
 }

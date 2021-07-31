@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:alipay_kit/src/json/jser_converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -31,4 +33,7 @@ class AuthResult {
   final String? userId;
 
   Map<String, dynamic> toJson() => _$AuthResultToJson(this);
+
+  @override
+  String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
 }
