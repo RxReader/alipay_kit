@@ -1,22 +1,22 @@
 import 'package:alipay_kit/src/json/jser_converter.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'alipay_auth_result.g.dart';
+part 'auth_result.g.dart';
 
 @JsonSerializable(
   explicitToJson: true,
   fieldRename: FieldRename.snake,
 )
-class AlipayAuthResult {
-  const AlipayAuthResult({
+class AuthResult {
+  const AuthResult({
     required this.success,
     this.resultCode,
     this.authCode,
     this.userId,
   });
 
-  factory AlipayAuthResult.fromJson(Map<String, dynamic> json) =>
-      _$AlipayAuthResultFromJson(json);
+  factory AuthResult.fromJson(Map<String, dynamic> json) =>
+      _$AuthResultFromJson(json);
 
   @NullableStringToBoolConverter()
   final bool success;
@@ -30,5 +30,5 @@ class AlipayAuthResult {
   final String? authCode;
   final String? userId;
 
-  Map<String, dynamic> toJson() => _$AlipayAuthResultToJson(this);
+  Map<String, dynamic> toJson() => _$AuthResultToJson(this);
 }

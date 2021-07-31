@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'alipay_auth_result.dart';
+part of 'auth_result.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-AlipayAuthResult _$AlipayAuthResultFromJson(Map<String, dynamic> json) {
-  return AlipayAuthResult(
+AuthResult _$AuthResultFromJson(Map<String, dynamic> json) {
+  return AuthResult(
     success: const NullableStringToBoolConverter()
         .fromJson(json['success'] as String?),
     resultCode: const NullableStringToNullableIntConverter()
@@ -17,7 +17,7 @@ AlipayAuthResult _$AlipayAuthResultFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$AlipayAuthResultToJson(AlipayAuthResult instance) =>
+Map<String, dynamic> _$AuthResultToJson(AuthResult instance) =>
     <String, dynamic>{
       'success': const NullableStringToBoolConverter().toJson(instance.success),
       'result_code': const NullableStringToNullableIntConverter()
