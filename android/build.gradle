@@ -30,7 +30,7 @@ android {
     compileSdkVersion 31
 
     defaultConfig {
-        minSdkVersion 16
+        minSdkVersion 19
 
         // library 混淆 -> 随 library 引用，自动添加到 apk 打包混淆
         consumerProguardFiles 'consumer-rules.pro'
