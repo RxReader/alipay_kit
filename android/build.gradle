@@ -27,7 +27,7 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 31
 
     defaultConfig {
         minSdkVersion 16
@@ -56,5 +56,5 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.0.0'
 
     // v15.8.03
-    vendorImplementation(name: 'alipaysdk-15.8.03.210428205839', ext: 'aar')
+    vendorImplementation(name: 'alipaysdk-15.8.06.211122170115', ext: 'aar')
 }
