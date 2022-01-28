@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'alipay_kit'
-  s.version          = '3.0.0'
+  s.version          = '3.1.0'
   s.summary          = 'A powerful Flutter plugin allowing developers to auth/pay with natvie Android & iOS Alipay SDKs.'
   s.description      = <<-DESC
 A powerful Flutter plugin allowing developers to auth/pay with natvie Android & iOS Alipay SDKs.
@@ -18,7 +18,7 @@ A powerful Flutter plugin allowing developers to auth/pay with natvie Android & 
   s.dependency 'Flutter'
   s.platform = :ios, '8.0'
 
-  # v15.8.03
+  # v15.8.06
   s.subspec 'vendor' do |sp|
     sp.resources = "Libraries/*.bundle"
     sp.vendored_frameworks = 'Libraries/*.framework'
