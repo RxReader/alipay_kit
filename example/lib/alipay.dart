@@ -58,7 +58,7 @@ extension UnsafeAlipay on Alipay {
       'auth_type': authType,
     };
     authInfo['sign_type'] = signType;
-    final Encoding encoding = utf8; // utf-8
+    const Encoding encoding = utf8; // utf-8
     final String param = _param(authInfo, encoding);
     final String sign = _sign(authInfo, signType, privateKey);
     return auth(
