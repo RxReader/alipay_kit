@@ -25,7 +25,6 @@ A powerful Flutter plugin allowing developers to auth/pay with natvie Android & 
   s.dependency 'Flutter'
   s.platform = :ios, '9.0'
 
-  s.module_name = alipay_kit_module_name
   # s.default_subspecs = :none
   s.default_subspec = alipay_kit_subspec
 

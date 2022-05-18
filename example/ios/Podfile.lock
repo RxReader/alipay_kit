@@ -17,7 +17,7 @@ EXTERNAL SOURCES:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  alipay_kit: 3cda499df4ce84f5efd20fc280e5f2c004ee863a
+  alipay_kit: 9cc3a457a787098d19547fb0cf28f85dc7635171
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
 
 PODFILE CHECKSUM: cfb60bd91b5c66df313706eb50cbb121bb38b6e3
