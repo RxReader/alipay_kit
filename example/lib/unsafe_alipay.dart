@@ -28,7 +28,8 @@ class UnsafeAlipay {
     final String param = _param(clone, encoding);
     final String sign = _sign(clone, signType, privateKey);
     return Alipay.pay(
-      orderInfo: '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
+      orderInfo:
+          '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
       isShowLoading: isShowLoading,
     );
   }
@@ -38,8 +39,10 @@ class UnsafeAlipay {
     required String appId, // 支付宝分配给开发者的应用ID
     required String pid, // 签约的支付宝账号对应的支付宝唯一用户号，以2088开头的16位纯数字组成
     required String targetId, // 商户标识该次用户授权请求的ID，该值在商户端应保持唯一
-    String authType = AUTHTYPE_AUTHACCOUNT, // 标识授权类型，取值范围：AUTHACCOUNT 代表授权；LOGIN 代表登录
-    String signType = SIGNTYPE_RSA2, // 商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA ，推荐使用 RSA2
+    String authType =
+        AUTHTYPE_AUTHACCOUNT, // 标识授权类型，取值范围：AUTHACCOUNT 代表授权；LOGIN 代表登录
+    String signType =
+        SIGNTYPE_RSA2, // 商户生成签名字符串所使用的签名算法类型，目前支持 RSA2 和 RSA ，推荐使用 RSA2
     required String privateKey,
     bool isShowLoading = true,
   }) {
@@ -61,16 +64,21 @@ class UnsafeAlipay {
     final String param = _param(authInfo, encoding);
     final String sign = _sign(authInfo, signType, privateKey);
     return Alipay.auth(
-      authInfo: '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
+      authInfo:
+          '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
       isShowLoading: isShowLoading,
     );
   }
 
   static String _param(Map<String, dynamic> map, Encoding encoding) {
-    return map.entries.map((MapEntry<String, dynamic> e) => '${e.key}=${Uri.encodeQueryComponent('${e.value}', encoding: encoding)}').join('&');
+    return map.entries
+        .map((MapEntry<String, dynamic> e) =>
+            '${e.key}=${Uri.encodeQueryComponent('${e.value}', encoding: encoding)}')
+        .join('&');
   }
 
-  static String _sign(Map<String, dynamic> map, String signType, String privateKey) {
+  static String _sign(
+      Map<String, dynamic> map, String signType, String privateKey) {
     // 参数排序
     final List<String> keys = map.keys.toList();
     keys.sort();
@@ -78,10 +86,12 @@ class UnsafeAlipay {
     String sign;
     switch (signType) {
       case SIGNTYPE_RSA:
-        sign = base64.encode(RsaSigner.sha1Rsa(privateKey).sign(utf8.encode(content)));
+        sign = base64
+            .encode(RsaSigner.sha1Rsa(privateKey).sign(utf8.encode(content)));
         break;
       case SIGNTYPE_RSA2:
-        sign = base64.encode(RsaSigner.sha256Rsa(privateKey).sign(utf8.encode(content)));
+        sign = base64
+            .encode(RsaSigner.sha256Rsa(privateKey).sign(utf8.encode(content)));
         break;
       default:
         throw UnsupportedError('Alipay sign_type($signType) is not supported!');

@@ -9,10 +9,14 @@ import 'package:flutter/services.dart';
 class MethodChannelAlipayKit extends AlipayKitPlatform {
   /// The method channel used to interact with the native platform.
   @visibleForTesting
-  late final MethodChannel methodChannel = const MethodChannel('v7lin.github.io/alipay_kit')..setMethodCallHandler(_handleMethod);
+  late final MethodChannel methodChannel =
+      const MethodChannel('v7lin.github.io/alipay_kit')
+        ..setMethodCallHandler(_handleMethod);
 
-  final StreamController<AlipayResp> _payRespStreamController = StreamController<AlipayResp>.broadcast();
-  final StreamController<AlipayResp> _authRespStreamController = StreamController<AlipayResp>.broadcast();
+  final StreamController<AlipayResp> _payRespStreamController =
+      StreamController<AlipayResp>.broadcast();
+  final StreamController<AlipayResp> _authRespStreamController =
+      StreamController<AlipayResp>.broadcast();
 
   Future<dynamic> _handleMethod(MethodCall call) async {
     switch (call.method) {

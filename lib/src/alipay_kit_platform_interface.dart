@@ -14,7 +14,7 @@ abstract class AlipayKitPlatform extends PlatformInterface {
   ///
   /// Defaults to [MethodChannelAlipayKit].
   static AlipayKitPlatform get instance => _instance;
-  
+
   /// Platform-specific implementations should set this with their own
   /// platform-specific class that extends [AlipayKitPlatform] when
   /// they register themselves.
@@ -39,13 +39,15 @@ abstract class AlipayKitPlatform extends PlatformInterface {
     required String orderInfo,
     bool isShowLoading = true,
   }) {
-    throw UnimplementedError('pay({required orderInfo, isShowLoading}) has not been implemented.');
+    throw UnimplementedError(
+        'pay({required orderInfo, isShowLoading}) has not been implemented.');
   }
 
   Future<void> auth({
     required String authInfo,
     bool isShowLoading = true,
   }) {
-    throw UnimplementedError('auth({required info, isShowLoading}) has not been implemented.');
+    throw UnimplementedError(
+        'auth({required info, isShowLoading}) has not been implemented.');
   }
 }

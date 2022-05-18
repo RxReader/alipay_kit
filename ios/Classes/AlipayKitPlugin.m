@@ -7,11 +7,11 @@
     FlutterMethodChannel *_channel;
 }
 
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
 #ifndef NONE_PAY
-    FlutterMethodChannel* channel = [FlutterMethodChannel
-                                     methodChannelWithName:@"v7lin.github.io/alipay_kit"
-                                     binaryMessenger:[registrar messenger]];
+    FlutterMethodChannel *channel = [FlutterMethodChannel
+        methodChannelWithName:@"v7lin.github.io/alipay_kit"
+              binaryMessenger:[registrar messenger]];
     AlipayKitPlugin *instance = [[AlipayKitPlugin alloc] initWithChannel:channel];
     [registrar addApplicationDelegate:instance];
     [registrar addMethodCallDelegate:instance channel:channel];
@@ -26,7 +26,7 @@
     return self;
 }
 
-- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
+- (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
 #ifndef NONE_PAY
     if ([@"isInstalled" isEqualToString:call.method]) {
         BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay:"]];

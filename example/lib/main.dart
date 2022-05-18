@@ -40,7 +40,8 @@ class _HomeState extends State<Home> {
   static const String _ALIPAY_APPID = 'your alipay appId'; // 支付/登录
   static const String _ALIPAY_PID = 'your alipay pid'; // 登录
   static const String _ALIPAY_TARGETID = 'your alipay targetId'; // 登录
-  static const String _ALIPAY_PRIVATEKEY = 'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
+  static const String _ALIPAY_PRIVATEKEY =
+      'your alipay rsa private key(pkcs1/pkcs8)'; // 支付/登录
 
   late final StreamSubscription<AlipayResp> _paySubs;
   late final StreamSubscription<AlipayResp> _authSubs;
@@ -105,7 +106,9 @@ class _HomeState extends State<Home> {
               };
               UnsafeAlipay.pay(
                 orderInfo: orderInfo,
-                signType: _ALIPAY_USE_RSA2 ? UnsafeAlipay.SIGNTYPE_RSA2 : UnsafeAlipay.SIGNTYPE_RSA,
+                signType: _ALIPAY_USE_RSA2
+                    ? UnsafeAlipay.SIGNTYPE_RSA2
+                    : UnsafeAlipay.SIGNTYPE_RSA,
                 privateKey: _ALIPAY_PRIVATEKEY,
               );
             },
@@ -117,7 +120,9 @@ class _HomeState extends State<Home> {
                 appId: _ALIPAY_APPID,
                 pid: _ALIPAY_PID,
                 targetId: _ALIPAY_TARGETID,
-                signType: _ALIPAY_USE_RSA2 ? UnsafeAlipay.SIGNTYPE_RSA2 : UnsafeAlipay.SIGNTYPE_RSA,
+                signType: _ALIPAY_USE_RSA2
+                    ? UnsafeAlipay.SIGNTYPE_RSA2
+                    : UnsafeAlipay.SIGNTYPE_RSA,
                 privateKey: _ALIPAY_PRIVATEKEY,
               );
             },

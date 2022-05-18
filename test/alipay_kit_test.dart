@@ -5,7 +5,9 @@ import 'package:alipay_kit/src/model/alipay_resp.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockAlipayKitPlatform with MockPlatformInterfaceMixin implements AlipayKitPlatform {
+class MockAlipayKitPlatform
+    with MockPlatformInterfaceMixin
+    implements AlipayKitPlatform {
   @override
   Stream<AlipayResp> payResp() {
     throw UnimplementedError();
