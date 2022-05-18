@@ -1,29 +1,22 @@
 #import "AlipayKitPlugin.h"
+#ifndef NONE_PAY
 #import <AlipaySDK/AlipaySDK.h>
+#endif
 
 @implementation AlipayKitPlugin {
     FlutterMethodChannel *_channel;
 }
 
-+ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar> *)registrar {
-    FlutterMethodChannel *channel = [FlutterMethodChannel
-        methodChannelWithName:@"v7lin.github.io/alipay_kit"
-              binaryMessenger:[registrar messenger]];
++ (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
+#ifndef NONE_PAY
+    FlutterMethodChannel* channel = [FlutterMethodChannel
+                                     methodChannelWithName:@"v7lin.github.io/alipay_kit"
+                                     binaryMessenger:[registrar messenger]];
     AlipayKitPlugin *instance = [[AlipayKitPlugin alloc] initWithChannel:channel];
     [registrar addApplicationDelegate:instance];
     [registrar addMethodCallDelegate:instance channel:channel];
+#endif
 }
-
-static NSString *const METHOD_ISINSTALLED = @"isInstalled";
-static NSString *const METHOD_PAY = @"pay";
-static NSString *const METHOD_AUTH = @"auth";
-
-static NSString *const METHOD_ONPAYRESP = @"onPayResp";
-static NSString *const METHOD_ONAUTHRESP = @"onAuthResp";
-
-static NSString *const ARGUMENT_KEY_ORDERINFO = @"orderInfo";
-static NSString *const ARGUMENT_KEY_AUTHINFO = @"authInfo";
-static NSString *const ARGUMENT_KEY_ISSHOWLOADING = @"isShowLoading";
 
 - (instancetype)initWithChannel:(FlutterMethodChannel *)channel {
     self = [super init];
@@ -33,35 +26,40 @@ static NSString *const ARGUMENT_KEY_ISSHOWLOADING = @"isShowLoading";
     return self;
 }
 
-- (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-    if ([METHOD_ISINSTALLED isEqualToString:call.method]) {
+- (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
+#ifndef NONE_PAY
+    if ([@"isInstalled" isEqualToString:call.method]) {
         BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay:"]];
         result([NSNumber numberWithBool:isInstalled]);
-    } else if ([METHOD_PAY isEqualToString:call.method]) {
-        NSString *orderInfo = call.arguments[ARGUMENT_KEY_ORDERINFO];
-        //        NSNumber * isShowLoading = call.arguments[ARGUMENT_KEY_ISSHOWLOADING];
+    } else if ([@"pay" isEqualToString:call.method]) {
+        NSString *orderInfo = call.arguments[@"orderInfo"];
+        // NSNumber * isShowLoading = call.arguments[@"isShowLoading"];
         NSString *scheme = [self fetchUrlScheme];
         [[AlipaySDK defaultService] payOrder:orderInfo
                                   fromScheme:scheme
                                     callback:^(NSDictionary *resultDic) {
-                                        [self->_channel invokeMethod:METHOD_ONPAYRESP arguments:resultDic];
+                                        [self->_channel invokeMethod:@"onPayResp" arguments:resultDic];
                                     }];
         result(nil);
-    } else if ([METHOD_AUTH isEqualToString:call.method]) {
-        NSString *authInfo = call.arguments[ARGUMENT_KEY_AUTHINFO];
-        //        NSNumber * isShowLoading = call.arguments[ARGUMENT_KEY_ISSHOWLOADING];
+    } else if ([@"auth" isEqualToString:call.method]) {
+        NSString *authInfo = call.arguments[@"authInfo"];
+        // NSNumber * isShowLoading = call.arguments[@"isShowLoading"];
         NSString *scheme = [self fetchUrlScheme];
         [[AlipaySDK defaultService] auth_V2WithInfo:authInfo
                                          fromScheme:scheme
                                            callback:^(NSDictionary *resultDic) {
-                                               [self->_channel invokeMethod:METHOD_ONAUTHRESP arguments:resultDic];
+                                               [self->_channel invokeMethod:@"onAuthResp" arguments:resultDic];
                                            }];
         result(nil);
     } else {
         result(FlutterMethodNotImplemented);
     }
+#else
+    result(FlutterMethodNotImplemented);
+#endif
 }
 
+#ifndef NONE_PAY
 - (NSString *)fetchUrlScheme {
     NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
     NSArray *types = [infoDic objectForKey:@"CFBundleURLTypes"];
@@ -72,9 +70,11 @@ static NSString *const ARGUMENT_KEY_ISSHOWLOADING = @"isShowLoading";
     }
     return nil;
 }
+#endif
 
 #pragma mark - AppDelegate
 
+#ifndef NONE_PAY
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [self handleOpenURL:url];
 }
@@ -90,19 +90,20 @@ static NSString *const ARGUMENT_KEY_ISSHOWLOADING = @"isShowLoading";
         [[AlipaySDK defaultService] processOrderWithPaymentResult:url
                                                   standbyCallback:^(NSDictionary *resultDic) {
                                                       __strong typeof(weakSelf) strongSelf = weakSelf;
-                                                      [strongSelf->_channel invokeMethod:METHOD_ONPAYRESP arguments:resultDic];
+                                                      [strongSelf->_channel invokeMethod:@"onPayResp" arguments:resultDic];
                                                   }];
 
         // 授权跳转支付宝钱包进行支付，处理支付结果
         [[AlipaySDK defaultService] processAuth_V2Result:url
                                          standbyCallback:^(NSDictionary *resultDic) {
                                              __strong typeof(weakSelf) strongSelf = weakSelf;
-                                             [strongSelf->_channel invokeMethod:METHOD_ONAUTHRESP arguments:resultDic];
+                                             [strongSelf->_channel invokeMethod:@"onAuthResp" arguments:resultDic];
                                          }];
 
         return YES;
     }
     return NO;
 }
+#endif
 
 @end

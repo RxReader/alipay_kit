@@ -1,90 +1,48 @@
-import 'dart:async';
-
+import 'package:alipay_kit/src/alipay_kit_platform_interface.dart';
 import 'package:alipay_kit/src/model/alipay_resp.dart';
-import 'package:flutter/services.dart';
 
+/// 支付宝
 ///
+/// * 默认包含支付，参考 https://github.com/RxReader/alipay_kit/blob/master/example/ios/Podfile
+///   修改 `$WechatKitSubspec = 'no_pay'` 可切换为不包含支付。
+/// * 不含「iOS 支付」调用会抛出 [MissingPluginException]。
 class Alipay {
-  ///
-  Alipay._();
-
-  static Alipay get instance => _instance;
-
-  static final Alipay _instance = Alipay._();
-
-  static const String _METHOD_ISINSTALLED = 'isInstalled';
-  static const String _METHOD_PAY = 'pay';
-  static const String _METHOD_AUTH = 'auth';
-
-  static const String _METHOD_ONPAYRESP = 'onPayResp';
-  static const String _METHOD_ONAUTHRESP = 'onAuthResp';
-
-  static const String _ARGUMENT_KEY_ORDERINFO = 'orderInfo';
-  static const String _ARGUMENT_KEY_AUTHINFO = 'authInfo';
-  static const String _ARGUMENT_KEY_ISSHOWLOADING = 'isShowLoading';
-
-  late final MethodChannel _channel =
-      const MethodChannel('v7lin.github.io/alipay_kit')
-        ..setMethodCallHandler(_handleMethod);
-
-  final StreamController<AlipayResp> _payRespStreamController =
-      StreamController<AlipayResp>.broadcast();
-  final StreamController<AlipayResp> _authRespStreamController =
-      StreamController<AlipayResp>.broadcast();
-
-  Future<dynamic> _handleMethod(MethodCall call) async {
-    switch (call.method) {
-      case _METHOD_ONPAYRESP:
-        _payRespStreamController.add(AlipayResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
-        break;
-      case _METHOD_ONAUTHRESP:
-        _authRespStreamController.add(AlipayResp.fromJson(
-            (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
-        break;
-    }
-  }
+  const Alipay._();
 
   /// 支付
-  Stream<AlipayResp> payResp() {
-    return _payRespStreamController.stream;
+  static Stream<AlipayResp> payResp() {
+    return AlipayKitPlatform.instance.payResp();
   }
 
   /// 登录
-  Stream<AlipayResp> authResp() {
-    return _authRespStreamController.stream;
+  static Stream<AlipayResp> authResp() {
+    return AlipayKitPlatform.instance.authResp();
   }
 
-  /// 检测支付宝是否已安装 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
-  Future<bool> isInstalled() async {
-    return await _channel.invokeMethod<bool?>(_METHOD_ISINSTALLED) ?? false;
+  /// 检测支付宝是否已安装
+  static Future<bool> isInstalled() {
+    return AlipayKitPlatform.instance.isInstalled();
   }
 
-  /// 支付 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
-  Future<void> pay({
+  /// 支付
+  static Future<void> pay({
     required String orderInfo,
     bool isShowLoading = true,
   }) {
-    return _channel.invokeMethod<void>(
-      _METHOD_PAY,
-      <String, dynamic>{
-        _ARGUMENT_KEY_ORDERINFO: orderInfo,
-        _ARGUMENT_KEY_ISSHOWLOADING: isShowLoading,
-      },
+    return AlipayKitPlatform.instance.pay(
+      orderInfo: orderInfo,
+      isShowLoading: isShowLoading,
     );
   }
 
-  /// 登录 - x.y.z-Android-Only 版本下 iOS 调用会直接抛出异常 No implementation [MissingPluginException]
-  Future<void> auth({
-    required String info,
+  /// 登录
+  static Future<void> auth({
+    required String authInfo,
     bool isShowLoading = true,
   }) {
-    return _channel.invokeMethod<void>(
-      _METHOD_AUTH,
-      <String, dynamic>{
-        _ARGUMENT_KEY_AUTHINFO: info,
-        _ARGUMENT_KEY_ISSHOWLOADING: isShowLoading,
-      },
+    return AlipayKitPlatform.instance.auth(
+      authInfo: authInfo,
+      isShowLoading: isShowLoading,
     );
   }
 }

@@ -1,0 +1,1 @@
+library alipay_kit_platform_interface;

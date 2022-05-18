@@ -26,19 +26,6 @@ import io.flutter.plugin.common.MethodChannel.Result;
  * AlipayKitPlugin
  */
 public class AlipayKitPlugin implements FlutterPlugin, ActivityAware, MethodCallHandler {
-    //
-
-    private static final String METHOD_ISINSTALLED = "isInstalled";
-    private static final String METHOD_PAY = "pay";
-    private static final String METHOD_AUTH = "auth";
-
-    private static final String METHOD_ONPAYRESP = "onPayResp";
-    private static final String METHOD_ONAUTHRESP = "onAuthResp";
-
-    private static final String ARGUMENT_KEY_ORDERINFO = "orderInfo";
-    private static final String ARGUMENT_KEY_AUTHINFO = "authInfo";
-    private static final String ARGUMENT_KEY_ISSHOWLOADING = "isShowLoading";
-
     /// The MethodChannel that will the communication between Flutter and native Android
     ///
     /// This local reference serves to register the plugin with the Flutter Engine and unregister it
@@ -89,26 +76,27 @@ public class AlipayKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
 
     @Override
     public void onMethodCall(@NonNull MethodCall call, @NonNull Result result) {
-        if (METHOD_ISINSTALLED.equals(call.method)) {
+        if ("isInstalled".equals(call.method)) {
             boolean isInstalled = false;
             try {
                 final PackageManager packageManager = applicationContext.getPackageManager();
-                PackageInfo info = packageManager.getPackageInfo("com.eg.android.AlipayGphone", PackageManager.GET_SIGNATURES);
+                final PackageInfo info = packageManager.getPackageInfo("com.eg.android.AlipayGphone", PackageManager.GET_SIGNATURES);
                 isInstalled = info != null;
             } catch (PackageManager.NameNotFoundException ignore) {
             }
             result.success(isInstalled);
-        } else if (METHOD_PAY.equals(call.method)) {
-            final String orderInfo = call.argument(ARGUMENT_KEY_ORDERINFO);
-            final boolean isShowLoading = call.argument(ARGUMENT_KEY_ISSHOWLOADING);
+        } else if ("pay".equals(call.method)) {
+            final String orderInfo = call.argument("orderInfo");
+            final boolean isShowLoading = call.argument("isShowLoading");
             final WeakReference<Activity> activityRef = new WeakReference<>(activity);
             final WeakReference<MethodChannel> channelRef = new WeakReference<>(channel);
+            //noinspection deprecation
             new AsyncTask<String, String, Map<String, String>>() {
                 @Override
                 protected Map<String, String> doInBackground(String... params) {
-                    Activity activity = activityRef.get();
+                    final Activity activity = activityRef.get();
                     if (activity != null && !activity.isFinishing()) {
-                        PayTask task = new PayTask(activity);
+                        final PayTask task = new PayTask(activity);
                         return task.payV2(orderInfo, isShowLoading);
                     }
                     return null;
@@ -117,26 +105,27 @@ public class AlipayKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
                 @Override
                 protected void onPostExecute(Map<String, String> result) {
                     if (result != null) {
-                        Activity activity = activityRef.get();
-                        MethodChannel channel = channelRef.get();
+                        final Activity activity = activityRef.get();
+                        final MethodChannel channel = channelRef.get();
                         if (activity != null && !activity.isFinishing() && channel != null) {
-                            channel.invokeMethod(METHOD_ONPAYRESP, result);
+                            channel.invokeMethod("onPayResp", result);
                         }
                     }
                 }
             }.execute();
             result.success(null);
-        } else if (METHOD_AUTH.equals(call.method)) {
-            final String authInfo = call.argument(ARGUMENT_KEY_AUTHINFO);
-            final boolean isShowLoading = call.argument(ARGUMENT_KEY_ISSHOWLOADING);
+        } else if ("auth".equals(call.method)) {
+            final String authInfo = call.argument("authInfo");
+            final boolean isShowLoading = call.argument("isShowLoading");
             final WeakReference<Activity> activityRef = new WeakReference<>(activity);
             final WeakReference<MethodChannel> channelRef = new WeakReference<>(channel);
-            new AsyncTask<String, String, Map<String, String>>(){
+            //noinspection deprecation
+            new AsyncTask<String, String, Map<String, String>>() {
                 @Override
                 protected Map<String, String> doInBackground(String... strings) {
-                    Activity activity = activityRef.get();
+                    final Activity activity = activityRef.get();
                     if (activity != null && !activity.isFinishing()) {
-                        AuthTask task = new AuthTask(activity);
+                        final AuthTask task = new AuthTask(activity);
                         return task.authV2(authInfo, isShowLoading);
                     }
                     return null;
@@ -145,10 +134,10 @@ public class AlipayKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
                 @Override
                 protected void onPostExecute(Map<String, String> result) {
                     if (result != null) {
-                        Activity activity = activityRef.get();
-                        MethodChannel channel = channelRef.get();
+                        final Activity activity = activityRef.get();
+                        final MethodChannel channel = channelRef.get();
                         if (activity != null && !activity.isFinishing() && channel != null) {
-                            channel.invokeMethod(METHOD_ONAUTHRESP, result);
+                            channel.invokeMethod("onAuthResp", result);
                         }
                     }
                 }
