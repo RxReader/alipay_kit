@@ -27,7 +27,7 @@ class UnsafeAlipay {
     };
     final String param = _param(clone, encoding);
     final String sign = _sign(clone, signType, privateKey);
-    return Alipay.pay(
+    return Alipay.instance.pay(
       orderInfo:
           '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
       isShowLoading: isShowLoading,
@@ -63,7 +63,7 @@ class UnsafeAlipay {
     const Encoding encoding = utf8; // utf-8
     final String param = _param(authInfo, encoding);
     final String sign = _sign(authInfo, signType, privateKey);
-    return Alipay.auth(
+    return Alipay.instance.auth(
       authInfo:
           '$param&sign=${Uri.encodeQueryComponent(sign, encoding: encoding)}',
       isShowLoading: isShowLoading,

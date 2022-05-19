@@ -48,6 +48,6 @@ void main() {
     final MockAlipayKitPlatform fakePlatform = MockAlipayKitPlatform();
     AlipayKitPlatform.instance = fakePlatform;
 
-    expect(await Alipay.isInstalled(), true);
+    expect(await Alipay.instance.isInstalled(), true);
   });
 }

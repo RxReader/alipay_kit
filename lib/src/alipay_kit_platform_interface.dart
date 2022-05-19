@@ -23,18 +23,22 @@ abstract class AlipayKitPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  /// 支付
   Stream<AlipayResp> payResp() {
     throw UnimplementedError('payResp() has not been implemented.');
   }
 
+  /// 登录
   Stream<AlipayResp> authResp() {
     throw UnimplementedError('authResp() has not been implemented.');
   }
 
+  /// 检测支付宝是否已安装
   Future<bool> isInstalled() {
     throw UnimplementedError('isInstalled() has not been implemented.');
   }
 
+  /// 支付
   Future<void> pay({
     required String orderInfo,
     bool isShowLoading = true,
@@ -43,6 +47,7 @@ abstract class AlipayKitPlatform extends PlatformInterface {
         'pay({required orderInfo, isShowLoading}) has not been implemented.');
   }
 
+  /// 登录
   Future<void> auth({
     required String authInfo,
     bool isShowLoading = true,

@@ -49,8 +49,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _paySubs = Alipay.payResp().listen(_listenPay);
-    _authSubs = Alipay.authResp().listen(_listenAuth);
+    _paySubs = Alipay.instance.payResp().listen(_listenPay);
+    _authSubs = Alipay.instance.authResp().listen(_listenAuth);
   }
 
   void _listenPay(AlipayResp resp) {
@@ -81,7 +81,8 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('环境检查'),
             onTap: () async {
-              final String content = 'alipay: ${await Alipay.isInstalled()}';
+              final String content =
+                  'alipay: ${await Alipay.instance.isInstalled()}';
               _showTips('环境检查', content);
             },
           ),

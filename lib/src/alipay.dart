@@ -9,40 +9,5 @@ import 'package:alipay_kit/src/model/alipay_resp.dart';
 class Alipay {
   const Alipay._();
 
-  /// 支付
-  static Stream<AlipayResp> payResp() {
-    return AlipayKitPlatform.instance.payResp();
-  }
-
-  /// 登录
-  static Stream<AlipayResp> authResp() {
-    return AlipayKitPlatform.instance.authResp();
-  }
-
-  /// 检测支付宝是否已安装
-  static Future<bool> isInstalled() {
-    return AlipayKitPlatform.instance.isInstalled();
-  }
-
-  /// 支付
-  static Future<void> pay({
-    required String orderInfo,
-    bool isShowLoading = true,
-  }) {
-    return AlipayKitPlatform.instance.pay(
-      orderInfo: orderInfo,
-      isShowLoading: isShowLoading,
-    );
-  }
-
-  /// 登录
-  static Future<void> auth({
-    required String authInfo,
-    bool isShowLoading = true,
-  }) {
-    return AlipayKitPlatform.instance.auth(
-      authInfo: authInfo,
-      isShowLoading: isShowLoading,
-    );
-  }
+  static AlipayKitPlatform get instance => AlipayKitPlatform.instance;
 }
