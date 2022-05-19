@@ -1,5 +1,4 @@
 import 'package:alipay_kit/src/alipay_kit_platform_interface.dart';
-import 'package:alipay_kit/src/model/alipay_resp.dart';
 
 /// 支付宝
 ///
