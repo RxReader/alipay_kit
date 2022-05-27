@@ -1,10 +1,10 @@
-name: publish manually
+name: publish android manually
 
 on: workflow_dispatch
 
 jobs:
-  publish_android_manually:
-    name: Publish Android Manually
+  publish_manually:
+    name: Publish Manually
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
