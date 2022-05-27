@@ -84,7 +84,6 @@ jobs:
           cd alipay_kit
           flutter pub get
           flutter format --dry-run --set-exit-if-changed .
-#          flutter pub publish --dry-run
           flutter analyze lib example/lib
       - name: build example
         run: |
