@@ -17,7 +17,7 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
-      - run: clang-format -style=file -i ios/Classes/*.h ios/Classes/*.m --dry-run
+      - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run
       - run: flutter --version
       - name: check alipay_kit_android
         run: |
@@ -84,7 +84,7 @@ jobs:
           cd alipay_kit
           flutter pub get
           flutter format --dry-run --set-exit-if-changed .
-          flutter pub publish --dry-run
+#          flutter pub publish --dry-run
           flutter analyze lib example/lib
       - name: build example
         run: |
