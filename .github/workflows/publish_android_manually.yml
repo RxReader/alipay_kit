@@ -3,8 +3,8 @@ name: publish manually
 on: workflow_dispatch
 
 jobs:
-  publish_manually:
-    name: Publish Manually
+  publish_android_manually:
+    name: Publish Android Manually
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
