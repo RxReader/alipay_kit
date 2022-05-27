@@ -19,11 +19,34 @@ jobs:
           brew install clang-format
       - run: clang-format -style=file -i ios/Classes/*.h ios/Classes/*.m --dry-run
       - run: flutter --version
-      - run: flutter pub get
-      - run: flutter format --dry-run --set-exit-if-changed .
-      - run: flutter pub publish --dry-run
-      - run: flutter analyze lib example/lib
-      - run: cd example; flutter build ios --no-codesign
+      - name: check alipay_kit_android
+        run: |
+          cd alipay_kit_android
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib
+      - name: check alipay_kit_ios
+        run: |
+          cd alipay_kit_ios
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib
+      - name: check alipay_kit
+        run: |
+          cd alipay_kit
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib example/lib
+      - name: build example
+        run: |
+          cd alipay_kit/example
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter analyze lib
+          flutter build ios --no-codesign
 
   build_android:
     name: Build Android on ${{ matrix.os }}
@@ -42,8 +65,31 @@ jobs:
         with:
           channel: 'stable'
       - run: flutter --version
-      - run: flutter pub get
-      - run: flutter format --dry-run --set-exit-if-changed .
-      - run: flutter pub publish --dry-run
-      - run: flutter analyze lib example/lib
-      - run: cd example; flutter build apk --debug
+      - name: check alipay_kit_android
+        run: |
+          cd alipay_kit_android
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib
+      - name: check alipay_kit_ios
+        run: |
+          cd alipay_kit_ios
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib
+      - name: check alipay_kit
+        run: |
+          cd alipay_kit
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib example/lib
+      - name: build example
+        run: |
+          cd alipay_kit/example
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter analyze lib
+          flutter build apk --debug

@@ -1,7 +1,5 @@
 #import "AlipayKitPlugin.h"
-#ifndef NONE_PAY
 #import <AlipaySDK/AlipaySDK.h>
-#endif
 
 @implementation AlipayKitPlugin {
     FlutterMethodChannel *_channel;
@@ -25,7 +23,6 @@
 }
 
 - (void)handleMethodCall:(FlutterMethodCall *)call result:(FlutterResult)result {
-#ifndef NONE_PAY
     if ([@"isInstalled" isEqualToString:call.method]) {
         BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay:"]];
         result([NSNumber numberWithBool:isInstalled]);
@@ -52,12 +49,8 @@
     } else {
         result(FlutterMethodNotImplemented);
     }
-#else
-    result(FlutterMethodNotImplemented);
-#endif
 }
 
-#ifndef NONE_PAY
 - (NSString *)fetchUrlScheme {
     NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
     NSArray *types = [infoDic objectForKey:@"CFBundleURLTypes"];
@@ -68,11 +61,9 @@
     }
     return nil;
 }
-#endif
 
 #pragma mark - AppDelegate
 
-#ifndef NONE_PAY
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     return [self handleOpenURL:url];
 }
@@ -102,6 +93,5 @@
     }
     return NO;
 }
-#endif
 
 @end

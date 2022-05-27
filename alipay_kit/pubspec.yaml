@@ -13,6 +13,11 @@ dependencies:
     sdk: flutter
   plugin_platform_interface: ^2.0.2
 
+  alipay_kit_android:
+    path: ../alipay_kit_android
+  alipay_kit_ios:
+    path: ../alipay_kit_ios
+
   json_annotation: ^4.5.0
 
 dev_dependencies:
@@ -41,10 +46,9 @@ flutter:
   plugin:
     platforms:
       android:
-        package: io.github.v7lin.alipay_kit
-        pluginClass: AlipayKitPlugin
+        default_package: alipay_kit_android
       ios:
-        pluginClass: AlipayKitPlugin
+        default_package: alipay_kit_ios
 
   # To add assets to your plugin package, add an assets section, like this:
   # assets:

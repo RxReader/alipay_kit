@@ -1,4 +1,4 @@
-group 'io.github.v7lin.alipay_kit'
+group 'io.github.v7lin.alipay_kit_android'
 version '4.0.0'
 
 buildscript {
@@ -19,7 +19,7 @@ rootProject.allprojects {
 
         // 私仓
         flatDir {
-            dirs project(':alipay_kit').file('libs')
+            dirs project(':alipay_kit_android').file('libs')
         }
     }
 }
