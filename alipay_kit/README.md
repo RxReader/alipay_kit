@@ -97,32 +97,19 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 
 * break change
   * 4.0.0: 按标准插件书写重构
-    * bdr: Baldr/Baldur Balder
+    * 默认集成 Android 实现
+    * iOS 实现需手动添加依赖：alipay_kit_ios
   * 3.1.0: android:minSdkVersion="19"
   * 3.0.0: 重构
   * 2.2.0: Alipay 单例
   * 2.1.0: nullsafety & 不再支持 Android embedding v1
 
-* snapshot
-
-```
-dependencies:
-  alipay_kit:
-    git:
-      url: https://github.com/rxreader/alipay_kit.git
-```
-
 * release
 
-```
+```diff
 dependencies:
-  alipay_kit: ^${latestTag}
-```
-
-若需要不包含支付的 iOS SDK，请修改项目下的 `ios/Podfile`：
-
-```diff 
-+ $AlipayKitSubspec = 'bdr'
+  alipay_kit: ^${latestTag} # 默认不包含iOS支付
++  alipay_kit_ios: ^${latestTag} # iOS支付
 ```
 
 * example

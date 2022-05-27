@@ -5,7 +5,7 @@ on: workflow_dispatch
 jobs:
   publish_manually:
     name: Publish Manually
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     steps:
       - uses: actions/checkout@v3
       - uses: subosito/flutter-action@v2
@@ -21,9 +21,9 @@ jobs:
           mkdir -p $PUB_CACHE
           echo $CREDENTIALS > $PUB_CACHE/credentials.json
       - run: flutter --version
-      - run: cd alipay_kit; flutter pub get
-      - run: cd alipay_kit; flutter format --dry-run --set-exit-if-changed .
-      - run: cd alipay_kit; echo "y" | flutter pub publish
+      - run: cd alipay_kit_ios; flutter pub get
+      - run: cd alipay_kit_ios; flutter format --dry-run --set-exit-if-changed .
+      - run: cd alipay_kit_ios; echo "y" | flutter pub publish
       - name: Run pub.dev/update-credentials@shell
         env:
           UPDATE_SECRETS_PAT_TOKEN: ${{ secrets.UPDATE_SECRETS_PAT_TOKEN }}
