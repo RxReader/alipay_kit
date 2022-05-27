@@ -18,6 +18,14 @@ A powerful Flutter plugin allowing developers to auth/pay with natvie Android & 
   s.dependency 'Flutter'
   s.platform = :ios, '9.0'
 
+  # v15.8.06
+  s.subspec 'vendor' do |sp|
+    sp.resources = "Libraries/*.bundle"
+    sp.vendored_frameworks = 'Libraries/*.framework'
+    sp.frameworks = 'SystemConfiguration', 'CoreTelephony', 'QuartzCore', 'CoreText', 'CoreGraphics', 'UIKit', 'Foundation', 'CFNetwork', 'CoreMotion', 'WebKit'
+    sp.libraries = 'c++', 'z'
+  end
+
   # Flutter.framework does not contain a i386 slice.
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'EXCLUDED_ARCHS[sdk=iphonesimulator*]' => 'i386' }
 end

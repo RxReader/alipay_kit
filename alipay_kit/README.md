@@ -1,12 +1,11 @@
 # alipay_kit
 
-[![GitHub Tag](https://img.shields.io/github/tag/rxreader/alipay_kit.svg)](https://github.com/rxreader/alipay_kit/releases)
-[![Pub Package](https://img.shields.io/pub/v/alipay_kit.svg)](https://pub.dartlang.org/packages/alipay_kit)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/rxreader/alipay_kit/blob/master/LICENSE)
+[![Pub Package](https://img.shields.io/pub/v/alipay_kit.svg)](https://pub.dev/packages/alipay_kit)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/RxReader/alipay_kit/blob/master/alipay_kit/LICENSE)
 
 flutter版支付宝SDK
 
-## fake 系列 libraries
+## 相关工具
 
 * [flutter版微信SDK](https://github.com/rxreader/wechat_kit)
 * [flutter版腾讯(QQ)SDK](https://github.com/rxreader/tencent_kit)
