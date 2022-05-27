@@ -11,16 +11,9 @@ packages:
   alipay_kit_android:
     dependency: transitive
     description:
-      path: "../../alipay_kit_android"
-      relative: true
-    source: path
-    version: "4.0.0"
-  alipay_kit_ios:
-    dependency: transitive
-    description:
-      path: "../../alipay_kit_ios"
-      relative: true
-    source: path
+      name: alipay_kit_android
+      url: "https://pub.flutter-io.cn"
+    source: hosted
     version: "4.0.0"
   async:
     dependency: transitive
