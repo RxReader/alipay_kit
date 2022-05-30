@@ -38,11 +38,10 @@ jobs:
           cd alipay_kit
           flutter pub get
           flutter format --dry-run --set-exit-if-changed .
-          flutter pub publish --dry-run
+          # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
           flutter build ios --no-codesign
-
 
   build_ios_pay:
     name: Build iOS Pay on ${{ matrix.os }}
@@ -79,10 +78,52 @@ jobs:
           cd alipay_kit
           flutter pub get
           flutter format --dry-run --set-exit-if-changed .
-          flutter pub publish --dry-run
+          # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
           sed -i.bak 's/#  alipay_kit_ios/  alipay_kit_ios/' ./pubspec.yaml
+          flutter build ios --no-codesign
+
+  build_ios_pay_noutdid:
+    name: Build iOS Pay NO UTDID on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [macos-latest]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Run llvm/clang-format@shell
+        run: |
+          brew install clang-format
+      - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run
+      - run: flutter --version
+      - name: alipay_kit_android
+        run: |
+          cd alipay_kit_android
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib
+      - name: alipay_kit_ios
+        run: |
+          cd alipay_kit_ios
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib
+      - name: alipay_kit
+        run: |
+          cd alipay_kit
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          # flutter pub publish --dry-run
+          flutter analyze lib example/lib
+          cd example
+          sed -i.bak0 's/#  alipay_kit_ios/  alipay_kit_ios/' pubspec.yaml
+          sed -i.bak1 's/#    path: ..\/..\/alipay_kit_ios/    path: ..\/..\/alipay_kit_ios/' pubspec.yaml
           flutter build ios --no-codesign
 
   build_android:
@@ -121,7 +162,49 @@ jobs:
           cd alipay_kit
           flutter pub get
           flutter format --dry-run --set-exit-if-changed .
-          flutter pub publish --dry-run
+          # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
+          flutter build apk --debug
+
+  build_android_noutdid:
+    name: Build Android NO UTDID on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ windows-latest, ubuntu-latest, macos-latest ]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu'
+          java-version: '11'
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - run: flutter --version
+      - name: alipay_kit_android
+        run: |
+          cd alipay_kit_android
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib
+      - name: alipay_kit_ios
+        run: |
+          cd alipay_kit_ios
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          flutter pub publish --dry-run
+          flutter analyze lib
+      - name: alipay_kit
+        run: |
+          cd alipay_kit
+          flutter pub get
+          flutter format --dry-run --set-exit-if-changed .
+          # flutter pub publish --dry-run
+          flutter analyze lib example/lib
+          cd example
+          sed -i.bak 's/\/\/    ext.alipay_kit_flavor/    ext.alipay_kit_flavor/' android/build.gradle
           flutter build apk --debug

@@ -1,5 +1,5 @@
 group 'io.github.v7lin.alipay_kit_android'
-version '4.0.0'
+version '4.0.1'
 
 buildscript {
     repositories {
@@ -53,7 +53,18 @@ android {
     }
 }
 
+def use_utdid() {
+    if (rootProject.ext.has('alipay_kit_flavor') && rootProject.ext.get('alipay_kit_flavor') == 'noutdid') {
+        return false
+    }
+    return true
+}
+
 dependencies {
-    // v15.8.03
-    vendorImplementation(name: 'alipaysdk-15.8.06.211122170115', ext: 'aar')
+    // v15.8.10
+    if (use_utdid()) {
+        vendorImplementation 'com.alipay.sdk:alipaysdk-android:15.8.10@aar'
+    } else {
+        vendorImplementation(name: 'alipaysdk-noutdid-15.8.10.220419171600', ext: 'aar')
+    }
 }

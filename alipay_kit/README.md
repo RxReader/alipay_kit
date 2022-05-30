@@ -37,18 +37,15 @@ flutter版支付宝SDK
 java.lang.RuntimeException: Duplicate class com.ta.utdid2.a.a.a found in modules alicloud-android-utdid-2.5.1-proguard.jar
 ```
 
-```groovy
-rootProject.subprojects {
-    project.configurations.all {
-        resolutionStrategy.eachDependency { details ->
-            if (details.requested.group == 'com.aliyun.ams' && details.requested.name == 'alicloud-android-utdid') {
-                // 用已存在的包替换掉冲突包
-                details.useTarget group: 'androidx.annotation', name: 'annotation', version: '1.1.0'
-            }
-        }
-    }
+alipay_kit_android: ^4.0.1 修改 android/build.gradle
+
+```diff
+buildscript {
++    ext.alipay_kit_flavor = "noutdid" // 默认 "utdid"
 }
 ```
+
+[示例](example/android/build.gradle)
 
 #### 获取 android 微信签名信息
 
@@ -92,6 +89,16 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
     <true/>
 </dict>
 ```
+
+#### noutdid
+
+alipay_kit_ios: ^4.0.1 修改 ios/Podfile
+
+```diff
++ $AlipayKitSubspec = 'noutdid' # 默认 utdid
+```
+
+[示例](example/ios/Podfile)
 
 ## flutter
 
