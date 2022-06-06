@@ -15,13 +15,6 @@ packages:
       relative: true
     source: path
     version: "4.0.1"
-  alipay_kit_ios:
-    dependency: transitive
-    description:
-      path: "../../alipay_kit_ios"
-      relative: true
-    source: path
-    version: "4.0.1"
   async:
     dependency: transitive
     description:
