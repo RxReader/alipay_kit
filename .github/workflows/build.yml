@@ -17,7 +17,7 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
-      - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run
+      - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run --Werror
       - run: flutter --version
       - name: alipay_kit_android
         run: |
@@ -57,7 +57,7 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
-      - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run
+      - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run --Werror
       - run: flutter --version
       - name: alipay_kit_android
         run: |
@@ -98,7 +98,7 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
-      - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run
+      - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run --Werror
       - run: flutter --version
       - name: alipay_kit_android
         run: |
