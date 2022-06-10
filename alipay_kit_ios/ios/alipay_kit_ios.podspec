@@ -3,6 +3,9 @@
 # Run `pod lib lint alipay_kit_ios.podspec` to validate before publishing.
 #
 
+pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
+library_version = pubspec['version'].gsub('+', '-')
+
 if defined?($AlipayKitSubspec)
   alipay_kit_subspec = $AlipayKitSubspec
 else
@@ -11,7 +14,7 @@ end
 
 Pod::Spec.new do |s|
   s.name             = 'alipay_kit_ios'
-  s.version          = '4.0.1'
+  s.version          = library_version
   s.summary          = 'A powerful Flutter plugin allowing developers to auth/pay with natvie Android & iOS Alipay SDKs.'
   s.description      = <<-DESC
 A powerful Flutter plugin allowing developers to auth/pay with natvie Android & iOS Alipay SDKs.
