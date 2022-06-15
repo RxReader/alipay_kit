@@ -1,3 +1,7 @@
+## 4.0.2
+
+* 简化动态切换 utdid/noutdid
+
 ## 4.0.1
 
 * 动态切换 utdid/noutdid

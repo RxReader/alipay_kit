@@ -16,6 +16,7 @@ buildscript {
 
     dependencies {
         classpath 'com.android.tools.build:gradle:7.1.2'
+        classpath 'org.yaml:snakeyaml:1.17'
     }
 }
 
@@ -61,13 +62,24 @@ android {
 }
 
 def use_utdid() {
-    if (rootProject.ext.has('alipay_kit_flavor') && rootProject.ext.get('alipay_kit_flavor') == 'noutdid') {
-        return false
+    final File flutter_project_dir = project(":app").projectDir.parentFile.parentFile
+    final File pubspec = new File(flutter_project_dir, 'pubspec.yaml')
+    final def cfg = new org.yaml.snakeyaml.Yaml().load(pubspec.text)
+    if (cfg.alipay_kit != null) {
+        if (cfg.alipay_kit?.android == 'noutdid') {
+            return false
+        }
+    } else {
+        // 5.x.y 版本将删除
+        if (rootProject.ext.has('alipay_kit_flavor') && rootProject.ext.get('alipay_kit_flavor') == 'noutdid') {
+            return false
+        }
     }
     return true
 }
 
 dependencies {
+    println "alipaysdk ${use_utdid() ? 'utdid' : 'noutdid'}"
     // v15.8.10
     if (use_utdid()) {
         vendorImplementation 'com.alipay.sdk:alipaysdk-android:15.8.10@aar'

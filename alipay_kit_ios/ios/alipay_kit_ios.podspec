@@ -6,11 +6,24 @@
 pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
 library_version = pubspec['version'].gsub('+', '-')
 
-if defined?($AlipayKitSubspec)
-  alipay_kit_subspec = $AlipayKitSubspec
+calling_dir = File.dirname(__FILE__)
+flutter_project_dir = calling_dir.slice(0..(calling_dir.index('/ios/.symlinks')))
+# cfg = YAML.load_file(File.join(File.expand_path('../../../../..', File.dirname(__FILE__)), 'pubspec.yaml'))
+cfg = YAML.load_file(File.join(flutter_project_dir, 'pubspec.yaml'))
+if cfg['alipay_kit']
+    if cfg['alipay_kit']['ios'] == 'noutdid'
+        alipay_kit_subspec = 'noutdid'
+    else
+        alipay_kit_subspec = 'utdid'
+    end
 else
-  alipay_kit_subspec = 'utdid'
+    if defined?($AlipayKitSubspec)
+      alipay_kit_subspec = $AlipayKitSubspec
+    else
+      alipay_kit_subspec = 'utdid'
+    end
 end
+Pod::UI.puts "alipaysdk #{alipay_kit_subspec}"
 
 Pod::Spec.new do |s|
   s.name             = 'alipay_kit_ios'
