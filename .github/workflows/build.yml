@@ -81,7 +81,8 @@ jobs:
           # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
-          sed -i.bak 's/#  alipay_kit_ios/  alipay_kit_ios/' ./pubspec.yaml
+          sed -i.bak0 's/#  alipay_kit_ios/  alipay_kit_ios/' pubspec.yaml
+          sed -i.bak1 's/#    path: ..\/..\/alipay_kit_ios/    path: ..\/..\/alipay_kit_ios/' pubspec.yaml
           flutter build ios --no-codesign
 
   build_ios_pay_noutdid:
@@ -124,6 +125,9 @@ jobs:
           cd example
           sed -i.bak0 's/#  alipay_kit_ios/  alipay_kit_ios/' pubspec.yaml
           sed -i.bak1 's/#    path: ..\/..\/alipay_kit_ios/    path: ..\/..\/alipay_kit_ios/' pubspec.yaml
+          sed -i.bak2 's/#alipay_kit/alipay_kit/' pubspec.yaml
+          sed -i.bak3 's/#  android: noutdid/  android: noutdid/' pubspec.yaml
+          sed -i.bak4 's/#  ios: noutdid/  ios: noutdid/' pubspec.yaml
           flutter build ios --no-codesign
 
   build_android:
@@ -206,5 +210,7 @@ jobs:
           # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
-          sed -i.bak 's/\/\/    ext.alipay_kit_flavor/    ext.alipay_kit_flavor/' android/build.gradle
+          sed -i.bak0 's/#alipay_kit/alipay_kit/' pubspec.yaml
+          sed -i.bak1 's/#  android: noutdid/  android: noutdid/' pubspec.yaml
+          sed -i.bak2 's/#  ios: noutdid/  ios: noutdid/' pubspec.yaml
           flutter build apk --debug
