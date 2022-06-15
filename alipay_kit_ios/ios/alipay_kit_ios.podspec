@@ -17,6 +17,7 @@ if cfg['alipay_kit']
         alipay_kit_subspec = 'utdid'
     end
 else
+    # 5.x.y 版本将删除
     if defined?($AlipayKitSubspec)
       alipay_kit_subspec = $AlipayKitSubspec
     else
