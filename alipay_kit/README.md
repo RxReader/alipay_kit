@@ -37,9 +37,17 @@ flutter版支付宝SDK
 java.lang.RuntimeException: Duplicate class com.ta.utdid2.a.a.a found in modules alicloud-android-utdid-2.5.1-proguard.jar
 ```
 
-alipay_kit_android: ^4.0.1 修改 android/build.gradle
+* alipay_kit_android: ^4.0.2 修改 pubspec.yaml
 
 ```diff
++alipay_kit:
++  android: noutdid # 默认 utdid
+```
+
+* alipay_kit_android: ^4.0.1 修改 android/build.gradle
+
+```diff
+// 5.x.y 版本将删除
 buildscript {
 +    ext.alipay_kit_flavor = "noutdid" // 默认 "utdid"
 }
@@ -92,9 +100,17 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 
 #### noutdid
 
-alipay_kit_ios: ^4.0.1 修改 ios/Podfile
+* alipay_kit_ios: ^4.0.2 修改 pubspec.yaml
 
 ```diff
++alipay_kit:
++  ios: noutdid # 默认 utdid
+```
+
+* alipay_kit_ios: ^4.0.1 修改 ios/Podfile
+
+```diff
+# 5.x.y 版本将删除
 + $AlipayKitSubspec = 'noutdid' # 默认 utdid
 ```
 

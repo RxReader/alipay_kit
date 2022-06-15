@@ -1,25 +1,16 @@
 PODS:
-  - alipay_kit_ios (4.0.1):
-    - alipay_kit_ios/utdid (= 4.0.1)
-    - Flutter
-  - alipay_kit_ios/utdid (4.0.1):
-    - Flutter
   - Flutter (1.0.0)
 
 DEPENDENCIES:
-  - alipay_kit_ios (from `.symlinks/plugins/alipay_kit_ios/ios`)
   - Flutter (from `Flutter`)
 
 EXTERNAL SOURCES:
-  alipay_kit_ios:
-    :path: ".symlinks/plugins/alipay_kit_ios/ios"
   Flutter:
     :path: Flutter
 
 SPEC CHECKSUMS:
-  alipay_kit_ios: 83f7c5cdb405edbdd8eee53f4c4213c2fe5277e1
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
 
-PODFILE CHECKSUM: 69e57a23bd3833e9b68db032dd9d7ac4f73e7224
+PODFILE CHECKSUM: 8e679eca47255a8ca8067c4c67aab20e64cb974d
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3
