@@ -31,6 +31,8 @@ flutter版支付宝SDK
 # 混淆已打入 Library，随 Library 引用，自动添加到 apk 打包混淆
 ```
 
+* [获取 Android 签名信息](https://github.com/RxReader/wechat_kit#android)
+
 #### UTDID冲突的问题解决方案
 
 ```shell
@@ -51,28 +53,6 @@ java.lang.RuntimeException: Duplicate class com.ta.utdid2.a.a.a found in modules
 buildscript {
 +    ext.alipay_kit_flavor = "noutdid" // 默认 "utdid"
 }
-```
-
-[示例](example/android/build.gradle)
-
-#### 获取 android 微信签名信息
-
-非官方方法 -> 反编译 GenSignature_0630.apk 所得
-
-命令：
-
-```shell
-keytool -list -v -keystore ${your_keystore_path} -storepass ${your_keystore_password} 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
-```
-
-示例：
-
-```shell
-keytool -list -v -keystore example/android/app/infos/dev.jks -storepass 123456 2>/dev/null | grep -p 'MD5:.*' -o | sed 's/MD5://' | sed 's/ //g' | sed 's/://g' | awk '{print tolower($0)}'
-```
-
-```shell
-28424130a4416d519e00946651d53a46
 ```
 
 ## ios
@@ -113,8 +93,6 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 # 5.x.y 版本将删除
 + $AlipayKitSubspec = 'noutdid' # 默认 utdid
 ```
-
-[示例](example/ios/Podfile)
 
 ## flutter
 
