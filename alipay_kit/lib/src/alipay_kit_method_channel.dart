@@ -50,12 +50,14 @@ class MethodChannelAlipayKit extends AlipayKitPlatform {
   Future<void> pay({
     required String orderInfo,
     bool isShowLoading = true,
+    bool sandbox = false /// 沙箱模式
   }) {
     return methodChannel.invokeMethod<void>(
       'pay',
       <String, dynamic>{
         'orderInfo': orderInfo,
         'isShowLoading': isShowLoading,
+        'sandbox': sandbox,
       },
     );
   }

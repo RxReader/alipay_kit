@@ -42,6 +42,7 @@ abstract class AlipayKitPlatform extends PlatformInterface {
   Future<void> pay({
     required String orderInfo,
     bool isShowLoading = true,
+    bool sandbox = false /// 沙箱模式
   }) {
     throw UnimplementedError(
         'pay({required orderInfo, isShowLoading}) has not been implemented.');
@@ -50,9 +51,11 @@ abstract class AlipayKitPlatform extends PlatformInterface {
   /// 登录
   Future<void> auth({
     required String authInfo,
-    bool isShowLoading = true,
+    bool isShowLoading = true
   }) {
     throw UnimplementedError(
         'auth({required info, isShowLoading}) has not been implemented.');
   }
+
+
 }
