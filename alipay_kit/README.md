@@ -3,7 +3,7 @@
 [![Pub Package](https://img.shields.io/pub/v/alipay_kit.svg)](https://pub.dev/packages/alipay_kit)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/RxReader/alipay_kit/blob/master/alipay_kit/LICENSE)
 
-flutter版支付宝SDK
+Flutter 版支付宝SDK
 
 ## 相关工具
 
@@ -14,18 +14,20 @@ flutter版支付宝SDK
 * [Flutter版深度链接](https://github.com/RxReader/link_kit)
 * [Flutter版walle渠道打包工具](https://github.com/RxReader/walle_kit)
 
-## dart/flutter 私服
+## Dart/Flutter Pub 私服
 
-* [simple_pub_server](https://github.com/rxreader/simple_pub_server)
+* [simple_pub_server](https://github.com/RxReader/simple_pub_server)
 
-## docs
+## 相关文档
 
 * [蚂蚁金服开放平台](https://openhome.alipay.com/platform/appManage.htm)
 * [支付宝支付](https://docs.open.alipay.com/204/105051/)
 * [支付宝登录](https://docs.open.alipay.com/218/105329/)
 * [应用签名工具](https://opendocs.alipay.com/open/common/104062)
 
-## android
+## 开始使用
+
+### Android
 
 ```
 # 不需要做任何额外接入工作
@@ -34,29 +36,23 @@ flutter版支付宝SDK
 
 * [获取 Android 签名信息](https://github.com/RxReader/wechat_kit#android)
 
-#### UTDID冲突的问题解决方案
+* UTDID冲突的问题解决方案
 
-```shell
+```
 java.lang.RuntimeException: Duplicate class com.ta.utdid2.a.a.a found in modules alicloud-android-utdid-2.5.1-proguard.jar
 ```
 
-* alipay_kit_android: ^4.0.2 修改 pubspec.yaml
-
 ```diff
-+alipay_kit:
+alipay_kit:
 +  android: noutdid # 默认 utdid
 ```
 
-* alipay_kit_android: ^4.0.1 修改 android/build.gradle
+### iOS
 
-```diff
-// 5.x.y 版本将删除
-buildscript {
-+    ext.alipay_kit_flavor = "noutdid" // 默认 "utdid"
-}
 ```
-
-## ios
+# 不需要做任何额外接入工作
+# 配置已集成到脚本里
+```
 
 ```
 在Xcode中，选择你的工程设置项，选中“TARGETS”一栏，在“info”标签栏的“URL type“添加“URL scheme”为你所注册的应用程序id
@@ -79,42 +75,28 @@ iOS 9系统策略更新，限制了http协议的访问，此外应用需要在�
 </dict>
 ```
 
-#### noutdid
-
-* alipay_kit_ios: ^4.0.2 修改 pubspec.yaml
+* UTDID冲突的问题解决方案
 
 ```diff
-+alipay_kit:
+alipay_kit:
 +  ios: noutdid # 默认 utdid
 ```
 
-* alipay_kit_ios: ^4.0.1 修改 ios/Podfile
+### Flutter
 
-```diff
-# 5.x.y 版本将删除
-+ $AlipayKitSubspec = 'noutdid' # 默认 utdid
-```
+* 配置
 
-## flutter
-
-* break change
-  * 4.0.0: 按标准插件书写重构
-    * 默认集成 Android 实现
-    * iOS 实现需手动添加依赖：alipay_kit_ios
-  * 3.1.0: android:minSdkVersion="19"
-  * 3.0.0: 重构
-  * 2.2.0: Alipay 单例
-  * 2.1.0: nullsafety & 不再支持 Android embedding v1
-
-* release
-
-```diff
+```yaml
 dependencies:
   alipay_kit: ^${latestTag} # 默认不包含iOS支付
-+  alipay_kit_ios: ^${latestTag} # iOS支付
+#  alipay_kit_ios: ^${latestTag} # iOS支付
+
+alipay_kit:
+#  android: noutdid # 默认 utdid
+#  ios: noutdid # 默认 utdid
 ```
 
-* example
+## 示例
 
 [示例](./example/lib/main.dart)
 

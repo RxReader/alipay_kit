@@ -2,6 +2,11 @@ import 'package:alipay_kit/src/alipay_kit_method_channel.dart';
 import 'package:alipay_kit/src/model/alipay_resp.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
+/// 支付宝
+///
+/// * 默认不包含iOS支付
+///   添加 alipay_kit_ios 依赖，可切换为不包含支付。
+/// * 不含「iOS 支付」调用会抛出 [MissingPluginException]。
 abstract class AlipayKitPlatform extends PlatformInterface {
   /// Constructs a AlipayKitPlatform.
   AlipayKitPlatform() : super(token: _token);
