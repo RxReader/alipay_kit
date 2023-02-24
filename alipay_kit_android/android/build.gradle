@@ -1,4 +1,4 @@
-File pubspec = new File(project.projectDir.parentFile,  'pubspec.yaml')
+File pubspec = new File(project.projectDir.parentFile, 'pubspec.yaml')
 String yaml = pubspec.text
 // Using \s*['|"]?([^\n|'|"]*)['|"]? to extract version number.
 java.util.regex.Matcher versionMatcher = java.util.regex.Pattern.compile("^version:\\s*['|\"]?([^\\n|'|\"]*)['|\"]?\$", java.util.regex.Pattern.MULTILINE).matcher(yaml)
@@ -62,18 +62,10 @@ android {
 }
 
 def use_utdid() {
-    final File flutter_project_dir = project(":app").projectDir.parentFile.parentFile
-    final File pubspec = new File(flutter_project_dir, 'pubspec.yaml')
-    final def cfg = new org.yaml.snakeyaml.Yaml().load(pubspec.text)
-    if (cfg.alipay_kit != null) {
-        if (cfg.alipay_kit?.android == 'noutdid') {
-            return false
-        }
-    } else {
-        // 5.x.y 版本将删除
-        if (rootProject.ext.has('alipay_kit_flavor') && rootProject.ext.get('alipay_kit_flavor') == 'noutdid') {
-            return false
-        }
+    File flutter_project_dir = rootProject.projectDir.parentFile
+    def cfg = new org.yaml.snakeyaml.Yaml().load(new File(flutter_project_dir, 'pubspec.yaml').text)
+    if (cfg.alipay_kit != null && cfg.alipay_kit?.android == 'noutdid') {
+        return false
     }
     return true
 }
