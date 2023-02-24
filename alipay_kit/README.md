@@ -94,6 +94,7 @@ dependencies:
 alipay_kit:
 #  android: noutdid # 默认 utdid
 #  ios: noutdid # 默认 utdid
+  scheme: ${your alipay scheme} # scheme 不能为纯数字，推荐：alipay${appId}
 ```
 
 ## 示例

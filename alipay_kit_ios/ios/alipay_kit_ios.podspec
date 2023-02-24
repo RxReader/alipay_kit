@@ -6,34 +6,30 @@
 pubspec = YAML.load_file(File.join('..', 'pubspec.yaml'))
 library_version = pubspec['version'].gsub('+', '-')
 
+current_dir = Dir.pwd
 calling_dir = File.dirname(__FILE__)
+project_dir = calling_dir.slice(0..(calling_dir.index('/.symlinks')))
 flutter_project_dir = calling_dir.slice(0..(calling_dir.index('/ios/.symlinks')))
-# cfg = YAML.load_file(File.join(File.expand_path('../../../../..', File.dirname(__FILE__)), 'pubspec.yaml'))
 cfg = YAML.load_file(File.join(flutter_project_dir, 'pubspec.yaml'))
-if cfg['alipay_kit']
-    if cfg['alipay_kit']['ios'] == 'noutdid'
-        alipay_kit_subspec = 'noutdid'
-    else
-        alipay_kit_subspec = 'utdid'
-    end
+if cfg['alipay_kit'] && cfg['alipay_kit']['ios'] == 'noutdid'
+    alipay_kit_subspec = 'noutdid'
 else
-    # 5.x.y 版本将删除
-    if defined?($AlipayKitSubspec)
-      alipay_kit_subspec = $AlipayKitSubspec
-    else
-      alipay_kit_subspec = 'utdid'
-    end
+    alipay_kit_subspec = 'utdid'
 end
 Pod::UI.puts "alipaysdk #{alipay_kit_subspec}"
+if cfg['alipay_kit'] && cfg['alipay_kit']['scheme']
+    scheme = cfg['alipay_kit']['scheme']
+    system("ruby #{current_dir}/alipay_setup.rb -s #{scheme} -p #{project_dir} -n Runner.xcodeproj")
+else
+    scheme = nil
+end
 
 Pod::Spec.new do |s|
   s.name             = 'alipay_kit_ios'
   s.version          = library_version
-  s.summary          = 'A powerful Flutter plugin allowing developers to auth/pay with natvie Android & iOS Alipay SDKs.'
-  s.description      = <<-DESC
-A powerful Flutter plugin allowing developers to auth/pay with natvie Android & iOS Alipay SDKs.
-                       DESC
-  s.homepage         = 'http://example.com'
+  s.summary          = pubspec['description']
+  s.description      = pubspec['description']
+  s.homepage         = pubspec['homepage']
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Your Company' => 'email@example.com' }
   s.source           = { :path => '.' }
@@ -58,6 +54,12 @@ A powerful Flutter plugin allowing developers to auth/pay with natvie Android & 
     sp.vendored_frameworks = 'Libraries/noutdid/*.framework'
     sp.frameworks = 'SystemConfiguration', 'CoreTelephony', 'QuartzCore', 'CoreText', 'CoreGraphics', 'UIKit', 'Foundation', 'CFNetwork', 'CoreMotion', 'WebKit'
     sp.libraries = 'c++', 'z'
+  end
+
+  s.subspec 'vendor' do |sp|
+    sp.pod_target_xcconfig = {
+      'GCC_PREPROCESSOR_DEFINITIONS' => "ALIPAY_KIT_SCHEME=\\@\\\"#{scheme}\\\""
+    }
   end
 
   # Flutter.framework does not contain a i386 slice.
