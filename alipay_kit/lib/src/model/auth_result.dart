@@ -9,16 +9,16 @@ part 'auth_result.g.dart';
   explicitToJson: true,
   fieldRename: FieldRename.snake,
 )
-class AuthResult {
-  const AuthResult({
+class AlipayAuthResult {
+  const AlipayAuthResult({
     required this.success,
     this.resultCode,
     this.authCode,
     this.userId,
   });
 
-  factory AuthResult.fromJson(Map<String, dynamic> json) =>
-      _$AuthResultFromJson(json);
+  factory AlipayAuthResult.fromJson(Map<String, dynamic> json) =>
+      _$AlipayAuthResultFromJson(json);
 
   @NullableStringToBoolConverter()
   final bool success;
@@ -32,7 +32,7 @@ class AuthResult {
   final String? authCode;
   final String? userId;
 
-  Map<String, dynamic> toJson() => _$AuthResultToJson(this);
+  Map<String, dynamic> toJson() => _$AlipayAuthResultToJson(this);
 
   @override
   String toString() => const JsonEncoder.withIndent('  ').convert(toJson());
