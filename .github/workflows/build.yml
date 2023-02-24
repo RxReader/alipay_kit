@@ -17,6 +17,9 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
+      - name: Run ruby/plist@shell
+        run: |
+          gem install plist
       - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run --Werror
       - run: flutter --version
       - name: alipay_kit_android
@@ -57,6 +60,9 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
+      - name: Run ruby/plist@shell
+        run: |
+          gem install plist
       - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run --Werror
       - run: flutter --version
       - name: alipay_kit_android
@@ -99,6 +105,9 @@ jobs:
       - name: Run llvm/clang-format@shell
         run: |
           brew install clang-format
+      - name: Run ruby/plist@shell
+        run: |
+          gem install plist
       - run: clang-format -style=file -i alipay_kit_ios/ios/Classes/*.h alipay_kit_ios/ios/Classes/*.m --dry-run --Werror
       - run: flutter --version
       - name: alipay_kit_android
