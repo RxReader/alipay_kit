@@ -54,27 +54,6 @@ alipay_kit:
 # 配置已集成到脚本里
 ```
 
-```
-在Xcode中，选择你的工程设置项，选中“TARGETS”一栏，在“info”标签栏的“URL type“添加“URL scheme”为你所注册的应用程序id
-
-URL Types
-alipay: identifier=alipay schemes=${your app scheme name} # schemes 不能为纯数字，推荐：alipay${appId}
-```
-
-```
-iOS 9系统策略更新，限制了http协议的访问，此外应用需要在“Info.plist”中将要使用的URL Schemes列为白名单，才可正常检查其他应用是否安装。
-
-<key>LSApplicationQueriesSchemes</key>
-<array>
-    <string>alipay</string>
-</array>
-<key>NSAppTransportSecurity</key>
-<dict>
-    <key>NSAllowsArbitraryLoads</key>
-    <true/>
-</dict>
-```
-
 * UTDID冲突的问题解决方案
 
 ```diff

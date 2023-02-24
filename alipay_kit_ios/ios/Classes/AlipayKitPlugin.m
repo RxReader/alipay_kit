@@ -29,7 +29,7 @@
     } else if ([@"pay" isEqualToString:call.method]) {
         NSString *orderInfo = call.arguments[@"orderInfo"];
         // NSNumber * isShowLoading = call.arguments[@"isShowLoading"];
-        NSString *scheme = [self fetchUrlScheme];
+        NSString *scheme = ALIPAY_KIT_SCHEME;
         [[AlipaySDK defaultService] payOrder:orderInfo
                                   fromScheme:scheme
                                     callback:^(NSDictionary *resultDic) {
@@ -39,7 +39,7 @@
     } else if ([@"auth" isEqualToString:call.method]) {
         NSString *authInfo = call.arguments[@"authInfo"];
         // NSNumber * isShowLoading = call.arguments[@"isShowLoading"];
-        NSString *scheme = [self fetchUrlScheme];
+        NSString *scheme = ALIPAY_KIT_SCHEME;
         [[AlipaySDK defaultService] auth_V2WithInfo:authInfo
                                          fromScheme:scheme
                                            callback:^(NSDictionary *resultDic) {
@@ -49,17 +49,6 @@
     } else {
         result(FlutterMethodNotImplemented);
     }
-}
-
-- (NSString *)fetchUrlScheme {
-    NSDictionary *infoDic = [[NSBundle mainBundle] infoDictionary];
-    NSArray *types = [infoDic objectForKey:@"CFBundleURLTypes"];
-    for (NSDictionary *type in types) {
-        if ([@"alipay" isEqualToString:[type objectForKey:@"CFBundleURLName"]]) {
-            return [type objectForKey:@"CFBundleURLSchemes"][0];
-        }
-    }
-    return nil;
 }
 
 #pragma mark - AppDelegate

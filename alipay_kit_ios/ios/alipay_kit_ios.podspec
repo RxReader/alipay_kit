@@ -40,7 +40,7 @@ Pod::Spec.new do |s|
 
   # v15.8.10
   # s.default_subspecs = :none
-  s.default_subspec = alipay_kit_subspec
+  s.default_subspecs = alipay_kit_subspec, 'vendor'
 
   s.subspec 'utdid' do |sp|
     sp.resources = "Libraries/utdid/*.bundle"
