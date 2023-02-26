@@ -76,10 +76,20 @@ alipay_kit:
   scheme: ${your alipay scheme} # scheme 不能为纯数字，推荐：alipay${appId}
 ```
 
+* 安装（仅iOS）
+
+```shell
+# step.1 安装必要依赖
+sudo gem install plist
+# step.2 切换工作目录，插件里为 example/ios/，普通项目为 ios/
+cd example/ios/
+# step.3 执行脚本
+pod install
+```
+
 ## 示例
 
 [示例](./example/lib/main.dart)
-
 
 ## Star History
 
