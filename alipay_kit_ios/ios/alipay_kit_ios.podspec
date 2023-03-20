@@ -21,7 +21,7 @@ if cfg['alipay_kit'] && cfg['alipay_kit']['scheme']
     scheme = cfg['alipay_kit']['scheme']
     system("ruby #{current_dir}/alipay_setup.rb -s #{scheme} -p #{project_dir} -n Runner.xcodeproj")
 else
-    scheme = nil
+    abort("alipay scheme is null, add code in pubspec.yaml:\nalipay_kit:\n  scheme: ${your alipay scheme} # scheme 不能为纯数字，推荐：alipay${appId}\n")
 end
 
 Pod::Spec.new do |s|
