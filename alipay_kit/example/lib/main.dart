@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:alipay_kit/alipay_kit.dart';
-import 'package:alipay_kit_example/unsafe_alipay.dart';
+import 'package:alipay_kit_example/unsafe_alipay_kit.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -49,8 +49,8 @@ class _HomeState extends State<Home> {
   @override
   void initState() {
     super.initState();
-    _paySubs = Alipay.instance.payResp().listen(_listenPay);
-    _authSubs = Alipay.instance.authResp().listen(_listenAuth);
+    _paySubs = AlipayKitPlatform.instance.payResp().listen(_listenPay);
+    _authSubs = AlipayKitPlatform.instance.authResp().listen(_listenAuth);
   }
 
   void _listenPay(AlipayResp resp) {
@@ -82,7 +82,7 @@ class _HomeState extends State<Home> {
             title: Text('环境检查'),
             onTap: () async {
               final String content =
-                  'alipay: ${await Alipay.instance.isInstalled()}';
+                  'alipay: ${await AlipayKitPlatform.instance.isInstalled()}';
               _showTips('环境检查', content);
             },
           ),
@@ -105,11 +105,11 @@ class _HomeState extends State<Home> {
                 'timestamp': '2016-07-29 16:55:53',
                 'version': '1.0',
               };
-              UnsafeAlipay.pay(
+              AlipayKitPlatform.instance.unsafePay(
                 orderInfo: orderInfo,
                 signType: _ALIPAY_USE_RSA2
-                    ? UnsafeAlipay.SIGNTYPE_RSA2
-                    : UnsafeAlipay.SIGNTYPE_RSA,
+                    ? UnsafeAlipayKitPlatform.SIGNTYPE_RSA2
+                    : UnsafeAlipayKitPlatform.SIGNTYPE_RSA,
                 privateKey: _ALIPAY_PRIVATEKEY,
               );
             },
@@ -117,13 +117,13 @@ class _HomeState extends State<Home> {
           ListTile(
             title: Text('授权'),
             onTap: () {
-              UnsafeAlipay.auth(
+              AlipayKitPlatform.instance.unsafeAuth(
                 appId: _ALIPAY_APPID,
                 pid: _ALIPAY_PID,
                 targetId: _ALIPAY_TARGETID,
                 signType: _ALIPAY_USE_RSA2
-                    ? UnsafeAlipay.SIGNTYPE_RSA2
-                    : UnsafeAlipay.SIGNTYPE_RSA,
+                    ? UnsafeAlipayKitPlatform.SIGNTYPE_RSA2
+                    : UnsafeAlipayKitPlatform.SIGNTYPE_RSA,
                 privateKey: _ALIPAY_PRIVATEKEY,
               );
             },

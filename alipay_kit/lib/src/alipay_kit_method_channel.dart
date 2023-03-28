@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:alipay_kit/src/alipay_kit_platform_interface.dart';
-import 'package:alipay_kit/src/model/alipay_resp.dart';
+import 'package:alipay_kit/src/model/resp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 

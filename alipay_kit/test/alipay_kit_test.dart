@@ -1,7 +1,6 @@
-import 'package:alipay_kit/src/alipay.dart';
 import 'package:alipay_kit/src/alipay_kit_method_channel.dart';
 import 'package:alipay_kit/src/alipay_kit_platform_interface.dart';
-import 'package:alipay_kit/src/model/alipay_resp.dart';
+import 'package:alipay_kit/src/model/resp.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -48,6 +47,6 @@ void main() {
     final MockAlipayKitPlatform fakePlatform = MockAlipayKitPlatform();
     AlipayKitPlatform.instance = fakePlatform;
 
-    expect(await Alipay.instance.isInstalled(), true);
+    expect(await AlipayKitPlatform.instance.isInstalled(), true);
   });
 }
