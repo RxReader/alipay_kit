@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:alipay_kit/src/alipay_kit_platform_interface.dart';
+import 'package:alipay_kit/src/constant.dart';
 import 'package:alipay_kit/src/model/resp.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -44,6 +45,18 @@ class MethodChannelAlipayKit extends AlipayKitPlatform {
   @override
   Future<bool> isInstalled() async {
     return await methodChannel.invokeMethod<bool?>('isInstalled') ?? false;
+  }
+
+  @override
+  Future<void> setEnv({
+    required AlipayEnv env,
+  }) {
+    return methodChannel.invokeMethod<void>(
+      'setEnv',
+      <String, dynamic>{
+        'env': env.index
+      },
+    );
   }
 
   @override

@@ -26,21 +26,21 @@ jobs:
         run: |
           cd alipay_kit_android
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit_ios
         run: |
           cd alipay_kit_ios
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit
         run: |
           cd alipay_kit
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
@@ -69,21 +69,21 @@ jobs:
         run: |
           cd alipay_kit_android
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit_ios
         run: |
           cd alipay_kit_ios
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit
         run: |
           cd alipay_kit
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
@@ -114,21 +114,21 @@ jobs:
         run: |
           cd alipay_kit_android
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit_ios
         run: |
           cd alipay_kit_ios
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit
         run: |
           cd alipay_kit
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
@@ -160,21 +160,21 @@ jobs:
         run: |
           cd alipay_kit_android
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit_ios
         run: |
           cd alipay_kit_ios
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit
         run: |
           cd alipay_kit
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
@@ -201,21 +201,21 @@ jobs:
         run: |
           cd alipay_kit_android
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit_ios
         run: |
           cd alipay_kit_ios
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit
         run: |
           cd alipay_kit
           flutter pub get
-          flutter format --dry-run --set-exit-if-changed .
+          dart format --set-exit-if-changed .
           # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example

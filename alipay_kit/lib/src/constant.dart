@@ -1,0 +1,4 @@
+enum AlipayEnv {
+  online,
+  sandbox
+}

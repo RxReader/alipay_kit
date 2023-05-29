@@ -1,4 +1,5 @@
 import 'package:alipay_kit/src/alipay_kit_method_channel.dart';
+import 'package:alipay_kit/src/constant.dart';
 import 'package:alipay_kit/src/model/resp.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -41,6 +42,13 @@ abstract class AlipayKitPlatform extends PlatformInterface {
   /// 检测支付宝是否已安装
   Future<bool> isInstalled() {
     throw UnimplementedError('isInstalled() has not been implemented.');
+  }
+
+  /// 支付环境
+  Future<void> setEnv({
+    required AlipayEnv env,
+  }) {
+    throw UnimplementedError('setEnv({required env}) has not been implemented.');
   }
 
   /// 支付
