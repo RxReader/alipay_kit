@@ -24,9 +24,3 @@ jobs:
       - run: cd alipay_kit_ios; flutter pub get
       - run: cd alipay_kit_ios; dart format --set-exit-if-changed .
       - run: cd alipay_kit_ios; echo "y" | flutter pub publish
-      - name: Run pub.dev/update-credentials@shell
-        env:
-          UPDATE_SECRETS_PAT_TOKEN: ${{ secrets.UPDATE_SECRETS_PAT_TOKEN }}
-        run: |
-          gh auth login --with-token <<< $UPDATE_SECRETS_PAT_TOKEN
-          gh secret set CREDENTIALS_JSON < $PUB_CACHE/credentials.json
