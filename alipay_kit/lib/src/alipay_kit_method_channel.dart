@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:alipay_kit/src/alipay_kit_platform_interface.dart';
 import 'package:alipay_kit/src/constant.dart';
@@ -51,10 +52,11 @@ class MethodChannelAlipayKit extends AlipayKitPlatform {
   Future<void> setEnv({
     required AlipayEnv env,
   }) {
+    assert(Platform.isAndroid);
     return methodChannel.invokeMethod<void>(
       'setEnv',
       <String, dynamic>{
-        'env': env.index
+        'env': env.index,
       },
     );
   }

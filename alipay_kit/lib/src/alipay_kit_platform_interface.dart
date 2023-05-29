@@ -48,7 +48,8 @@ abstract class AlipayKitPlatform extends PlatformInterface {
   Future<void> setEnv({
     required AlipayEnv env,
   }) {
-    throw UnimplementedError('setEnv({required env}) has not been implemented.');
+    throw UnimplementedError(
+        'setEnv({required env}) has not been implemented.');
   }
 
   /// 支付

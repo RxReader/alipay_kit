@@ -1,3 +1,7 @@
+## 5.0.1
+
+* Android: setEnv
+
 ## 5.0.0
 
 * break change

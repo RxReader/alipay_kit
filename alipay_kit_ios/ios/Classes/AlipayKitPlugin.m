@@ -26,6 +26,8 @@
     if ([@"isInstalled" isEqualToString:call.method]) {
         BOOL isInstalled = [[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:@"alipay:"]];
         result([NSNumber numberWithBool:isInstalled]);
+    } else if ([@"setEnv" isEqualToString:call.method]) {
+        result(FlutterMethodNotImplemented);
     } else if ([@"pay" isEqualToString:call.method]) {
         NSString *orderInfo = call.arguments[@"orderInfo"];
         // NSNumber * isShowLoading = call.arguments[@"isShowLoading"];
