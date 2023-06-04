@@ -25,7 +25,7 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/integration_test/ios"
 
 SPEC CHECKSUMS:
-  alipay_kit_ios: 35795bde1a66fc74f3e4f63b54d7d6596d12de01
+  alipay_kit_ios: 16ee3125a92858d593fb66ec8e64de8dccecc938
   Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
   integration_test: 13825b8a9334a850581300559b8839134b124670
 
