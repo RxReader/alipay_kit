@@ -1,3 +1,4 @@
+/// alipay_kit_platform_interface
 library alipay_kit_platform_interface;
 
 export 'src/alipay_kit_method_channel.dart';

@@ -29,7 +29,11 @@ class MockAlipayKitPlatform
   }
 
   @override
-  Future<void> pay({required String orderInfo, bool isShowLoading = true}) {
+  Future<void> pay({
+    required String orderInfo,
+    bool dynamicLaunch = false,
+    bool isShowLoading = true,
+  }) {
     throw UnimplementedError();
   }
 

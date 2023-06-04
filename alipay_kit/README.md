@@ -36,16 +36,7 @@ Flutter 版支付宝SDK
 
 * [获取 Android 签名信息](https://github.com/RxReader/wechat_kit#android)
 
-* UTDID冲突的问题解决方案
-
-```
-java.lang.RuntimeException: Duplicate class com.ta.utdid2.a.a.a found in modules alicloud-android-utdid-2.5.1-proguard.jar
-```
-
-```diff
-alipay_kit:
-+  android: noutdid # 默认 utdid
-```
+* 新版已没有「~~UTDID冲突的问题~~」
 
 ### iOS
 
@@ -71,7 +62,6 @@ dependencies:
 #  alipay_kit_ios: ^${latestTag} # iOS支付
 
 alipay_kit:
-#  android: noutdid # 默认 utdid
 #  ios: noutdid # 默认 utdid
   scheme: ${your alipay scheme} # scheme 不能为纯数字，推荐：alipay${appId}
 ```

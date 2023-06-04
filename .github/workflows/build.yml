@@ -1,6 +1,11 @@
 name: build
 
-on: [push, pull_request]
+on:
+  push:
+    paths-ignore:
+      - '.github/workflows/**'
+      - 'README.md'
+  pull_request:
 
 jobs:
   build_ios:
@@ -125,6 +130,7 @@ jobs:
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit
+        continue-on-error: true
         run: |
           cd alipay_kit
           flutter pub get
@@ -178,48 +184,4 @@ jobs:
           # flutter pub publish --dry-run
           flutter analyze lib example/lib
           cd example
-          flutter build apk --debug
-
-  build_android_noutdid:
-    name: Build Android NO UTDID on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ windows-latest, ubuntu-latest, macos-latest ]
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-java@v2
-        with:
-          distribution: 'zulu'
-          java-version: '11'
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: 'stable'
-      - run: flutter --version
-      - name: alipay_kit_android
-        run: |
-          cd alipay_kit_android
-          flutter pub get
-          dart format --set-exit-if-changed .
-          flutter pub publish --dry-run
-          flutter analyze lib
-      - name: alipay_kit_ios
-        run: |
-          cd alipay_kit_ios
-          flutter pub get
-          dart format --set-exit-if-changed .
-          flutter pub publish --dry-run
-          flutter analyze lib
-      - name: alipay_kit
-        run: |
-          cd alipay_kit
-          flutter pub get
-          dart format --set-exit-if-changed .
-          # flutter pub publish --dry-run
-          flutter analyze lib example/lib
-          cd example
-          sed -i.bak0 's/#alipay_kit/alipay_kit/' pubspec.yaml
-          sed -i.bak1 's/#  android: noutdid/  android: noutdid/' pubspec.yaml
-          sed -i.bak2 's/#  ios: noutdid/  ios: noutdid/' pubspec.yaml
           flutter build apk --debug

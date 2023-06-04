@@ -1,0 +1,27 @@
+name: publish android
+
+on: workflow_dispatch
+
+jobs:
+  publish_android:
+    name: Publish Android
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+      - name: Run pub.dev/inject-credentials@shell
+        env:
+          # Mac: ~/Library/Application\ Support/dart/pub-credentials.json
+          # Linux: $HOME/.config/dart/pub-credentials.json
+          # Windows: %APPDATA%/dart/pub-credentials.json
+          # Windows: %LOCALAPPDATA%/dart/pub-credentials.json
+          CREDENTIALS: ${{ secrets.CREDENTIALS_JSON }}
+        run: |
+          mkdir -p ~/Library/Application\ Support/dart
+          echo $CREDENTIALS > ~/Library/Application\ Support/dart/pub-credentials.json
+      - run: flutter --version
+      - run: cd alipay_kit_android; flutter pub get
+      - run: cd alipay_kit_android; dart format --set-exit-if-changed .
+      - run: cd alipay_kit_android; echo "y" | flutter pub publish
