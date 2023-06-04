@@ -1,7 +1,8 @@
 # alipay_kit
 
 [![Pub Package](https://img.shields.io/pub/v/alipay_kit.svg)](https://pub.dev/packages/alipay_kit)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://github.com/RxReader/alipay_kit/blob/master/alipay_kit/LICENSE)
+[![License](https://img.shields.io/github/license/RxReader/alipay_kit)](https://github.com/RxReader/alipay_kit/blob/master/LICENSE)
+
 
 Flutter 版支付宝SDK
 
