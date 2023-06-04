@@ -1,3 +1,4 @@
+/// alipay_kit
 library alipay_kit;
 
 export 'src/alipay_kit_platform_interface.dart';

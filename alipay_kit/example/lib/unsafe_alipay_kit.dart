@@ -86,11 +86,9 @@ extension UnsafeAlipayKitPlatform on AlipayKitPlatform {
       case SIGNTYPE_RSA:
         sign = base64
             .encode(RsaSigner.sha1Rsa(privateKey).sign(utf8.encode(content)));
-        break;
       case SIGNTYPE_RSA2:
         sign = base64
             .encode(RsaSigner.sha256Rsa(privateKey).sign(utf8.encode(content)));
-        break;
       default:
         throw UnsupportedError('Alipay sign_type($signType) is not supported!');
     }

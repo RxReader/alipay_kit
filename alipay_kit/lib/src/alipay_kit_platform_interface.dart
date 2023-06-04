@@ -55,6 +55,7 @@ abstract class AlipayKitPlatform extends PlatformInterface {
   /// 支付
   Future<void> pay({
     required String orderInfo,
+    bool dynamicLaunch = false, // iOS 是否使用动态配置策略跳转支付宝支付
     bool isShowLoading = true,
   }) {
     throw UnimplementedError(

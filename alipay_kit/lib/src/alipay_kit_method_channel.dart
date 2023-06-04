@@ -25,11 +25,9 @@ class MethodChannelAlipayKit extends AlipayKitPlatform {
       case 'onPayResp':
         _payRespStreamController.add(AlipayResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
-        break;
       case 'onAuthResp':
         _authRespStreamController.add(AlipayResp.fromJson(
             (call.arguments as Map<dynamic, dynamic>).cast<String, dynamic>()));
-        break;
     }
   }
 
@@ -64,12 +62,14 @@ class MethodChannelAlipayKit extends AlipayKitPlatform {
   @override
   Future<void> pay({
     required String orderInfo,
+    bool dynamicLaunch = false,
     bool isShowLoading = true,
   }) {
     return methodChannel.invokeMethod<void>(
       'pay',
       <String, dynamic>{
         'orderInfo': orderInfo,
+        'dynamicLaunch': dynamicLaunch,
         'isShowLoading': isShowLoading,
       },
     );
