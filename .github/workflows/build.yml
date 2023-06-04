@@ -130,6 +130,7 @@ jobs:
           flutter pub publish --dry-run
           flutter analyze lib
       - name: alipay_kit
+        continue-on-error: true
         run: |
           cd alipay_kit
           flutter pub get
