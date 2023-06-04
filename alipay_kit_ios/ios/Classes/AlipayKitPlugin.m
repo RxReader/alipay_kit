@@ -30,9 +30,11 @@
         result(FlutterMethodNotImplemented);
     } else if ([@"pay" isEqualToString:call.method]) {
         NSString *orderInfo = call.arguments[@"orderInfo"];
-        // NSNumber * isShowLoading = call.arguments[@"isShowLoading"];
+        NSNumber *dynamicLaunch = call.arguments[@"dynamicLaunch"];
+        // NSNumber *isShowLoading = call.arguments[@"isShowLoading"];
         NSString *scheme = ALIPAY_KIT_SCHEME;
         [[AlipaySDK defaultService] payOrder:orderInfo
+                               dynamicLaunch:dynamicLaunch.boolValue
                                   fromScheme:scheme
                                     callback:^(NSDictionary *resultDic) {
                                         [self->_channel invokeMethod:@"onPayResp" arguments:resultDic];

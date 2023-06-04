@@ -36,27 +36,25 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.platform = :ios, '9.0'
+  s.platform = :ios, '11.0'
 
-  # v15.8.10
+  # v15.8.14
   # s.default_subspecs = :none
   s.default_subspecs = alipay_kit_subspec, 'vendor'
 
   s.subspec 'utdid' do |sp|
     sp.resources = "Libraries/utdid/*.bundle"
     sp.vendored_frameworks = 'Libraries/utdid/*.framework'
-    sp.frameworks = 'SystemConfiguration', 'CoreTelephony', 'QuartzCore', 'CoreText', 'CoreGraphics', 'UIKit', 'Foundation', 'CFNetwork', 'CoreMotion', 'WebKit'
-    sp.libraries = 'c++', 'z'
   end
 
   s.subspec 'noutdid' do |sp|
     sp.resources = "Libraries/noutdid/*.bundle"
     sp.vendored_frameworks = 'Libraries/noutdid/*.framework'
-    sp.frameworks = 'SystemConfiguration', 'CoreTelephony', 'QuartzCore', 'CoreText', 'CoreGraphics', 'UIKit', 'Foundation', 'CFNetwork', 'CoreMotion', 'WebKit'
-    sp.libraries = 'c++', 'z'
   end
 
   s.subspec 'vendor' do |sp|
+    sp.frameworks = 'SystemConfiguration', 'CoreTelephony', 'QuartzCore', 'CoreText', 'CoreGraphics', 'UIKit', 'Foundation', 'CFNetwork', 'CoreMotion', 'WebKit'
+    sp.libraries = 'c++', 'z'
     sp.pod_target_xcconfig = {
       'GCC_PREPROCESSOR_DEFINITIONS' => "ALIPAY_KIT_SCHEME=\\@\\\"#{scheme}\\\""
     }

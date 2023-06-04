@@ -9,7 +9,7 @@
 
 ////////////////////////////////////////////////////////
 ///////////////// 支付宝标准版本支付SDK ///////////////////
-///////// version:15.8.10  modify:2022.03.29///////////
+///////// version:15.8.14  modify:2023.05.15///////////
 ////////////////////////////////////////////////////////
 
 #import <UIKit/UIKit.h>
@@ -52,10 +52,9 @@ typedef enum {
 /**
  *  支付接口
  *
- *  @param orderStr        支付订单信息字串
- *  @param schemeStr       调用支付的app注册在info.plist中的scheme
- *  @param completionBlock 支付结果回调Block，用于wap支付结果回调
-                           跳转支付宝支付时只有当processOrderWithPaymentResult接口的completionBlock为nil时会使用这个bolock
+ *  @param orderStr                支付订单信息字串
+ *  @param schemeStr              调用支付的app注册在info.plist中的scheme
+ *  @param completionBlock 支付结果回调Block，用于wap支付结果回调,跳转支付宝支付时只有当processOrderWithPaymentResult接口的completionBlock为nil时会使用这个bolock
  */
 - (void)payOrder:(NSString *)orderStr
       fromScheme:(NSString *)schemeStr
@@ -83,6 +82,30 @@ typedef enum {
  */
 - (void)processOrderWithPaymentResult:(NSURL *)resultUrl
                       standbyCallback:(CompletionBlock)completionBlock;
+
+
+/**
+ *  商户接入UniversalLink支付接口使用该接口
+ *
+ *  @param orderStr                  支付订单信息字串
+ *  @param schemeStr                调用支付的app注册在info.plist中的scheme
+ *  @param universalLink       调用支付的app关联的universalLink,如'https://render.alipay.com/'
+ *  @param completionBlock   支付结果回调Block，用于wap支付结果回调,跳转支付宝支付时只有当processOrderWithPaymentResult接口的completionBlock为nil时会使用这个bolock
+ */
+- (void) payOrder:(NSString *)orderStr
+       fromScheme:(NSString *)schemeStr
+fromUniversalLink:(NSString *)universalLink
+         callback:(CompletionBlock)completionBlock;
+
+
+/**
+ *  处理支付宝app支付后通过universalLink跳回商户app携带的支付结果处理
+ *
+ *  @param userActivity            系统接口传入的userActivity
+ *  @param completionBlock     支付结果回调 为nil时默认使用支付接口的completionBlock
+ */
+- (void)handleOpenUniversalLink:(NSUserActivity *)userActivity standbyCallback:(CompletionBlock)completionBlock;
+
 
 /**
  *  获取交易token。
