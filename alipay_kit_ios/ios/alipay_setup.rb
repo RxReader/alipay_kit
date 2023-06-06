@@ -106,10 +106,10 @@ project.targets.each do |target|
                 security["NSAllowsArbitraryLoads"] = true
                 File.write(infoplistFile, Plist::Emit.dump(result))
             end
-            if security["NSAllowsArbitraryLoadsInWebContent"] != true
-                security["NSAllowsArbitraryLoadsInWebContent"] = true
-                File.write(infoplistFile, Plist::Emit.dump(result))
-            end
+#             if security["NSAllowsArbitraryLoadsInWebContent"] != true
+#                 security["NSAllowsArbitraryLoadsInWebContent"] = true
+#                 File.write(infoplistFile, Plist::Emit.dump(result))
+#             end
         end
     end
 end
