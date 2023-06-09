@@ -55,6 +55,8 @@ alipay_kit:
 
 ### Flutter
 
+> [周期扣款](https://github.com/RxReader/alipay_kit/issues)
+
 * 配置
 
 ```yaml
