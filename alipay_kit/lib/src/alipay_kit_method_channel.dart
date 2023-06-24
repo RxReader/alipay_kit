@@ -64,6 +64,7 @@ class MethodChannelAlipayKit extends AlipayKitPlatform {
     required String orderInfo,
     bool dynamicLaunch = false,
     bool isShowLoading = true,
+    bool sandbox = false /// 沙箱模式
   }) {
     return methodChannel.invokeMethod<void>(
       'pay',
@@ -71,6 +72,7 @@ class MethodChannelAlipayKit extends AlipayKitPlatform {
         'orderInfo': orderInfo,
         'dynamicLaunch': dynamicLaunch,
         'isShowLoading': isShowLoading,
+        'sandbox': sandbox,
       },
     );
   }

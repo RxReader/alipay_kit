@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 
 import androidx.annotation.NonNull;
 
+import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.AuthTask;
 import com.alipay.sdk.app.EnvUtils;
 import com.alipay.sdk.app.PayTask;
@@ -101,14 +102,19 @@ public class AlipayKitPlugin implements FlutterPlugin, ActivityAware, MethodCall
         } else if ("pay".equals(call.method)) {
             final String orderInfo = call.argument("orderInfo");
             final boolean isShowLoading = call.argument("isShowLoading");
+            final boolean sandbox = call.argument("sandbox");
             final WeakReference<Activity> activityRef = new WeakReference<>(activity);
             final WeakReference<MethodChannel> channelRef = new WeakReference<>(channel);
+
             //noinspection deprecation
             new AsyncTask<String, String, Map<String, String>>() {
                 @Override
                 protected Map<String, String> doInBackground(String... params) {
                     final Activity activity = activityRef.get();
                     if (activity != null && !activity.isFinishing()) {
+                        if(sandbox){
+                            EnvUtils.setEnv(EnvUtils.EnvEnum.SANDBOX);
+                        }
                         final PayTask task = new PayTask(activity);
                         return task.payV2(orderInfo, isShowLoading);
                     }
